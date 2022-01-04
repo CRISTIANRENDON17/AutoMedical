@@ -13,14 +13,3 @@ const App = () => {
 
 export default App;
 
-
-
- {/*
-	  <div>
-        <AppBar />
-        <div className="container">
-          <Login />
-          <Registry />
-        </div>
-      </div>
-	 */}
