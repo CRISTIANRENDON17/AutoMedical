@@ -1,0 +1,12 @@
+
+.QuitarEstilo{ 
+    text-decoration: none;
+    color: inherit;
+  
+}
+.QuitarEstilo:link{ 
+    text-decoration: none;
+}
+.QuitarEstilo:visited{ 
+    text-decoration: none;
+}
