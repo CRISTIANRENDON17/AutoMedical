@@ -27,7 +27,7 @@ export default function AppBar() {
             <LogoTipo />
           </Link>
           <Typography variant="h2" className={classes.title}>
-            <NavLink activeClassName="active" 
+            <NavLink activeclassname="active" 
             className={"QuitarEstilo"} 
             exact to="/">
               AutoMedical
@@ -36,7 +36,7 @@ export default function AppBar() {
 
           <Button color="inherit">
             <Typography variant="h5" className={classes.login}>
-            <NavLink activeClassName="active" 
+            <NavLink activeclassname="active" 
             className={"QuitarEstilo"} 
             exact to="/Login">
               Ingresar
@@ -45,7 +45,7 @@ export default function AppBar() {
           </Button>
           <Button color="inherit">
             <Typography variant="h5" className={classes.registry}>
-            <NavLink activeClassName="active" 
+            <NavLink activeclassname="active" 
             className={"QuitarEstilo"} 
             exact to="/Registry">
               Registrar
