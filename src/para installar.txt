@@ -1,5 +1,6 @@
 npm install @mui/material @emotion/react @emotion/styled
 npm install @material-ui/core
 npm install react-router-dom@6
+npm i --save @fortawesome/fontawesome-svg-core @fortawesome/free-solid-svg-icons @fortawesome/react-fontawesome @fortawesome/free-brands-svg-icons
 just test
 prueba2

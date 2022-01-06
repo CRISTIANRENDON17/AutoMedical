@@ -8,7 +8,7 @@ export default function Footer() {
       <footer>
           
             <h3>
-                <i ClassName="fa fa-copyright" aria-hidden="true">
+                <i className="fa fa-copyright" aria-hidden="true">
                     ©2022 copyright
                 </i>
                 <ol>

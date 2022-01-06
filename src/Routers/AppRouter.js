@@ -5,6 +5,7 @@ import Login from "../components/Login/Login";
 import Registry from "../components/Registry/Registry";
 import Footer from "../components/Footer/Footer";
 import BoxSx from "../components/BoxSx/BoxSx";
+import SelfTriage from "../components/SelfTriage/SelfTriage";
 
 import * as React from "react";
 import Container from '@mui/material/Container';
@@ -17,6 +18,7 @@ export const AppRouter = () => {
                 <Route path="/" element={<BoxSx />} />
                 <Route path="/Registry" element={<Registry />} />
                 <Route path="/Login" element={<Login />} />
+                <Route path="/SelfTriage" element={<SelfTriage/>}/>
             </Routes>
             </Container>
             <Footer/>
