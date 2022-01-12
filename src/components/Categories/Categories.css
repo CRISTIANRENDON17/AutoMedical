@@ -11,3 +11,7 @@
 .itemCategory:hover{
     color: rgb(64, 150, 248);
 }
+
+a {
+    text-decoration: none;
+}
