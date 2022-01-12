@@ -85,7 +85,41 @@
     },
     {
         "id" : 2,
-        "categoryName" : "Ortopedia o músculos esqueléticos"
+        "categoryName" : "Ortopedia o músculos esqueléticos",
+        "subcategories" : [
+            {
+                "idSubcategory" : 0,
+                "subcategoryName" : "Dolor musculo-esqueletico CON limitación del arco de movilidad"
+            },
+            {
+                "idSubcategory" : 1,
+                "subcategoryName" : "Dolor muscular (ejemplo: brazos, piernas, muslos, manos)"
+            },
+            {
+                "idSubcategory" : 2,
+                "subcategoryName" : "Dolor de espalda"
+            },
+            {
+                "idSubcategory" : 3,
+                "subcategoryName" : "Dolor articular (ejemplo: hombro, rodilla, tobillo, cadera)"
+            },
+            {
+                "idSubcategory" : 4,
+                "subcategoryName" : "Fatiga/cansancio o dolor en todo el cuerpo"
+            },
+            {
+                "idSubcategory" : 5,
+                "subcategoryName" : "Sensación de debilidad o incapacidad para ponerte de pie"
+            },
+            {
+                "idSubcategory" : 6,
+                "subcategoryName" : "Dolor de espalda con alteración de la sensibilidad o limitación de movimiento"
+            },
+            {
+                "idSubcategory" : 7,
+                "subcategoryName" : "Ninguno de los anteriores"
+            }
+        ]
     },
     {
         "id" : 3,
@@ -131,47 +165,385 @@
     },
     {
         "id" : 4,
-        "categoryName" : "Neurológico y cabeza"
+        "categoryName" : "Neurológico y cabeza",
+        "subcategories" : [
+            {
+                "idSubcategory" : 0,
+                "subcategoryName" : "Migraña"
+            },
+            {
+                "idSubcategory" : 1,
+                "subcategoryName" : "Dolor de cabeza"
+            },
+            {
+                "idSubcategory" : 2,
+                "subcategoryName" : "Vértigo o sensación de movimiento propio o de los objetos"
+            },
+            {
+                "idSubcategory" : 3,
+                "subcategoryName" : "Pito en los oídos"
+            },
+            {
+                "idSubcategory" : 4,
+                "subcategoryName" : "Parálisis en cara o extremidades"
+            },
+            {
+                "idSubcategory" : 5,
+                "subcategoryName" : "Mareo o sensación de desmayo, aturdimiento, o desfallecimiento"
+            },
+            {
+                "idSubcategory" : 6,
+                "subcategoryName" : "Presentas cambios en el estado de conciencia"
+            },
+            {
+                "idSubcategory" : 7,
+                "subcategoryName" : "Alteración o pérdida súbita del lenguaje o de la memoria"
+            },
+            {
+                "idSubcategory" : 8,
+                "subcategoryName" : "Tiene nuevas convulsiones o sus convulsiones no se detienen"
+            },
+            {
+                "idSubcategory" : 9,
+                "subcategoryName" : "Ninguno de los anteriores"
+            }                       
+        ]
     },
     {
         "id" : 5,
-        "categoryName" : "Abdominal o gastrointestinal"
+        "categoryName" : "Abdominal o gastrointestinal",
+        "subcategories" : [
+            {
+                "idSubcategory" : 0,
+                "subcategoryName" : "Acidez, agriera, indigestión y náuseas"
+            },
+            {
+                "idSubcategory" : 1,
+                "subcategoryName" : "Vómito"
+            },
+            {
+                "idSubcategory" : 2,
+                "subcategoryName" : "Aumento de la frecuencia y consistencia de las deposiciones (diarrea)"
+            },
+            {
+                "idSubcategory" : 3,
+                "subcategoryName" : "Imposibilidad para defecar o estreñimiento"
+            },
+            {
+                "idSubcategory" : 4,
+                "subcategoryName" : "Hemorroides o sangrado rectal"
+            },
+            {
+                "idSubcategory" : 5,
+                "subcategoryName" : "Hipo"
+            },
+            {
+                "idSubcategory" : 6,
+                "subcategoryName" : "Dolor abdominal"
+            },
+            {
+                "idSubcategory" : 7,
+                "subcategoryName" : "Perdida del apetito"
+            },
+            {
+                "idSubcategory" : 8,
+                "subcategoryName" : "Sangrado abundante en materia fecal"
+            },
+            {
+                "idSubcategory" : 9,
+                "subcategoryName" : "Ninguno de los anteriores"
+            }                       
+        ]
     },
     {
         "id" : 6,
-        "categoryName" : "Boca, garganta y cuello"
+        "categoryName" : "Boca, garganta y cuello",
+        "subcategories" : [
+            {
+                "idSubcategory" : 0,
+                "subcategoryName" : "Sangrado de las encías"
+            },
+            {
+                "idSubcategory" : 1,
+                "subcategoryName" : "Dolor en boca, cuello o garganta"
+            },
+            {
+                "idSubcategory" : 2,
+                "subcategoryName" : "Perdida o cambios en la voz"
+            },
+            {
+                "idSubcategory" : 3,
+                "subcategoryName" : "Alteración del gusto"
+            },
+            {
+                "idSubcategory" : 4,
+                "subcategoryName" : "Cuerpo extraño en garganta (ejemplo: espina de pescado)"
+            },
+            {
+                "idSubcategory" : 5,
+                "subcategoryName" : "Ninguno de los anteriores"
+            }                       
+        ]
     },
     {
         "id" : 7,
-        "categoryName" : "Oídos"
+        "categoryName" : "Oídos",
+        "subcategories" : [
+            {
+                "idSubcategory" : 0,
+                "subcategoryName" : "Dolor de oído con secreción por el oído"
+            },
+            {
+                "idSubcategory" : 1,
+                "subcategoryName" : "Perdida o disminución de audición"
+            },
+            {
+                "idSubcategory" : 2,
+                "subcategoryName" : "Cuerpo extraño en oído"
+            },
+            {
+                "idSubcategory" : 3,
+                "subcategoryName" : "Secreción por el oído"
+            },
+            {
+                "idSubcategory" : 4,
+                "subcategoryName" : "Sangrado por oído relacionado con un trauma"
+            },
+            {
+                "idSubcategory" : 5,
+                "subcategoryName" : "Ninguno de los anteriores"
+            }                       
+        ]
     },
     {
         "id" : 8,
-        "categoryName" : "Nariz"
+        "categoryName" : "Nariz",
+        "subcategories" : [
+            {
+                "idSubcategory" : 0,
+                "subcategoryName" : "Dolor en la nariz"
+            },
+            {
+                "idSubcategory" : 1,
+                "subcategoryName" : "Alteración del olfato"
+            },
+            {
+                "idSubcategory" : 2,
+                "subcategoryName" : "Congestión nasal"
+            },
+            {
+                "idSubcategory" : 3,
+                "subcategoryName" : "Cuerpo extraño en nariz"
+            },
+            {
+                "idSubcategory" : 4,
+                "subcategoryName" : "Sangrado nasal intermitente o escaso"
+            },            
+            {
+                "idSubcategory" : 5,
+                "subcategoryName" : "Sangrado nasal o por nariz abundante"
+            },
+            {
+                "idSubcategory" : 6,
+                "subcategoryName" : "Ninguno de los anteriores"
+            }                       
+        ]
     },
     {
         "id" : 9,
-        "categoryName" : "Vascular periférico"
+        "categoryName" : "Vascular periférico",
+        "subcategories" : [
+            {
+                "idSubcategory" : 0,
+                "subcategoryName" : "Dolor en extremidades (piernas y brazos)"
+            },
+            {
+                "idSubcategory" : 1,
+                "subcategoryName" : "Úlcera varicosa o de varices con sangrado"
+            },
+            {
+                "idSubcategory" : 2,
+                "subcategoryName" : "Ninguno de los anteriores"
+            }                       
+        ]
     },
     {
         "id" : 10,
-        "categoryName" : "Genito urinario"
+        "categoryName" : "Genito urinario",
+        "subcategories" : [
+            {
+                "idSubcategory" : 0,
+                "subcategoryName" : "Consulta para salud sexual y reproductiva"
+            },
+            {
+                "idSubcategory" : 1,
+                "subcategoryName" : "Ardor al orinar"
+            },
+            {
+                "idSubcategory" : 2,
+                "subcategoryName" : "Dolor testicular"
+            },
+            {
+                "idSubcategory" : 3,
+                "subcategoryName" : "Orina con sangre"
+            },
+            {
+                "idSubcategory" : 4,
+                "subcategoryName" : "Orina con abundante sangre luego de una cirugía"
+            },
+            {
+                "idSubcategory" : 5,
+                "subcategoryName" : "Ninguno de los anteriores"
+            }                       
+        ]
     },
     {
         "id" : 11,
-        "categoryName" : "Caídas, accidentes, traumas"
+        "categoryName" : "Caídas, accidentes, traumas",
+        "subcategories" : [
+            {
+                "idSubcategory" : 0,
+                "subcategoryName" : "Herida con elemento corto punzante (Ejemplo: cuchillo, navaja, machete)"
+            },
+            {
+                "idSubcategory" : 1,
+                "subcategoryName" : "Caída o golpe en extremidades (me aporrié, me cai)"
+            },
+            {
+                "idSubcategory" : 2,
+                "subcategoryName" : "Trauma o golpe en la cabeza"
+            },
+            {
+                "idSubcategory" : 3,
+                "subcategoryName" : "Trauma en otras zonas"
+            },
+            {
+                "idSubcategory" : 4,
+                "subcategoryName" : "Trauma asociado con sangrado continuo"
+            },
+            {
+                "idSubcategory" : 5,
+                "subcategoryName" : "Herida por arma de fuego o por bala o proyectil"
+            },
+            {
+                "idSubcategory" : 6,
+                "subcategoryName" : "Trauma severo con deformidad ósea o pérdida de conciencia"
+            },
+            {
+                "idSubcategory" : 7,
+                "subcategoryName" : "Ninguno de los anteriores"
+            }                       
+        ]
     },
     {
         "id" : 12,
-        "categoryName" : "Piel, uñas, cabello, pestañas"
+        "categoryName" : "Piel, uñas, cabello, pestañas",
+        "subcategories" : [
+            {
+                "idSubcategory" : 0,
+                "subcategoryName" : "Alergia, brote o erupción en la piel en sitios diferentes a la cara"
+            },
+            {
+                "idSubcategory" : 1,
+                "subcategoryName" : "Moretones con facilidad o sangrado con facilidad"
+            },
+            {
+                "idSubcategory" : 2,
+                "subcategoryName" : "Dolor o sensación de quemazón en la piel"
+            },
+            {
+                "idSubcategory" : 3,
+                "subcategoryName" : "Quemaduras (Ej: calor, exposición al sol, eléctricas o químicas)"
+            },
+            {
+                "idSubcategory" : 4,
+                "subcategoryName" : "Uña encarnada"
+            },
+            {
+                "idSubcategory" : 5,
+                "subcategoryName" : "Rasquiña o prurito en el cuerpo"
+            },
+            {
+                "idSubcategory" : 6,
+                "subcategoryName" : "Cuerpo extraño o protuberancia en la piel"
+            },
+            {
+                "idSubcategory" : 7,
+                "subcategoryName" : "Mordeduras o picaduras por animales o humanos"
+            },
+            {
+                "idSubcategory" : 8,
+                "subcategoryName" : "Mordedura por serpiente o culebra"
+            },
+            {
+                "idSubcategory" : 9,
+                "subcategoryName" : "Acné, puntos negros o granos en la piel"
+            },
+            {
+                "idSubcategory" : 10,
+                "subcategoryName" : "Ninguno de los anteriores"
+            }                       
+        ]
     },
     {
         "id" : 13,
-        "categoryName" : "Salud mental"
+        "categoryName" : "Salud mental",
+        "subcategories" : [
+            {
+                "idSubcategory" : 0,
+                "subcategoryName" : "Anorexia sin otros síntomas"
+            },
+            {
+                "idSubcategory" : 1,
+                "subcategoryName" : "Bulimia sin otros síntomas"
+            },
+            {
+                "idSubcategory" : 2,
+                "subcategoryName" : "Depresión aguda sin ideas suicidas"
+            },
+            {
+                "idSubcategory" : 3,
+                "subcategoryName" : "Molestias del sueño (Ej: Incapacidad para conciliar el sueño o permanecer dormido, sueño excesivo o pesadillas)"
+            },
+            {
+                "idSubcategory" : 4,
+                "subcategoryName" : "¿Te preocupas mucho por las cosas incluso si a veces son asuntos menores?"
+            },
+            {
+                "idSubcategory" : 5,
+                "subcategoryName" : "Agresividad por abuso de drogas"
+            },
+            {
+                "idSubcategory" : 6,
+                "subcategoryName" : "Pensamientos suicidas o intento suicida"
+            },
+            {
+                "idSubcategory" : 7,
+                "subcategoryName" : "Intoxicaciones o envenenamiento"
+            },
+            {
+                "idSubcategory" : 8,
+                "subcategoryName" : "Ninguno de los anteriores"
+            }                       
+        ]
     },
     {
         "id" : 14,
-        "categoryName" : "Violencia"
+        "categoryName" : "Violencia",
+        "subcategories" : [
+            {
+                "idSubcategory" : 0,
+                "subcategoryName" : "Violencia familiar con agresiones físicas"
+            },
+            {
+                "idSubcategory" : 1,
+                "subcategoryName" : "Abuso sexual o violación"
+            },
+            {
+                "idSubcategory" : 2,
+                "subcategoryName" : "Ninguno de los anteriores"
+            }                       
+        ]
     },
     {
         "id" : 15,
