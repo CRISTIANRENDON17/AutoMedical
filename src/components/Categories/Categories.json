@@ -1,0 +1,180 @@
+[
+    {
+        "id" : 0,
+        "categoryName" : "Cardiovascular",
+        "subcategories" : [
+            {
+                "idSubcategory" : 0,
+                "subcategoryName" : "Dolor en el pecho"
+            },
+            {
+                "idSubcategory" : 1,
+                "subcategoryName" : "Insuficiencia cardíaca con problemas para respirar y sensación de cansancio"
+            },
+            {
+                "idSubcategory" : 2,
+                "subcategoryName" : "Presión arterial alta"
+            },
+            {
+                "idSubcategory" : 3,
+                "subcategoryName" : "Dificultad para respirar"
+            },
+            {
+                "idSubcategory" : 4,
+                "subcategoryName" : "Sensación de presión en el pecho con dolor severo"
+            },
+            {
+                "idSubcategory" : 5,
+                "subcategoryName" : "Sudoración, piel pálida o debilidad para pararse"
+            },
+            {
+                "idSubcategory" : 6,
+                "subcategoryName" : "Palpitación o taquicardia"
+            },
+            {
+                "idSubcategory" : 7,
+                "subcategoryName" : "Coma"
+            },
+            {
+                "idSubcategory" : 8,
+                "subcategoryName" : "Ninguno de los anteriores"
+            }
+        ]
+    },
+    {
+        "id" : 1,
+        "categoryName" : "Oftamológico",
+        "subcategories" : [
+            {
+                "idSubcategory" : 0,
+                "subcategoryName" : "Trauma severo o penetrante en el ojo"
+            },
+            {
+                "idSubcategory" : 1,
+                "subcategoryName" : "Herida en ojo"
+            },
+            {
+                "idSubcategory" : 2,
+                "subcategoryName" : "Ojo rojo"
+            },
+            {
+                "idSubcategory" : 3,
+                "subcategoryName" : "Cuerpo extraño en ojo"
+            },
+            {
+                "idSubcategory" : 4,
+                "subcategoryName" : "Perdida total de la visión"
+            },
+            {
+                "idSubcategory" : 5,
+                "subcategoryName" : "Disminución de la visión"
+            },
+            {
+                "idSubcategory" : 6,
+                "subcategoryName" : "Sensación de ardor o picor de ojos"
+            },
+            {
+                "idSubcategory" : 7,
+                "subcategoryName" : "Dolor en el ojo"
+            },
+            {
+                "idSubcategory" : 8,
+                "subcategoryName" : "Ninguno de los anteriores"
+            }            
+        ]
+    },
+    {
+        "id" : 2,
+        "categoryName" : "Ortopedia o músculos esqueléticos"
+    },
+    {
+        "id" : 3,
+        "categoryName" : "Respiratorio",
+        "subcategories" : [
+            {
+                "idSubcategory" : 0,
+                "subcategoryName" : "Tos a repetición"
+            },
+            {
+                "idSubcategory" : 1,
+                "subcategoryName" : "Malestar general"
+            },
+            {
+                "idSubcategory" : 2,
+                "subcategoryName" : "Gripa, resfriado o catarro"
+            },
+            {
+                "idSubcategory" : 3,
+                "subcategoryName" : "Dolor para respirar"
+            },
+            {
+                "idSubcategory" : 4,
+                "subcategoryName" : "Dificultad para respirar"
+            },
+            {
+                "idSubcategory" : 5,
+                "subcategoryName" : "Sangre al toser"
+            },
+            {
+                "idSubcategory" : 6,
+                "subcategoryName" : "Dificultad súbita"
+            },
+            {
+                "idSubcategory" : 7,
+                "subcategoryName" : "Obstrucción de la vía aerea o respiratoria"
+            },
+            {
+                "idSubcategory" : 8,
+                "subcategoryName" : "Ninguno de los anteriores"
+            }            
+        ]
+    },
+    {
+        "id" : 4,
+        "categoryName" : "Neurológico y cabeza"
+    },
+    {
+        "id" : 5,
+        "categoryName" : "Abdominal o gastrointestinal"
+    },
+    {
+        "id" : 6,
+        "categoryName" : "Boca, garganta y cuello"
+    },
+    {
+        "id" : 7,
+        "categoryName" : "Oídos"
+    },
+    {
+        "id" : 8,
+        "categoryName" : "Nariz"
+    },
+    {
+        "id" : 9,
+        "categoryName" : "Vascular periférico"
+    },
+    {
+        "id" : 10,
+        "categoryName" : "Genito urinario"
+    },
+    {
+        "id" : 11,
+        "categoryName" : "Caídas, accidentes, traumas"
+    },
+    {
+        "id" : 12,
+        "categoryName" : "Piel, uñas, cabello, pestañas"
+    },
+    {
+        "id" : 13,
+        "categoryName" : "Salud mental"
+    },
+    {
+        "id" : 14,
+        "categoryName" : "Violencia"
+    },
+    {
+        "id" : 15,
+        "categoryName" : "No me identifico con ninguna"
+    }
+]
