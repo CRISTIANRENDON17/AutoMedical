@@ -15,6 +15,34 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+  const variable = () => {
+    
+    let identificacion = document.getElementById("identificacion").value;
+    let Nombre = document.getElementById("Nombre").value;
+    let Edad = document.getElementById("Edad").value;
+    let Celular = document.getElementById("Celular").value;
+    let Telefono = document.getElementById("Telefono").value;
+    let Direccion = document.getElementById("Direccion").value;
+    let  correo = document.getElementById("email").value;
+    let contraseña = document.getElementById("contraseña").value;
+    let confirmed_contraseña = document.getElementById("confirmed_contraseña").value;
+   
+     const Usuario ={
+      id: identificacion,
+      name: Nombre,
+      age: Edad,
+      phone: Celular,
+      phone2: Telefono,
+      address: Direccion,
+      email: correo,
+      password: contraseña,
+      confcontraseña: confirmed_contraseña
+    };
+    console.log(Usuario);
+    
+  };
+
+
 export default function RegistryForm(props) {
   //props es el objeto que por defecto todos los componentes de react tienen acceso, alli se encuentran por ejemplo las propiedades que le envia el padre al componente hijo
   const classes = useStyles(); /*guardar los estilos en la variable classes*/
@@ -25,12 +53,13 @@ export default function RegistryForm(props) {
     props.onRegistry(); /*Propiedades de padre a hijo*/
   };
 
+ 
   return (
-    <form onSubmit={formSubmitHandler} className={classes.form}>
+    <form onSubmit={formSubmitHandler} id="forrmulario" className={classes.form}>
       {" "}
       {/*cuando se le de submit envia el formulario a la funcion formSubmitHandler y aparte llama a la clase del form qu elo hace flex y lo agrupa todo en columna */}
       <TextField
-        id="id"
+        id="identificacion"
         label="Identificacion"
         variant="outlined"
         type="number"
@@ -86,13 +115,18 @@ export default function RegistryForm(props) {
         className={classes.textField}
       />
       <TextField
-        id="confirmed-contraseña"
+        id="confirmed_contraseña"
         label="Confirmar Contraseña"
         variant="outlined"
         type="password"
         className={classes.textField}
       />
-      <Button variant="contained" color="primary" type="submit">
+      <Button 
+      variant="contained" 
+      color="primary" 
+      type="submit" 
+      onClick={variable}
+      >
         {" "}
         {/*Boton propio de import Button from '@material-ui/core/Button'; */}
         Registrar
