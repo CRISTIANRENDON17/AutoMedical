@@ -1,6 +1,7 @@
 import Button from "@material-ui/core/Button";
 import { makeStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
+import  {Guardar} from "../database/BaseDatos.js";
 
 const useStyles = makeStyles((theme) => ({
   /*estilos del formulario y del texto*/
@@ -15,33 +16,33 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-  const variable = () => {
-    
-    let identificacion = document.getElementById("identificacion").value;
-    let Nombre = document.getElementById("Nombre").value;
-    let Edad = document.getElementById("Edad").value;
-    let Celular = document.getElementById("Celular").value;
-    let Telefono = document.getElementById("Telefono").value;
-    let Direccion = document.getElementById("Direccion").value;
-    let  correo = document.getElementById("email").value;
-    let contraseña = document.getElementById("contraseña").value;
-    let confirmed_contraseña = document.getElementById("confirmed_contraseña").value;
-   
-     const Usuario ={
-      id: identificacion,
-      name: Nombre,
-      age: Edad,
-      phone: Celular,
-      phone2: Telefono,
-      address: Direccion,
-      email: correo,
-      password: contraseña,
-      confcontraseña: confirmed_contraseña
-    };
-    console.log(Usuario);
-    
-  };
+const Limpiar_form = () =>{
+  document.getElementById("identificacion").value = "";
+  document.getElementById("Nombre").value = "";
+  document.getElementById("Edad").value = "";
+  document.getElementById("Celular").value = "";
+  document.getElementById("Telefono").value = "";
+  document.getElementById("Direccion").value = "";
+  document.getElementById("email").value = "";
+  document.getElementById("contraseña").value = "";
+  document.getElementById("confirmed_contraseña").value = "";
+};
 
+const variable = () => {
+    const Usuario = {
+    id: document.getElementById("identificacion").value,
+    name: document.getElementById("Nombre").value,
+    age: document.getElementById("Edad").value,
+    phone: document.getElementById("Celular").value,
+    phone2: document.getElementById("Telefono").value,
+    address: document.getElementById("Direccion").value,
+    email: document.getElementById("email").value,
+    password: document.getElementById("contraseña").value,
+    confcontraseña: document.getElementById("confirmed_contraseña").value,
+  };
+  Guardar(Usuario);
+  Limpiar_form();
+};
 
 export default function RegistryForm(props) {
   //props es el objeto que por defecto todos los componentes de react tienen acceso, alli se encuentran por ejemplo las propiedades que le envia el padre al componente hijo
@@ -53,9 +54,12 @@ export default function RegistryForm(props) {
     props.onRegistry(); /*Propiedades de padre a hijo*/
   };
 
- 
   return (
-    <form onSubmit={formSubmitHandler} id="forrmulario" className={classes.form}>
+    <form
+      onSubmit={formSubmitHandler}
+      id="forrmulario"
+      className={classes.form}
+    >
       {" "}
       {/*cuando se le de submit envia el formulario a la funcion formSubmitHandler y aparte llama a la clase del form qu elo hace flex y lo agrupa todo en columna */}
       <TextField
@@ -65,7 +69,7 @@ export default function RegistryForm(props) {
         type="number"
         className={classes.textField}
       />
-        <TextField
+      <TextField
         id="Nombre"
         label="Nombre Completo"
         variant="outlined"
@@ -121,11 +125,11 @@ export default function RegistryForm(props) {
         type="password"
         className={classes.textField}
       />
-      <Button 
-      variant="contained" 
-      color="primary" 
-      type="submit" 
-      onClick={variable}
+      <Button
+        variant="contained"
+        color="primary"
+        type="submit"
+        onClick={variable}
       >
         {" "}
         {/*Boton propio de import Button from '@material-ui/core/Button'; */}

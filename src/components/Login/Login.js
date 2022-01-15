@@ -3,7 +3,8 @@ import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import Snackbar from "@material-ui/core/Snackbar";
 import React from "react";
-import LoginForm from "./LoginForm";
+import LoginForm,{Incorrecto} from "./LoginForm";
+
 
 export default function Login() {
   const [open, setOpen] = React.useState(false);
@@ -15,8 +16,9 @@ export default function Login() {
   const handleClose = () => {
     setOpen(false);
   };
-
-  
+  const mensaje = () =>{
+    return(Incorrecto());
+  };
 
   return (
     <div>
@@ -31,7 +33,7 @@ export default function Login() {
         open={open}
         autoHideDuration={3000}
         onClose={handleClose}
-        message="Login Clicked"
+        message={mensaje()}
         action={
           <Button color="secondary" size="small" onClick={handleClose}>
             Cerrar
