@@ -18,7 +18,10 @@ const useStyles = makeStyles((theme) => ({
     "margin-bottom": "1rem",
   },
 }));
-
+export const Mensaje = () => {
+  return mensaje;
+};
+var mensaje = "";
 var aux = 0;
 const LoginButton = () => {
   let array = GetArray();
@@ -34,9 +37,15 @@ const LoginButton = () => {
   if (aux2 === undefined) {
     aux = 0;
     console.log("Fallido");
+    mensaje = "Ingreso Fallido";
   } else if (aux2.password === document.getElementById("contraseña").value) {
     console.log("exito");
+    mensaje = "Ingreso Exitoso";
     aux = 1;
+  }else{
+    aux = 0;
+    console.log("Fallido");
+    mensaje = "Ingreso Fallido";
   }
 
   return null;

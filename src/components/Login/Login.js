@@ -4,6 +4,17 @@ import CardContent from "@material-ui/core/CardContent";
 import React from "react";
 import LoginForm from "./LoginForm";
 import { Snackbar } from "@material-ui/core";
+import {Mensaje} from "./LoginForm.js"; 
+const mensaje = () =>{
+  if(Mensaje() === "Ingreso Exitoso"){
+    return("Ingreso Exitoso");
+  }else if(Mensaje()==="Ingreso Fallido")
+  {
+    return("Ingreso Fallido, correo o clave incorrecta");
+  }
+
+};
+
 
 export default function Login() {
   const [open, setOpen] = React.useState(false);
@@ -29,7 +40,7 @@ export default function Login() {
         open={open}
         autoHideDuration={3000}
         onClose={handleClose}
-        message={'Usuario o clave incorrecta'}
+        message={mensaje()}
         action={
           <Button color="secondary" size="small" onClick={handleClose}>
             Cerrar

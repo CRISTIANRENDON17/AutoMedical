@@ -3,7 +3,7 @@ import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import Snackbar from "@material-ui/core/Snackbar";
 import React from "react";
-import RegistryForm from "./RegistryForm"; //importar form del registro
+import RegistryForm,{ Mensaje } from "./RegistryForm.js"; //importar form del registro
 
 export default function Registry() {
   const [open, setOpen] = React.useState(false); //Los Hooks son una nueva incorporación en React 16.8. Te permiten usar estado y otras características de React sin escribir una clase.
@@ -19,6 +19,17 @@ export default function Registry() {
   const handleClose = () => {
     //Esta funcion lo que hace es cambiar el estado del componente "open" a true, lo que activa el SnackBar
     setOpen(false);
+  };
+  const mensaje = () =>{
+    if(Mensaje() === ""){
+      return("Registro exitoso");
+    }else if(Mensaje()==="Email Repetido")
+    {
+      return("Fallo Registro, Este Email ya existe");
+    }
+    else{
+      return("Registro Fallido");
+    }
   };
 
   return (
@@ -40,7 +51,7 @@ export default function Registry() {
         open={open} //abirr el mensaje
         autoHideDuration={3000} //Duracion del mensaje
         onClose={handleClose} //lo cierra validandolo desde una funcion que retorna false
-        message="Registry Clicked" //mensaje
+        message={mensaje()} //mensaje
         action={
           //accion
           <Button color="secondary" size="small" onClick={handleClose}>
