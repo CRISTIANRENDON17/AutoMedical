@@ -47,6 +47,7 @@ export default function AppBar() {
             <Typography variant="h5" className={classes.registry}>
             <NavLink activeclassname="active" 
             className={"QuitarEstilo"} 
+            
             exact to="/Registry">
               Registrar
               </NavLink>

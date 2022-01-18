@@ -10,6 +10,7 @@ const array = [
         email: "Cris@gmail.com",
         password: "56",
         confcontraseña: "56",
+        doctor:"no"
     },
     {
         id: "1002",
@@ -21,6 +22,7 @@ const array = [
         email: "Juan@gmail.com",
         password: "34",
         confcontraseña: "34",
+        doctor:"no"
     }
 ];
 

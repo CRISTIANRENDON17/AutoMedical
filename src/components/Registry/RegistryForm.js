@@ -39,7 +39,45 @@ const variable = () => {
     email: document.getElementById("email").value,
     password: document.getElementById("contraseña").value,
     confcontraseña: document.getElementById("confirmed_contraseña").value,
+    doctor:"no"
   };
+  /*
+  console.log(typeof Usuario.id,typeof Usuario.name,typeof Usuario.age,typeof Usuario.phone,typeof Usuario.phone2,typeof Usuario.address,typeof Usuario.email,typeof Usuario.password,typeof Usuario.confcontraseña,typeof Usuario.doctor);
+  console.log(Usuario.id,Usuario.name,Usuario.age,Usuario.phone,Usuario.phone2,Usuario.address,Usuario.email,Usuario.password,Usuario.confcontraseña,Usuario.doctor);
+  */
+  let mensaje = "";
+
+  if(!/^\d{7,14}$/.test(Number(Usuario.id))){
+    mensaje = mensaje + `<div><li>Identificacion tiene que estar entre 7 a 14 numeros <br></li></div>`;
+  }
+  if(!/^[a-zA-ZÀ-ÿ\s]{2,40}$/.test(Usuario.name)){
+    mensaje = mensaje + `<div><li>Nombre solo acepta valores alfabeticos y minimo 2 digitos<br></li></div>`;
+  }
+  if(!/^\d{1,2}$/.test(Usuario.age)){
+    mensaje = mensaje + `<div><li>Edad solo acepta valores numericos entre 0 y 99<br></li></div>`;
+  }
+  if(!/^\d{10}$/.test(Usuario.phone)){
+    mensaje = mensaje + `<div><li>Celular solo acepta 10 valores numericos<br></li></div>`;
+  }
+  if(!/^\d{7}$/.test(Usuario.phone2)){
+    mensaje = mensaje + `<div><li>Telefono solo acepta 7 valores numericos<br></li></div>`;
+  }
+  if(!/^[^]+$/.test(Usuario.address)){
+    mensaje = mensaje + `<div><li>Direccion no puede estar vacia<br></li></div>`;
+  }
+  if(!/^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/.test(Usuario.email)){
+    mensaje = mensaje + `<div><li>Correo no puede estar vacio, debe detener caracteres antes y despues del @ con una direccion <br></li></div>`;
+  }
+  if(!/^.{4,12}$/.test(Usuario.password)){
+    mensaje = mensaje + `<div><li>Contraseña no puede estar vacia y tiene de 4 a 12 caracteres<br></li></div>`;
+  }
+  if(!/^.{4,12}$/.test(Usuario.confcontraseña)){
+    mensaje = mensaje + `<div><li>Confirmar Contraseña no puede estar vacia y tiene de 4 a 12 caracteres<br></li></div>`;
+  }
+
+
+
+  document.getElementById("Alert").innerHTML = mensaje;
   Guardar(Usuario);
   Limpiar_form();
 };
@@ -124,7 +162,9 @@ export default function RegistryForm(props) {
         variant="outlined"
         type="password"
         className={classes.textField}
+        pattern="[A-Za-z0-9!?-]{8,12}"
       />
+      <div id = "Alert"></div>
       <Button
         variant="contained"
         color="primary"
