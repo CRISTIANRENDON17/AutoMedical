@@ -45,6 +45,10 @@ const Subcategories = () => {
       history('/Agendamiento')
     };
 
+    const handJustClose = () => {
+        setOpen(false);
+    }
+
     const {categoryName} = useParams();
     const [categories] = React.useState(CategoriesList);
     var categoriesIcons = [faHeart, faEye, faBone, faLungs, faBrain, faGoogleWallet, faHeadSideCough, faAssistiveListeningSystems, 
@@ -99,7 +103,7 @@ const Subcategories = () => {
                 </DialogContentText>
                 </DialogContent>
                 <DialogActions>
-                <Button onClick={handleClose}>Cancelar</Button>
+                <Button onClick={handJustClose}>Cancelar</Button>
                 <Button onClick={handleClose}>Aceptar</Button>
                 </DialogActions>
             </Dialog>

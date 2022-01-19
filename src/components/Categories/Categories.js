@@ -26,7 +26,7 @@ const Categories = () => {
     return(
         <div>
             <p>Selecciona en qué catergoría se encuentra tu síntoma</p>
-            <Box sx={{ width: '100%', 'margin-top': '3%' }}>
+            <Box sx={{ width: '100%', 'marginTop': '3%' }}>
                 <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
                     {categories.map((category) => {
                         return(      
@@ -40,6 +40,10 @@ const Categories = () => {
                     })}
                 </Grid>
             </Box>
+            <br></br>
+            <br></br>
+            <br></br>
+            <br></br>
         </div>
     );    
 }

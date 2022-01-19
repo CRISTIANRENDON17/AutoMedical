@@ -8,8 +8,8 @@ const array = [
         phone2: "8283132",
         address: "carrera 32 c d nort 21",
         email: "Cris@gmail.com",
-        password: "56",
-        confcontraseña: "56",
+        password: "1234",
+        confcontraseña: "1234",
         doctor:"no"
     },
     {

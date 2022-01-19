@@ -115,7 +115,9 @@ export default function LoginForm(props) {
           >
             A ingresado con exito a la plataforma pulse para continuar →
           </Alert>
-        
+          <br></br>
+          <br></br>
+          <br></br>
       </div>
     );
   };

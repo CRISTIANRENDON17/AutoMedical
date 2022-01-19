@@ -215,6 +215,9 @@ export default function RegistryForm(props) {
         {/*Boton propio de import Button from '@material-ui/core/Button'; */}
         Registrar
       </Button>
+      <br></br>
+      <br></br>
+      <br></br>
     </form>
   );
 }
