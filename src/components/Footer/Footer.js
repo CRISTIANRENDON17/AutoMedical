@@ -11,7 +11,7 @@ export default function Footer() {
             ©2022 copyright
           </i>
           <ol>Cristian Rendon Rodriguez</ol>
-          <ol>León Ángel Chancí Gizmán</ol>
+          <ol>León Ángel Chancí Guzmán</ol>
           <ol>Darbey Tejada Ruiz</ol>
           <ol>Ferney de Jesus Londoño</ol>
         </h3>
