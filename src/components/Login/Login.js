@@ -5,7 +5,7 @@ import React, {useEffect} from "react";
 import LoginForm from "./LoginForm";
 import { Snackbar } from "@material-ui/core";
 import {Mensaje} from "./LoginForm.js"; 
-import getCollection from "../../actions";
+import {getCollection} from "../../actions";
 
 const mensaje = () =>{
   if(Mensaje() === "Ingreso Exitoso"){
@@ -17,14 +17,13 @@ const mensaje = () =>{
 
 };
 
-
 export default function Login() {
   const [open, setOpen] = React.useState(false);
 
   useEffect(() => {    
     const obtenerUsuarios = async() => {                
       const datos = await getCollection('usuarios');
-      datos.data.docs.map( (user) => console.log(user.data()) );    
+      datos.data.docs.map( (user) => console.log(user.data()) );        
     }    
     obtenerUsuarios();
   }, []);  

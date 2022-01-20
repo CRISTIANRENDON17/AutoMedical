@@ -1,7 +1,7 @@
 import Button from "@material-ui/core/Button";
 import { makeStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
-import { Guardar } from "../database/BaseDatos.js";
+import { addUser, getUser } from "../../actions.js";
 import { GetArray } from "../database/BaseDatos.js";
 
 const useStyles = makeStyles((theme) => ({
@@ -33,13 +33,13 @@ const Limpiar_form = () => {
   document.getElementById("confirmed_contraseña").value = "";
 };
 var mensaje = "";
-const variable = () => {
+const variable = async() => {
   const Usuario = {
-    id: document.getElementById("identificacion").value,
-    name: document.getElementById("Nombre").value,
+    identification: document.getElementById("identificacion").value,
+    fullName: document.getElementById("Nombre").value,
     age: document.getElementById("Edad").value,
-    phone: document.getElementById("Celular").value,
-    phone2: document.getElementById("Telefono").value,
+    cellNumber: document.getElementById("Celular").value,
+    phoneNumber: document.getElementById("Telefono").value,
     address: document.getElementById("Direccion").value,
     email: document.getElementById("email").value,
     password: document.getElementById("contraseña").value,
@@ -50,14 +50,14 @@ const variable = () => {
   console.log(typeof Usuario.id,typeof Usuario.name,typeof Usuario.age,typeof Usuario.phone,typeof Usuario.phone2,typeof Usuario.address,typeof Usuario.email,typeof Usuario.password,typeof Usuario.confcontraseña,typeof Usuario.doctor);
   console.log(Usuario.id,Usuario.name,Usuario.age,Usuario.phone,Usuario.phone2,Usuario.address,Usuario.email,Usuario.password,Usuario.confcontraseña,Usuario.doctor);
   */
-  mensaje = "";
+  mensaje = "<di><l1>Error</li></div>";
 
-  if (!/^\d{7,14}$/.test(Usuario.id)) {
+  if (!/^\d{7,14}$/.test(Usuario.identification)) {
     mensaje =
       mensaje +
       "<div><li>Identificacion tiene que estar entre 7 a 14 numeros <br></li></div>";
   }
-  if (!/^[a-zA-ZÀ-ÿ\s]{2,40}$/.test(Usuario.name)) {
+  if (!/^[a-zA-ZÀ-ÿ\s]{2,40}$/.test(Usuario.fullName)) {
     mensaje =
       mensaje +
       "<div><li>Nombre solo acepta valores alfabeticos y minimo 2 digitos <br></li></div>";
@@ -67,12 +67,12 @@ const variable = () => {
       mensaje +
       `<div><li>Edad solo acepta valores numericos entre 0 y 99<br></li></div>`;
   }
-  if (!/^\d{10}$/.test(Usuario.phone)) {
+  if (!/^\d{10}$/.test(Usuario.cellNumber)) {
     mensaje =
       mensaje +
       `<div><li>Celular solo acepta 10 valores numericos<br></li></div>`;
   }
-  if (!/^\d{7}$/.test(Usuario.phone2)) {
+  if (!/^\d{7}$/.test(Usuario.phoneNumber)) {
     mensaje =
       mensaje +
       `<div><li>Telefono solo acepta 7 valores numericos<br></li></div>`;
@@ -100,7 +100,7 @@ const variable = () => {
     mensaje = mensaje + `<div><li>Contraseña no conciden<br></li></div>`;
   }
 
-  if (mensaje === "") {
+  if (mensaje === "<di><l1>Error</li></div>") {
     let array = GetArray();
     /*  console.log(typeof array.find((data) => data.email));
   console.log(typeof  Email); */
@@ -109,9 +109,23 @@ const variable = () => {
         ({ email}) => (email === document.getElementById('email').value )
       );
     if (aux2 === undefined) {
-      Limpiar_form();
-      Guardar(Usuario);
-      console.log("Registro Guardado con extio");
+      
+      const result = await ValidarUsuario(Usuario);
+      
+      if(!result.usuarioExiste) {    
+        mensaje = "";    
+        GuardarUsuario(Usuario); 
+        Limpiar_form();
+      }
+      else{        
+        mensaje = mensaje + ((result.usuarioExisteById && result.usuarioExisteByEmail) ?     
+        `<div><li>El usuario con identificación: ` + Usuario.identification + ` y correo: ` + Usuario.email+ ` ya se encuentra registrado en el sistema.<br></li></div>` : 
+        result.usuarioExisteById ? 
+        `<div><li>El usuario con identificación: ` + Usuario.identification + ` ya se encuentra registrado en el sistema.<br></li></div>` :
+        result.usuarioExisteByEmail ? 
+        `<div><li>El usuario con correo: ` + Usuario.email + ` ya se encuentra registrado en el sistema.<br></li></div>` : "");
+      }
+      
     } else if(aux2.email === Usuario.email){
       console.log("Email Repetido");
       mensaje = 'Email Repetido';
@@ -120,6 +134,18 @@ const variable = () => {
   document.getElementById("Alert").innerHTML = mensaje;
 
 };
+
+const ValidarUsuario = async(Usuario) => {  
+  const userQuery = await getUser(Usuario.identification, Usuario.email);
+  const usuarioExiste = (userQuery.userIdExiste || userQuery.userEmailExiste) ? true : false;
+  const result = { usuarioExiste: usuarioExiste, usuarioExisteById: userQuery.userIdExiste, usuarioExisteByEmail: userQuery.userEmailExiste };
+  return result;
+}
+
+const GuardarUsuario = async(newUser) => {
+  const result = await addUser('usuarios', newUser);
+  console.log("Usuario registrado exitomsamente: ", result.data);
+}
 
 export default function RegistryForm(props) {
   //props es el objeto que por defecto todos los componentes de react tienen acceso, alli se encuentran por ejemplo las propiedades que le envia el padre al componente hijo
@@ -215,6 +241,7 @@ export default function RegistryForm(props) {
         {/*Boton propio de import Button from '@material-ui/core/Button'; */}
         Registrar
       </Button>
+      <br></br>
       <br></br>
       <br></br>
       <br></br>
