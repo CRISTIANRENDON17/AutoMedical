@@ -2,7 +2,7 @@ import Button from "@material-ui/core/Button";
 import { makeStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 import { addUser, getUser } from "../../actions.js";
-import { GetArray } from "../database/BaseDatos.js";
+//import { GetArray } from "../database/BaseDatos.js";
 
 const useStyles = makeStyles((theme) => ({
   /*estilos del formulario y del texto*/
@@ -101,21 +101,12 @@ const variable = async() => {
   }
 
   if (mensaje === "<di><l1>Error</li></div>") {
-    let array = GetArray();
-    /*  console.log(typeof array.find((data) => data.email));
-  console.log(typeof  Email); */
-    let aux2;
-      aux2 = array.find(
-        ({ email}) => (email === document.getElementById('email').value )
-      );
-    if (aux2 === undefined) {
-      
       const result = await ValidarUsuario(Usuario);
       
-      if(!result.usuarioExiste) {    
-        mensaje = "";    
+      if(!result.usuarioExiste) {       
         GuardarUsuario(Usuario); 
         Limpiar_form();
+        mensaje = "";
       }
       else{        
         mensaje = mensaje + ((result.usuarioExisteById && result.usuarioExisteByEmail) ?     
@@ -125,11 +116,7 @@ const variable = async() => {
         result.usuarioExisteByEmail ? 
         `<div><li>El usuario con correo: ` + Usuario.email + ` ya se encuentra registrado en el sistema.<br></li></div>` : "");
       }
-      
-    } else if(aux2.email === Usuario.email){
-      console.log("Email Repetido");
-      mensaje = 'Email Repetido';
-    }
+       
   }
   document.getElementById("Alert").innerHTML = mensaje;
 
@@ -140,12 +127,13 @@ const ValidarUsuario = async(Usuario) => {
   const usuarioExiste = (userQuery.userIdExiste || userQuery.userEmailExiste) ? true : false;
   const result = { usuarioExiste: usuarioExiste, usuarioExisteById: userQuery.userIdExiste, usuarioExisteByEmail: userQuery.userEmailExiste };
   return result;
-}
+};
 
 const GuardarUsuario = async(newUser) => {
   const result = await addUser('usuarios', newUser);
   console.log("Usuario registrado exitomsamente: ", result.data);
-}
+  mensaje ="";
+};
 
 export default function RegistryForm(props) {
   //props es el objeto que por defecto todos los componentes de react tienen acceso, alli se encuentran por ejemplo las propiedades que le envia el padre al componente hijo
@@ -159,6 +147,7 @@ export default function RegistryForm(props) {
   };
 
   return (
+    <div>
     <form
       onSubmit={formSubmitHandler}
       id="forrmulario"
@@ -246,5 +235,6 @@ export default function RegistryForm(props) {
       <br></br>
       <br></br>
     </form>
+    </div>
   );
 }

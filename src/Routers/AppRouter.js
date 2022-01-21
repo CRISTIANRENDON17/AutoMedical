@@ -1,5 +1,4 @@
 import { Routes, Route, BrowserRouter} from "react-router-dom";
-
 import AppBar from "../components/AppBar/AppBar";
 import Login from "../components/Login/Login";
 import Registry from "../components/Registry/Registry";
@@ -11,20 +10,20 @@ import Agendamiento from "../components/Agendamiento/Agendamiento";
 
 import * as React from "react";
 import Container from '@mui/material/Container';
+//import {aux} from "";
+
+
 export const AppRouter = () => {
     return (
         <BrowserRouter>
-            <AppBar/>
-            <Container>
             <Routes>
-                <Route path="/" element={<BoxSx />} />
-                <Route path="/Registry" element={<Registry />} />
-                <Route path="/Login" element={<Login />} />
-                <Route path="/SelfTriage" element={<SelfTriage/>}/>
-                <Route path="/SelfTriage/:categoryName" element={<Subcategories/>}/>
-                <Route path="/Agendamiento" element={<Agendamiento/>}/>
+                <Route path="/" element={<div><AppBar data={0}/><BoxSx /></div>} />
+                <Route path="/Registry" element={<div><AppBar data={0}/><Registry /></div>} />
+                <Route path="/Login" element={<div><AppBar data={0} /><Login /></div>} />
+                <Route path="/SelfTriage" element={<div><AppBar data={1}/><SelfTriage/></div>}/>
+                <Route path="/SelfTriage/:categoryName" element={<div><AppBar data={1}/><Subcategories/></div>}/>
+                <Route path="/Agendamiento" element={<div><AppBar data={1}/><Agendamiento/></div>}/>
             </Routes>
-            </Container>
             <Footer/>
         </BrowserRouter>
     )

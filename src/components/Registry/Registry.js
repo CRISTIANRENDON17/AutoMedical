@@ -5,6 +5,7 @@ import Snackbar from "@material-ui/core/Snackbar";
 import React from "react";
 import RegistryForm,{ Mensaje } from "./RegistryForm.js"; //importar form del registro
 
+
 export default function Registry() {
   const [open, setOpen] = React.useState(false); //Los Hooks son una nueva incorporación en React 16.8. Te permiten usar estado y otras características de React sin escribir una clase.
 
@@ -23,9 +24,6 @@ export default function Registry() {
   const mensaje = () =>{
     if(Mensaje() === ""){
       return("Registro exitoso");
-    }else if(Mensaje()==="Email Repetido")
-    {
-      return("Fallo Registro, Este Email ya existe");
     }
     else{
       return("Registro Fallido");
@@ -35,7 +33,7 @@ export default function Registry() {
   return (
     <div>
       {" "}
-      {/*se usa el div porque se tiene que retornar un objeto entero*/}
+      {/*se usa el div porque se tiene que retornar un objeto entero*/}    
       <h2 style={{ textAlign: "center" }}>Registro de Operario</h2>{" "}
       {/*un h2 que agranda la letra, con un stylo de centrado */}
       <Card>

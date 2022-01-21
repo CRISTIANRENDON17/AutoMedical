@@ -4,7 +4,7 @@ npm install react-router-dom@6
 npm i --save @fortawesome/fontawesome-svg-core @fortawesome/free-solid-svg-icons @fortawesome/react-fontawesome @fortawesome/free-brands-svg-icons
 npm i  @material-ui/pickers
 npm i @date-io/date-fns@1.x date-fns
-
+npm i firebase
 
 
 

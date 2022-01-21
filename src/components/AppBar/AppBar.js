@@ -7,6 +7,7 @@ import LogoTipo from "../LogoTipo/LogoTipo.js";
 import "./AppBar.css";
 import { Link, NavLink } from "react-router-dom";
 
+
 const useStyles = makeStyles(() => ({
   root: {
     flexGrow: 1,
@@ -16,45 +17,98 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-export default function AppBar() {
+export default function AppBar({data}) {
   const classes = useStyles();
-
-  return (
-    <div className={classes.root}>
-      <AppBarMaterial position="static">
-        <Toolbar>
-          <Link to="/">
-            <LogoTipo />
-          </Link>
-          <Typography variant="h2" className={classes.title}>
-            <NavLink activeclassname="active" 
-            className={"QuitarEstilo"} 
-            exact to="/">
-              AutoMedical
-            </NavLink>
-          </Typography>
-
-          <Button color="inherit">
-            <Typography variant="h5" className={classes.login}>
-            <NavLink activeclassname="active" 
-            className={"QuitarEstilo"} 
-            exact to="/Login">
-              Ingresar
+  if (data === 0) {
+    return (
+      <div className={classes.root}>
+        <AppBarMaterial position="static">
+          <Toolbar>
+            <Link to="/">
+              <LogoTipo />
+            </Link>
+            <Typography variant="h2" className={classes.title}>
+              <NavLink
+                activeclassname="active"
+                className={"QuitarEstilo"}
+                exact
+                to="/"
+              >
+                AutoMedical
               </NavLink>
             </Typography>
-          </Button>
-          <Button color="inherit">
-            <Typography variant="h5" className={classes.registry}>
-            <NavLink activeclassname="active" 
-            className={"QuitarEstilo"} 
-            
-            exact to="/Registry">
-              Registrar
-              </NavLink>
-            </Typography>
-          </Button>
-        </Toolbar>
-      </AppBarMaterial>
-    </div>
+
+            <Button color="inherit">
+              <Typography variant="h5" className={classes.login}>
+                <NavLink
+                  activeclassname="active"
+                  className={"QuitarEstilo"}
+                  exact
+                  to="/Login"
+                >
+                  Ingresar
+                </NavLink>
+              </Typography>
+            </Button>
+            <Button color="inherit">
+              <Typography variant="h5" className={classes.registry}>
+                <NavLink
+                  activeclassname="active"
+                  className={"QuitarEstilo"}
+                  exact
+                  to="/Registry"
+                >
+                  Registrar
+                </NavLink>
+              </Typography>
+            </Button>
+          </Toolbar>
+        </AppBarMaterial>
+      </div>
   );
+  } else if (data === 1) {
+    return (
+      <div className={classes.root}>
+        <AppBarMaterial position="static">
+          <Toolbar>
+            <Link to="/SelfTriage">
+              <LogoTipo />
+            </Link>
+            <Typography variant="h2" className={classes.title}>
+              <NavLink
+                activeclassname="active"
+                className={"QuitarEstilo"}
+                exact
+                to="/SelfTriage"
+              >
+                AutoMedical
+              </NavLink>
+            </Typography>
+
+            <Button color="inherit">
+              <Typography variant="h5" className={classes.registry}>
+                <NavLink
+                  activeclassname="active"
+                  className={"QuitarEstilo"}
+                  exact
+                  to="/"
+                  onClick={() => {this.data = 0}}
+                >
+                  Salir
+                </NavLink>
+              </Typography>
+            </Button>
+          </Toolbar>
+        </AppBarMaterial>
+      </div>
+    );
+  }
 }
+
+
+AppBar.defaultProps = {
+  props: 0,
+ }
+
+
+

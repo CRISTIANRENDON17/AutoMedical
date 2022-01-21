@@ -1,13 +1,12 @@
 import Button from "@material-ui/core/Button";
 import { makeStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
-import { GetArray } from "../database/BaseDatos.js";
 import { Link } from "react-router-dom";
 import Covid from './Covid.png';
 import Avatar from '@mui/material/Avatar';
-
-import * as React from 'react';
+import React, {useEffect} from 'react';
 import Alert from '@mui/material/Alert';
+import {getCollection} from "../../actions";
 
 const useStyles = makeStyles((theme) => ({
   form: {
@@ -21,37 +20,42 @@ const useStyles = makeStyles((theme) => ({
 export const Mensaje = () => {
   return mensaje;
 };
+
 var mensaje = "";
 var aux = 0;
+
 const LoginButton = () => {
-  let array = GetArray();
-  /*  console.log(typeof array.find((data) => data.email));
-  console.log(typeof  Email); */
   let aux2;
   if (aux === 0) {
     aux2 = array.find(
       ({ email }) => email === document.getElementById("Email").value
     );
   }
-
   if (aux2 === undefined) {
     aux = 0;
-    console.log("Fallido");
     mensaje = "Ingreso Fallido";
   } else if (aux2.password === document.getElementById("contraseña").value) {
-    console.log("exito");
     mensaje = "Ingreso Exitoso";
     aux = 1;
   }else{
     aux = 0;
-    console.log("Fallido");
     mensaje = "Ingreso Fallido";
   }
-
   return null;
 };
 
+var array = [];
+
 export default function LoginForm(props) {
+  useEffect(() => {    
+    const obtenerUsuarios = async() => {                
+      const datos = await getCollection('usuarios');
+        datos.data.docs.map( (user) => {
+          array.push(user.data());
+      });
+    };   
+    obtenerUsuarios();
+  }, []);  
   const classes = useStyles(); /*guardar los estilos en la variable classes*/
 
   const formSubmitHandler = (event) => {
