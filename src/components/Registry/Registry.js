@@ -34,7 +34,7 @@ export default function Registry() {
     <div>
       {" "}
       {/*se usa el div porque se tiene que retornar un objeto entero*/}    
-      <h2 style={{ textAlign: "center" }}>Registro de Operario</h2>{" "}
+      <h3 style={{ textAlign: "center" }}>Registro de Usuario</h3>{" "}
       {/*un h2 que agranda la letra, con un stylo de centrado */}
       <Card>
         {/*card es propio de '@material-ui/core/Card'*/}

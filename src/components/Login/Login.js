@@ -30,7 +30,7 @@ export default function Login() {
  
     return (
     <div>
-      <h2 style={{ textAlign: "center" }}>Bienvenido!</h2>
+      <h3 style={{ textAlign: "center" }}>Iniciar Sesión</h3>
       <Card>
         <CardContent>
           <LoginForm onLogin={handleClick} />

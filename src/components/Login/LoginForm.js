@@ -7,6 +7,10 @@ import Avatar from '@mui/material/Avatar';
 import React, {useEffect} from 'react';
 import Alert from '@mui/material/Alert';
 import {getCollection} from "../../actions";
+import Container from '@material-ui/core/Container';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Checkbox from '@material-ui/core/Checkbox';
+import Grid from '@material-ui/core/Grid';
 
 const useStyles = makeStyles((theme) => ({
   form: {
@@ -15,6 +19,10 @@ const useStyles = makeStyles((theme) => ({
   },
   textField: {
     "margin-bottom": "1rem",
+  },
+  link:{
+    "font-size": "0.85rem",
+    "text-decoration-line": "underline"
   },
 }));
 export const Mensaje = () => {
@@ -65,31 +73,57 @@ export default function LoginForm(props) {
   const funcion1 = () => {
     return (
       <div>
-        <form onSubmit={formSubmitHandler} className={classes.form}>
-          <TextField
-            id="Email"
-            label="Email"
-            variant="outlined"
-            type="email"
-            className={classes.textField}
-          />
-          <TextField
-            id="contraseña"
-            label="Contraseña"
-            variant="outlined"
-            type="password"
-            className={classes.textField}
-          />
-
-          <Button
-            onClick={LoginButton}
-            variant="contained"
-            color="primary"
-            type="submit"
-          >
-            Entrar
-          </Button>
-        </form>
+        <Container component="main" maxWidth="xs">
+          <form onSubmit={formSubmitHandler} className={classes.form} noValidate>
+            <TextField
+              fullWidth
+              required
+              autoFocus
+              id="Email"
+              label="Email"
+              variant="outlined"
+              type="email"
+              className={classes.textField}
+            />
+            <TextField
+              fullWidth
+              required
+              id="contraseña"
+              label="Contraseña"
+              variant="outlined"
+              type="password"
+              className={classes.textField}
+            />
+            <FormControlLabel
+              control={
+                <Checkbox 
+                  value="remember"
+                  color="primary"
+                />
+              }
+              label="Recordar Contraseña"
+            />
+            <Button
+              fullWidth
+              onClick={LoginButton}
+              variant="contained"
+              color="primary"
+              type="submit">Entrar 
+            </Button>
+            <Grid container>
+              <Grid item xs>
+                <Link to="/Recover" className={classes.link}>
+                  Recuperar contraseña
+                </Link>
+              </Grid>
+              <Grid item>
+                <Link to="/Registry" className={classes.link}>
+                  ¿No tienes cuenta?, ¡Regístrate!
+                </Link>
+              </Grid>
+            </Grid>
+            </form>
+        </Container>
       </div>
     );
   };
@@ -97,31 +131,29 @@ export default function LoginForm(props) {
     return (
       <div>
         <Avatar 
-      alt="Remy Sharp" 
-      src={Covid}  
-      sx={{height:"100%",width:"100%",margin:"10px"}} 
-      variant="rounded" 
-      />    
-          <Alert 
+          alt="Remy Sharp" 
+          src={Covid}  
+          sx={{height:"100%",width:"100%",margin:"10px"}} 
+          variant="rounded" 
+        />    
+        <Alert 
           severity="info"
-            action={
-              <Link to="/SelfTriage">
+          action={
+            <Link to="/SelfTriage">
               <Button
-                onClick={LoginButton}
-                variant="contained"
-                color="primary"
-                type="submit"
-              >
-                Entrar
+              onClick={LoginButton}
+              variant="contained"
+              color="primary"
+              type="submit">Entrar
               </Button>
             </Link>
-            }
-          >
-            A ingresado con exito a la plataforma pulse para continuar →
-          </Alert>
-          <br></br>
-          <br></br>
-          <br></br>
+          }
+        >
+          A ingresado con exito a la plataforma pulse para continuar →
+        </Alert>
+        <br></br>
+        <br></br>
+        <br></br>
       </div>
     );
   };
