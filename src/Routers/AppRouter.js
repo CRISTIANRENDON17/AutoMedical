@@ -7,9 +7,10 @@ import BoxSx from "../components/BoxSx/BoxSx";
 import SelfTriage from "../components/SelfTriage/SelfTriage";
 import Subcategories from "../components/Subcategories/Subcategories";
 import Agendamiento from "../components/Agendamiento/Agendamiento";
+import RecuperarPasword from "../components/Login/RecuperarPassword";
 
 import * as React from "react";
-import Container from '@mui/material/Container';
+
 //import {aux} from "";
 
 
@@ -23,6 +24,7 @@ export const AppRouter = () => {
                 <Route path="/SelfTriage" element={<div><AppBar data={1}/><SelfTriage/></div>}/>
                 <Route path="/SelfTriage/:categoryName" element={<div><AppBar data={1}/><Subcategories/></div>}/>
                 <Route path="/Agendamiento" element={<div><AppBar data={1}/><Agendamiento/></div>}/>
+                <Route path="/Recover" element={<div><AppBar data={0}/><RecuperarPasword/></div>}/>                
             </Routes>
             <Footer/>
         </BrowserRouter>

@@ -4,13 +4,14 @@ import TextField from "@material-ui/core/TextField";
 import { Link } from "react-router-dom";
 import Covid from './Covid.png';
 import Avatar from '@mui/material/Avatar';
-import React, {useEffect} from 'react';
+//import React, {useEffect} from 'react';
 import Alert from '@mui/material/Alert';
-import {getCollection} from "../../actions";
+//import {getCollection} from "../../actions";
 import Container from '@material-ui/core/Container';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 import Grid from '@material-ui/core/Grid';
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 
 const useStyles = makeStyles((theme) => ({
   form: {
@@ -33,37 +34,50 @@ var mensaje = "";
 var aux = 0;
 
 const LoginButton = () => {
-  let aux2;
-  if (aux === 0) {
-    aux2 = array.find(
-      ({ email }) => email === document.getElementById("Email").value
-    );
-  }
-  if (aux2 === undefined) {
-    aux = 0;
-    mensaje = "Ingreso Fallido";
-  } else if (aux2.password === document.getElementById("contraseña").value) {
-    mensaje = "Ingreso Exitoso";
-    aux = 1;
-  }else{
-    aux = 0;
-    mensaje = "Ingreso Fallido";
-  }
+  const email = document.getElementById("Email").value;
+  const password = document.getElementById("contraseña").value;
+  const auth = getAuth();
+  signInWithEmailAndPassword(auth, email, password)
+  .then((userCredential) => {    
+    //const user = userCredential.user;        
+    mensaje = "Ingreso Exitoso"; 
+    aux = 1;    
+  })
+  .catch((error) => {
+    console.log("Error al autenticar el usuario: ",error.code); 
+    mensaje = "Usuario no existe";    
+  });
+  // let aux2;
+  // if (aux === 0) {
+  //   aux2 = array.find(
+  //     ({ email }) => email === document.getElementById("Email").value
+  //   );
+  // }
+  // if (aux2 === undefined) {
+  //   aux = 0;
+  //   mensaje = "Ingreso Fallido";
+  // } else if (aux2.password === document.getElementById("contraseña").value) {
+  //   mensaje = "Ingreso Exitoso";
+  //   aux = 1;
+  // }else{
+  //   aux = 0;
+  //   mensaje = "Ingreso Fallido";
+  // }
   return null;
 };
 
-var array = [];
+// var array = [];
 
 export default function LoginForm(props) {
-  useEffect(() => {    
-    const obtenerUsuarios = async() => {                
-      const datos = await getCollection('usuarios');
-        datos.data.docs.map( (user) => {
-          array.push(user.data());
-      });
-    };   
-    obtenerUsuarios();
-  }, []);  
+  // useEffect(() => {    
+  //   const obtenerUsuarios = async() => {                
+  //     const datos = await getCollection('usuarios');
+  //       datos.data.docs.map( (user) => {
+  //         array.push(user.data());
+  //     });
+  //   };   
+  //   obtenerUsuarios();
+  // }, []);  
   const classes = useStyles(); /*guardar los estilos en la variable classes*/
 
   const formSubmitHandler = (event) => {

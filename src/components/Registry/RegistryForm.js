@@ -4,6 +4,7 @@ import TextField from "@material-ui/core/TextField";
 import { addUser, getUser } from "../../actions.js";
 import Grid from '@material-ui/core/Grid';
 import { Link } from "react-router-dom";
+import {getAuth, createUserWithEmailAndPassword} from 'firebase/auth';
 //import { GetArray } from "../database/BaseDatos.js";
 
 const useStyles = makeStyles((theme) => ({
@@ -112,6 +113,7 @@ const variable = async() => {
       
       if(!result.usuarioExiste) {       
         GuardarUsuario(Usuario); 
+        CrearUsuarioAutenticacion(Usuario);
         Limpiar_form();
         mensaje = "";
       }
@@ -141,6 +143,19 @@ const GuardarUsuario = async(newUser) => {
   console.log("Usuario registrado exitosamente: ", result.data);
   mensaje ="";
 };
+
+const CrearUsuarioAutenticacion = (Usuario) => {
+  const auth = getAuth();
+  createUserWithEmailAndPassword(auth, Usuario.email, Usuario.password)
+    .then((userCredential) => {
+      const user = userCredential.user;
+      console.log("Credencial: ",user);      
+    })
+    .catch((error) => {
+      console.log(error);
+      
+    });
+}
 
 export default function RegistryForm(props) {
   //props es el objeto que por defecto todos los componentes de react tienen acceso, alli se encuentran por ejemplo las propiedades que le envia el padre al componente hijo
