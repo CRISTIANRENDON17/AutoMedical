@@ -34,12 +34,11 @@ export default function AppBar({data}) {
                 exact
                 to="/"
               >
-                AutoMedical
               </NavLink>
             </Typography>
 
             <Button color="inherit">
-              <Typography variant="h5" className={classes.login}>
+              <Typography variant="h6" className={classes.login}>
                 <NavLink
                   activeclassname="active"
                   className={"QuitarEstilo"}
@@ -51,7 +50,7 @@ export default function AppBar({data}) {
               </Typography>
             </Button>
             <Button color="inherit">
-              <Typography variant="h5" className={classes.registry}>
+              <Typography variant="h6" className={classes.registry}>
                 <NavLink
                   activeclassname="active"
                   className={"QuitarEstilo"}

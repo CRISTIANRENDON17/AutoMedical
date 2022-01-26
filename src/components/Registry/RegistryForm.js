@@ -170,11 +170,8 @@ export default function RegistryForm(props) {
 
   return (
     <div>
-      {/*<Container component="main" maxWidth="xs">*/}
-        <form onSubmit={formSubmitHandler} id="forrmulario" className={classes.form} noValidate>
-          {" "}
-          {/*cuando se le de submit envia el formulario a la funcion formSubmitHandler y aparte llama a la clase del form qu elo hace flex y lo agrupa todo en columna */}
-          
+      <form onSubmit={formSubmitHandler} id="forrmulario" className={classes.form} noValidate>
+        {/*cuando se le de submit envia el formulario a la funcion formSubmitHandler y aparte llama a la clase del form qu elo hace flex y lo agrupa todo en columna */}
           {/* Contenedor formulario */}
           <Grid container spacing={2}>
             {/* Primer columna */}
@@ -304,7 +301,6 @@ export default function RegistryForm(props) {
             type="submit"
             onClick={variable}
           >
-            {" "}
             {/*Boton propio de import Button from '@material-ui/core/Button'; */}
             Registrar
           </Button>
@@ -321,8 +317,7 @@ export default function RegistryForm(props) {
           <br></br>
           <br></br>
           <br></br>
-        </form>
-      {/*</Container>*/}
+      </form>
     </div>
   );
 }
