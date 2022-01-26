@@ -9,7 +9,7 @@ export default function LogoTipo() {
       <Avatar 
       alt="Remy Sharp" 
       src={AutoMedical2}  
-      sx={{height:"96px", width:"190px", margin:"10px"}} 
+      sx={{height:"98px", width:"187px", margin:"10px"}} 
       variant="rounded" 
       />      
     </Stack>

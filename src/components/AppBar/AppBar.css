@@ -1,10 +1,10 @@
 .styleButtonsNav{ 
     text-decoration: none;
-    color: inherit;
+    color: #4054B4;
     font-size: 1rem;;
 }
 .styleButtonsNav:hover{ 
-    color:rgb(226, 226, 226);
+    color:#6472BE;
 }
 .styleButtonsNav:link{ 
     text-decoration: none;

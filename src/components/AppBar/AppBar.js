@@ -22,7 +22,7 @@ export default function AppBar({data}) {
   if (data === 0) {
     return (
       <div className={classes.root}>
-        <AppBarMaterial position="static">
+        <AppBarMaterial position="static" color="">
           <Toolbar>
             <Link to="/">
               <LogoTipo />
@@ -30,7 +30,7 @@ export default function AppBar({data}) {
             <Typography variant="h2" className={classes.title}>
               <NavLink
                 activeclassname="active"
-                className={"QuitarEstilo"}
+                className={"styleButtonsNav"}
                 exact
                 to="/"
               >
@@ -64,7 +64,7 @@ export default function AppBar({data}) {
             <Typography variant="h2" className={classes.title}>
               <NavLink
                 activeclassname="active"
-                className={"QuitarEstilo"}
+                className={"styleButtonsNav"}
                 exact
                 to="/SelfTriage"
               >
@@ -76,7 +76,7 @@ export default function AppBar({data}) {
               <Typography variant="h5" className={classes.registry}>
                 <NavLink
                   activeclassname="active"
-                  className={"QuitarEstilo"}
+                  className={"styleButtonsNav"}
                   exact
                   to="/"
                   onClick={() => {this.data = 0}}
