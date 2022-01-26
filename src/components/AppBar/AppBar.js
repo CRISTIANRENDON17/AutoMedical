@@ -56,7 +56,7 @@ export default function AppBar({data}) {
   } else if (data === 1) {
     return (
       <div className={classes.root}>
-        <AppBarMaterial position="static">
+        <AppBarMaterial position="static" color="">
           <Toolbar>
             <Link to="/SelfTriage">
               <LogoTipo />
@@ -67,8 +67,7 @@ export default function AppBar({data}) {
                 className={"styleButtonsNav"}
                 exact
                 to="/SelfTriage"
-              >
-                AutoMedical
+              >              
               </NavLink>
             </Typography>
 
