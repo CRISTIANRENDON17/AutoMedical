@@ -41,23 +41,11 @@ export default function AppBar({data}) {
               <Typography variant="h6" className={classes.login}>
                 <NavLink
                   activeclassname="active"
-                  className={"QuitarEstilo"}
+                  className={"styleButtonsNav"}
                   exact
                   to="/Login"
                 >
-                  Ingresar
-                </NavLink>
-              </Typography>
-            </Button>
-            <Button color="inherit">
-              <Typography variant="h6" className={classes.registry}>
-                <NavLink
-                  activeclassname="active"
-                  className={"QuitarEstilo"}
-                  exact
-                  to="/Registry"
-                >
-                  Registrar
+                Ingresar
                 </NavLink>
               </Typography>
             </Button>

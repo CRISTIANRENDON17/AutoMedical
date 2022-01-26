@@ -313,10 +313,6 @@ export default function RegistryForm(props) {
             </Grid>
           </Grid>
           <div id="Alert"></div>
-          <br></br>
-          <br></br>
-          <br></br>
-          <br></br>
       </form>
     </div>
   );

@@ -5,14 +5,6 @@ footer {
     text-align: center; 
     background: #4054b4;
     color: white;
-    position: fixed;
-
-}
-
-footer h3 {
-    display: flex;
-    align-items: center;
-    font-size: 18px;
 }
 
 

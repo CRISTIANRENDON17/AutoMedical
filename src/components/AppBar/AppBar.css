@@ -1,11 +1,14 @@
-.QuitarEstilo{ 
+.styleButtonsNav{ 
     text-decoration: none;
     color: inherit;
-  
+    font-size: 1rem;;
 }
-.QuitarEstilo:link{ 
+.styleButtonsNav:hover{ 
+    color:rgb(226, 226, 226);
+}
+.styleButtonsNav:link{ 
     text-decoration: none;
 }
-.QuitarEstilo:visited{ 
+.styleButtonsNav:visited{ 
     text-decoration: none;
 }
