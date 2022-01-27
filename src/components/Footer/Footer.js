@@ -28,16 +28,16 @@ export default function Footer() {
                 <br></br>
                 <Grid container>
                   <Grid item xs={3} sm={3} md={3} lg={3}>
-                    <FontAwesomeIcon icon= {faFacebook} size='lg'/>
+                    <FontAwesomeIcon icon= {faFacebook} size='lg' className="iconFacebook"/>
                   </Grid>
                   <Grid item xs>
-                    <FontAwesomeIcon icon= {faTwitter} size='lg'/>
+                    <FontAwesomeIcon icon= {faTwitter} size='lg' className="iconTwiter"/>
                   </Grid>
                   <Grid item xs>
-                    <FontAwesomeIcon icon= {faInstagram} size='lg'/>
+                    <FontAwesomeIcon icon= {faInstagram} size='lg' className="iconInstagram"/>
                   </Grid>
                   <Grid item xs>
-                    <FontAwesomeIcon icon= {faYoutube} size='lg'/>
+                    <FontAwesomeIcon icon= {faYoutube} size='lg' className="iconYoutube"/>
                   </Grid>
                 </Grid>
               </h5>

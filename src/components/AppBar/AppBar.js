@@ -22,7 +22,7 @@ export default function AppBar({data}) {
   if (data === 0) {
     return (
       <div className={classes.root}>
-        <AppBarMaterial position="static" color="">
+        <AppBarMaterial position="static" color="transparent">
           <Toolbar>
             <Link to="/">
               <LogoTipo />
@@ -56,7 +56,7 @@ export default function AppBar({data}) {
   } else if (data === 1) {
     return (
       <div className={classes.root}>
-        <AppBarMaterial position="static" color="">
+        <AppBarMaterial position="static" color="transparent">
           <Toolbar>
             <Link to="/SelfTriage">
               <LogoTipo />
@@ -72,7 +72,7 @@ export default function AppBar({data}) {
             </Typography>
 
             <Button color="inherit">
-              <Typography variant="h5" className={classes.registry}>
+              <Typography variant="h6" className={classes.registry}>
                 <NavLink
                   activeclassname="active"
                   className={"styleButtonsNav"}

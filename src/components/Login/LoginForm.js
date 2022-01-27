@@ -1,17 +1,9 @@
-import Button from "@material-ui/core/Button";
-import { makeStyles } from "@material-ui/core/styles";
-import TextField from "@material-ui/core/TextField";
 import { Link } from "react-router-dom";
-import Covid from './Covid.png';
-import Avatar from '@mui/material/Avatar';
-//import React, {useEffect} from 'react';
-import Alert from '@mui/material/Alert';
-//import {getCollection} from "../../actions";
-import Container from '@material-ui/core/Container';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
-import Grid from '@material-ui/core/Grid';
+import { useState } from 'react';
+import { Avatar, Alert, Stack } from '@mui/material';
+import { makeStyles, Checkbox, TextField, FormControlLabel, Button, Container, Snackbar, Grid} from '@material-ui/core';
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import Covid from './Covid.png';
 
 const useStyles = makeStyles((theme) => ({
   form: {
@@ -31,7 +23,7 @@ export const Mensaje = () => {
 };
 
 var mensaje = "";
-var aux = 0;
+var isLoginOK = 0;
 
 const LoginButton = () => {
   const email = document.getElementById("Email").value;
@@ -39,52 +31,67 @@ const LoginButton = () => {
   const auth = getAuth();
   signInWithEmailAndPassword(auth, email, password)
   .then((userCredential) => {    
-    //const user = userCredential.user;        
-    mensaje = "Ingreso Exitoso"; 
-    aux = 1;    
+    //const user = userCredential.user;
+    mensaje = "Ingreso Exitoso";     
+    isLoginOK = 1;    
   })
   .catch((error) => {
-    console.log("Error al autenticar el usuario: ",error.code); 
-    mensaje = "Usuario no existe";    
+    mensaje = "Ingreso Fallido";
+    console.log("Error al autenticar el usuario: ", error.code);
   });
-  // let aux2;
-  // if (aux === 0) {
-  //   aux2 = array.find(
-  //     ({ email }) => email === document.getElementById("Email").value
-  //   );
-  // }
-  // if (aux2 === undefined) {
-  //   aux = 0;
-  //   mensaje = "Ingreso Fallido";
-  // } else if (aux2.password === document.getElementById("contraseña").value) {
-  //   mensaje = "Ingreso Exitoso";
-  //   aux = 1;
-  // }else{
-  //   aux = 0;
-  //   mensaje = "Ingreso Fallido";
-  // }
   return null;
 };
 
-// var array = [];
-
 export default function LoginForm(props) {
-  // useEffect(() => {    
-  //   const obtenerUsuarios = async() => {                
-  //     const datos = await getCollection('usuarios');
-  //       datos.data.docs.map( (user) => {
-  //         array.push(user.data());
-  //     });
-  //   };   
-  //   obtenerUsuarios();
-  // }, []);  
-  const classes = useStyles(); /*guardar los estilos en la variable classes*/
+  /*Guarda los estilos en la variable classes*/
+  const classes = useStyles(); 
+
+  const [errorEmail, setErrorEmail] = useState(false);   
+  const [errorPassword, setErrorPassword] = useState(false); 
 
   const formSubmitHandler = (event) => {
-    event.preventDefault(); /*No se reinicia el form al darle al button*/
-    props.onLogin(); /*Propiedades de padre a hijo*/
+    /*No se reinicia el form al darle al button*/
+    event.preventDefault();
+    /*Validar campos formulario*/
+    validarEmail();
+    validarConstraseña();
+    /*Propiedades de padre a hijo*/
+    props.onLogin(); 
   };
-  const funcion1 = () => {
+
+  /*Método para validar que el correo electrónico no esté vacío y cumpla con el estandar*/
+  const validarEmail = () => {  
+    var email = document.getElementById("Email");
+    if(email.value ===  undefined || email.value === '' ||
+      (!/^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/.test(email.value))){
+      setErrorEmail(true);
+    }else{
+      setErrorEmail(false);
+    }
+  };
+
+  /*Método para validar que la contraseña no esté vacía y cumpla con el estandar*/
+  const validarConstraseña = () => {  
+    var password = document.getElementById("contraseña");
+    if (password.value ===  undefined || password.value === '' ||
+       (!/^.{4,12}$/.test(password.value))){
+      setErrorPassword(true);
+    }else{
+      setErrorPassword(false);
+    }
+  };
+
+  /*Método para cerrar la alerta de información*/
+  const handleClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+    setErrorEmail(false);
+    setErrorPassword(false);
+  };
+
+  /*Método con el formulario del Login*/
+  const Login = () => {
     return (
       <div>
         <Container component="main" maxWidth="xs">
@@ -94,9 +101,11 @@ export default function LoginForm(props) {
               required
               autoFocus
               id="Email"
-              label="Email"
+              label="Correo Electrónico"
               variant="outlined"
               type="email"
+              error={errorEmail}
+              onBlur={validarEmail}
               className={classes.textField}
             />
             <TextField
@@ -106,6 +115,8 @@ export default function LoginForm(props) {
               label="Contraseña"
               variant="outlined"
               type="password"
+              error={errorPassword}
+              onBlur={validarConstraseña}
               className={classes.textField}
             />
             <FormControlLabel
@@ -136,20 +147,34 @@ export default function LoginForm(props) {
                 </Link>
               </Grid>
             </Grid>
-            </form>
+          </form>
         </Container>
+        <Stack spacing={2} sx={{ width: '100%' }}>       
+           <Snackbar open={errorEmail} autoHideDuration={6000} onClose={handleClose}>
+            <Alert onClose={handleClose} severity="info" sx={{ width: '100%' }}>
+                El formato del Correo Electrónico es "micorreo@email.com".
+            </Alert>
+           </Snackbar>
+           <Snackbar open={errorPassword} autoHideDuration={6000} onClose={handleClose}>
+            <Alert onClose={handleClose} severity="info" sx={{ width: '100%' }}>
+                La Contraseña debe ser minímo de 4 caracteres y máximo 12 caracteres.
+            </Alert>
+           </Snackbar>
+        </Stack>
       </div>
     );
   };
-  const funtion2 = () => {
+
+  /*Método cuando inicia sesión correctamente*/
+  const LoginOK = () => {
     return (
       <div>
         <Avatar 
           alt="Remy Sharp" 
           src={Covid}  
-          sx={{height:"100%",width:"100%",margin:"10px"}} 
+          sx={{height:"45%", width:"45%"}} 
           variant="rounded" 
-        />    
+        /> 
         <Alert 
           severity="info"
           action={
@@ -158,22 +183,21 @@ export default function LoginForm(props) {
               onClick={LoginButton}
               variant="contained"
               color="primary"
-              type="submit">Entrar
+              type="submit">Registrar Síntomas
               </Button>
             </Link>
           }
         >
-          A ingresado con exito a la plataforma pulse para continuar →
+        A ingresado con exito a la plataforma
         </Alert>
-        <br></br>
-        <br></br>
-        <br></br>
       </div>
     );
   };
-  if (aux === 1) {
-    return funtion2();
+
+  /*Método para validar si se inicio correctamente la sesión o no; 1: Sesión OK, 0: Lo contrario*/
+  if (isLoginOK === 1) {
+    return LoginOK();
   } else {
-    return funcion1();
+    return Login();
   }
 }

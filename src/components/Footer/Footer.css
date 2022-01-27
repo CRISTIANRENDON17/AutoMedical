@@ -7,4 +7,15 @@ footer {
     color: white;
 }
 
-
+.iconFacebook:hover{
+    color: #04144F;
+}
+.iconTwiter:hover{
+    color: #1686C4;
+}
+.iconInstagram:hover{
+    color: #D42C8B;
+}
+.iconYoutube:hover{
+    color: #DE2624;
+}

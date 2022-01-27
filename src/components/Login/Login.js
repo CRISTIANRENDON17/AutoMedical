@@ -9,8 +9,7 @@ import {Mensaje} from "./LoginForm.js";
 const mensaje = () =>{
   if(Mensaje() === "Ingreso Exitoso"){
     return("Ingreso Exitoso");
-  }else if(Mensaje()==="Ingreso Fallido")
-  {
+  }else if(Mensaje()==="Ingreso Fallido"){
     return("Ingreso Fallido, correo o clave incorrecta");
   }
 
@@ -39,7 +38,7 @@ export default function Login() {
       <Snackbar
         anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
         open={open}
-        autoHideDuration={3000}
+        autoHideDuration={2000}
         onClose={handleClose}
         message={mensaje()}
         action={

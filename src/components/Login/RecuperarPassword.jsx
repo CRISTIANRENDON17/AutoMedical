@@ -5,7 +5,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import { useState } from 'react';
 import { Alert, Stack } from '@mui/material';
 import { sendEmailResetPassword } from '../../actions';
-
+import Card from "@material-ui/core/Card";
 
 const useStyles = makeStyles((theme) => ({
     form: {
@@ -64,40 +64,43 @@ export default function RecuperarPasword() {
 
     return (
         <div>
-            <Container component="main" maxWidth="xs" className={classes.containerMain}>
-                <form onSubmit={formSubmitHandler} className={classes.form} noValidate>
-                    <div className={classes.containerElements}>
-                        <div className={classes.titleRecovery}>
-                            <p>Recuperar contraseña</p>
-                        </div>
-                        <TextField
-                            fullWidth
-                            required
-                            autoFocus
-                            id="Email"
-                            label="Correo electrónico"
-                            variant="outlined"
-                            type="email"
-                            className={classes.textFieldEmail}
-                            error={errorEmail}
-                        />
-                        <Button
-                            fullWidth
-                            variant="contained"
-                            color="primary"
-                            type="submit"
-                            size="large">Enviar correo                             
-                        </Button>
-                    </div>                                                   
-                </form>
-            </Container>
-            <Stack spacing={2} sx={{ width: '100%' }}>
-                <Snackbar open={emailSend} autoHideDuration={6000} onClose={handleClose}>
-                    <Alert onClose={handleClose} severity="success" sx={{ width: '100%' }}>
-                        Se ha enviado el correco exitosamente!
-                    </Alert>
-                </Snackbar>
-            </Stack>
+            <h3 style={{ textAlign: "center" }}>Recuperar contraseña</h3>
+            <Card>
+                <Container component="main" maxWidth="xs" className={classes.containerMain}>
+                    <form onSubmit={formSubmitHandler} className={classes.form} noValidate>
+                        <div className={classes.containerElements}>
+                            <div className={classes.titleRecovery}>
+                                
+                            </div>
+                            <TextField
+                                fullWidth
+                                required
+                                autoFocus
+                                id="Email"
+                                label="Correo electrónico"
+                                variant="outlined"
+                                type="email"
+                                className={classes.textFieldEmail}
+                                error={errorEmail}
+                            />
+                            <Button
+                                fullWidth
+                                variant="contained"
+                                color="primary"
+                                type="submit"
+                                size="large">Enviar correo                             
+                            </Button>
+                        </div>                                                   
+                    </form>
+                </Container>
+                <Stack spacing={2} sx={{ width: '100%' }}>
+                    <Snackbar open={emailSend} autoHideDuration={6000} onClose={handleClose}>
+                        <Alert onClose={handleClose} severity="success" sx={{ width: '100%' }}>
+                            Se ha enviado el correco exitosamente!
+                        </Alert>
+                    </Snackbar>
+                </Stack>
+            </Card>
         </div>
     );
 }
