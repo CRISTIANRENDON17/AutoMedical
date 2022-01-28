@@ -47,7 +47,7 @@ export default function Registry() {
       <Snackbar /*Proporciona un mensaje corto propio de import Snackbar from '@material-ui/core/Snackbar';*/
         anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
         open={open} //abirr el mensaje
-        autoHideDuration={3000} //Duracion del mensaje
+        autoHideDuration={2000} //Duracion del mensaje
         onClose={handleClose} //lo cierra validandolo desde una funcion que retorna false
         message={mensaje()} //mensaje
         action={

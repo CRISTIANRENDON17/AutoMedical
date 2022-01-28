@@ -1,11 +1,9 @@
-import Button from "@material-ui/core/Button";
-import { makeStyles } from "@material-ui/core/styles";
-import TextField from "@material-ui/core/TextField";
 import { addUser, getUser } from "../../actions.js";
-import Grid from '@material-ui/core/Grid';
+import { Alert, Stack } from '@mui/material';
+import { makeStyles, TextField, Button, Snackbar, Grid} from '@material-ui/core';
 import { Link } from "react-router-dom";
+import React from "react";
 import {getAuth, createUserWithEmailAndPassword} from 'firebase/auth';
-//import { GetArray } from "../database/BaseDatos.js";
 
 const useStyles = makeStyles((theme) => ({
   /*estilos del formulario y del texto*/
@@ -29,17 +27,6 @@ export const Mensaje = () => {
   return mensaje;
 };
 
-const Limpiar_form = () => {
-  document.getElementById("identificacion").value = "";
-  document.getElementById("Nombre").value = "";
-  document.getElementById("Edad").value = "";
-  document.getElementById("Celular").value = "";
-  document.getElementById("Telefono").value = "";
-  document.getElementById("Direccion").value = "";
-  document.getElementById("email").value = "";
-  document.getElementById("contraseña").value = "";
-  document.getElementById("confirmed_contraseña").value = "";
-};
 var mensaje = "";
 const variable = async() => {
   const Usuario = {
@@ -114,7 +101,7 @@ const variable = async() => {
       if(!result.usuarioExiste) {       
         GuardarUsuario(Usuario); 
         CrearUsuarioAutenticacion(Usuario);
-        Limpiar_form();
+        //LimpiarForm();
         mensaje = "";
       }
       else{        
@@ -157,16 +144,48 @@ const CrearUsuarioAutenticacion = (Usuario) => {
     });
 }
 
+const LimpiarForm = () => {
+  document.getElementById("identificacion").value = "";
+  document.getElementById("Nombre").value = "";
+  document.getElementById("Edad").value = "";
+  document.getElementById("Celular").value = "";
+  document.getElementById("Telefono").value = "";
+  document.getElementById("Direccion").value = "";
+  document.getElementById("email").value = "";
+  document.getElementById("contraseña").value = "";
+  document.getElementById("confirmed_contraseña").value = "";
+};
+
 export default function RegistryForm(props) {
+  const [errors, setErrors] = React.useState(false);
+
   //props es el objeto que por defecto todos los componentes de react tienen acceso, alli se encuentran por ejemplo las propiedades que le envia el padre al componente hijo
   const classes = useStyles(); /*guardar los estilos en la variable classes*/
 
   const formSubmitHandler = (event) => {
     //el "event" es una propiedad que por defecto se tiene acceso cuando se aplica un Evento en un elemento de HTML, alli se puede encontrar por ejemplo las propiedades del elemento el cual inicio el evento.
-
     event.preventDefault(); /*No se reinicia el form al darle al button*/
+    validarFormulario();
     props.onRegistry(); /*Propiedades de padre a hijo*/
   };
+
+  const validarFormulario = ()=> {
+    var identificacion = document.getElementById("identificacion");
+    if(identificacion.value ===  undefined || identificacion.value === '' || 
+       (!/^\d{7,14}$/.test(identificacion.value))){
+      setErrors(true);
+    }else{
+      setErrors(false);
+    }
+  }
+
+  /*Método para cerrar la alerta de información*/
+  const handleClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+    setErrors(false);
+} ;
 
   return (
     <div>
@@ -183,9 +202,10 @@ export default function RegistryForm(props) {
                     required
                     autoFocus
                     id="identificacion"
-                    label="Identificacion"
+                    label="Identificación"
                     variant="outlined"
                     type="number"
+                    error={errors}
                     className={classes.textField}
                   />
                 </Grid>
@@ -312,6 +332,15 @@ export default function RegistryForm(props) {
               </Link>
             </Grid>
           </Grid>
+
+          <Stack spacing={2} sx={{ width: '100%' }}>       
+           <Snackbar open={errors} autoHideDuration={6000} onClose={handleClose}>
+            <Alert onClose={handleClose} severity="error" sx={{ width: '100%' }}>
+                Los campos con (*) son obligatorios.
+            </Alert>
+           </Snackbar>
+          </Stack>
+
           <div id="Alert"></div>
       </form>
     </div>
