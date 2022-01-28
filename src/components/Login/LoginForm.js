@@ -1,8 +1,11 @@
-import { Link } from "react-router-dom";
+import React from "react";
 import { useState } from 'react';
-import { Avatar, Alert, Stack } from '@mui/material';
-import { makeStyles, Checkbox, TextField, FormControlLabel, Button, Container, Snackbar, Grid} from '@material-ui/core';
+import { Link } from "react-router-dom";
+import { makeStyles, Checkbox, TextField, FormControlLabel, Button, Container, Snackbar, Grid } from '@material-ui/core';
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import { Avatar, Alert, Stack } from '@mui/material';
+import { FormControl, IconButton, InputAdornment, InputLabel, OutlinedInput } from '@mui/material';
+import { VisibilityOff, Visibility } from '@mui/icons-material';
 import Covid from './Covid.png';
 
 const useStyles = makeStyles((theme) => ({
@@ -43,6 +46,12 @@ const LoginButton = () => {
 };
 
 export default function LoginForm(props) {
+
+  const [values, setValues] = React.useState({
+    password: '',
+    showPassword: false,
+  });
+
   /*Guarda los estilos en la variable classes*/
   const classes = useStyles(); 
 
@@ -90,6 +99,20 @@ export default function LoginForm(props) {
     setErrorPassword(false);
   };
 
+  /*Métodos para el campo contraseña*/
+  const handleChange = (prop) => (event) => {
+    setValues({ ...values, [prop]: event.target.value });
+  };
+  const handleClickShowPassword = () => {
+    setValues({
+      ...values,
+      showPassword: !values.showPassword,
+    });
+  };
+  const handleMouseDownPassword = (event) => {
+    event.preventDefault();
+  };
+
   /*Método con el formulario del Login*/
   const Login = () => {
     return (
@@ -102,23 +125,42 @@ export default function LoginForm(props) {
               autoFocus
               id="Email"
               label="Correo Electrónico"
+              placeholder="micorreo@email.com"
               variant="outlined"
               type="email"
               error={errorEmail}
-              onBlur={validarEmail}
               className={classes.textField}
             />
-            <TextField
-              fullWidth
-              required
-              id="contraseña"
-              label="Contraseña"
-              variant="outlined"
-              type="password"
-              error={errorPassword}
-              onBlur={validarConstraseña}
-              className={classes.textField}
-            />
+            <FormControl>
+              <InputLabel 
+                htmlFor="password" 
+                required
+                error={errorPassword}>Contraseña
+              </InputLabel>
+              <OutlinedInput
+                fullWidth
+                id="contraseña"
+                variant="outlined"
+                type={values.showPassword ? 'text' : 'password'}
+                error={errorPassword}
+                value={values.password}
+                className={classes.textField}
+                onChange={handleChange('password')}
+                endAdornment={
+                  <InputAdornment position="end">
+                    <IconButton
+                      aria-label="toggle password visibility"
+                      onClick={handleClickShowPassword}
+                      onMouseDown={handleMouseDownPassword}
+                      edge="end"
+                    >
+                      {values.showPassword ? <VisibilityOff /> : <Visibility />}
+                    </IconButton>
+                  </InputAdornment>
+                }
+                label="Contraseña *"
+              />
+            </FormControl>
             <FormControlLabel
               control={
                 <Checkbox 
@@ -151,16 +193,17 @@ export default function LoginForm(props) {
         </Container>
         <Stack spacing={2} sx={{ width: '100%' }}>       
            <Snackbar open={errorEmail} autoHideDuration={6000} onClose={handleClose}>
-            <Alert onClose={handleClose} severity="info" sx={{ width: '100%' }}>
+            <Alert onClose={handleClose} severity="error" sx={{ width: '100%' }}>
                 El formato del Correo Electrónico es "micorreo@email.com".
             </Alert>
            </Snackbar>
            <Snackbar open={errorPassword} autoHideDuration={6000} onClose={handleClose}>
-            <Alert onClose={handleClose} severity="info" sx={{ width: '100%' }}>
+            <Alert onClose={handleClose} severity="error" sx={{ width: '100%' }}>
                 La Contraseña debe ser minímo de 4 caracteres y máximo 12 caracteres.
             </Alert>
            </Snackbar>
         </Stack>
+        <br></br>
       </div>
     );
   };

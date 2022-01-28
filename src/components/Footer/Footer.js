@@ -8,9 +8,9 @@ export default function Footer() {
   return (
     <div>
       <footer>
-          <Grid container>
+        <Grid container>
             {/* Primer columna */}
-            <Grid item xs={12} sm={12} md={4} lg={4}>
+            <Grid item xs={4} sm={4} md={4} lg={4}>
               <h6>
                 <ol>Cristian Rendon Rodriguez</ol>
                 <ol>León Ángel Chancí Guzmán</ol>
@@ -18,7 +18,7 @@ export default function Footer() {
                 <ol>Ferney de Jesus Londoño</ol>
               </h6>
             </Grid>
-            <Grid item xs={12} sm={12} md={4} lg={4}>
+            <Grid item xs={4} sm={4} md={4} lg={4}>
               <h5>
                 <br></br>
                 <i className="fa fa-copyright" aria-hidden="true">
@@ -42,7 +42,7 @@ export default function Footer() {
                 </Grid>
               </h5>
             </Grid>
-            <Grid item xs={12} sm={12} md={4} lg={4}>
+            <Grid item xs={4} sm={4} md={4} lg={4}>
               <h6>
                 <ol>Aviso legal</ol>
                 <ol>Política de privacidad</ol>
@@ -50,7 +50,7 @@ export default function Footer() {
                 <ol>Contacto</ol>
               </h6>
             </Grid>
-          </Grid>
+        </Grid>
       </footer>
     </div>
   );

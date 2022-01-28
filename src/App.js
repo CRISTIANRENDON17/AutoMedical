@@ -4,8 +4,8 @@ import {AppRouter} from './Routers/AppRouter.js';
 
 const App = () => {
   return (
-	  <div> 
-		  <AppRouter />
+	<div> 
+		<AppRouter />
 	</div>
   );
 };

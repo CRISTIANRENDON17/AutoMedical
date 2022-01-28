@@ -101,7 +101,7 @@ const variable = async() => {
       if(!result.usuarioExiste) {       
         GuardarUsuario(Usuario); 
         CrearUsuarioAutenticacion(Usuario);
-        //LimpiarForm();
+        LimpiarForm();
         mensaje = "";
       }
       else{        
@@ -340,8 +340,12 @@ export default function RegistryForm(props) {
             </Alert>
            </Snackbar>
           </Stack>
-
           <div id="Alert"></div>
+          <br></br>
+          <br></br>
+          <br></br>
+          <br></br>
+          <br></br>
       </form>
     </div>
   );
