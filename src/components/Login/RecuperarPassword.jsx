@@ -5,7 +5,9 @@ import { makeStyles } from "@material-ui/core/styles";
 import { useState } from 'react';
 import { Alert, Stack } from '@mui/material';
 import { sendEmailResetPassword } from '../../actions';
-import Card from "@material-ui/core/Card";
+import CheckCircleRoundedIcon from '@mui/icons-material/CheckCircleRounded';
+import CancelIcon from '@mui/icons-material/Cancel';
+
 
 const useStyles = makeStyles((theme) => ({
     form: {
@@ -32,7 +34,11 @@ const useStyles = makeStyles((theme) => ({
         "borderRadius" : "5px"
     },
     titleRecovery:{
-        "marginBottom" : "7em"
+        "marginBottom" : "20px"
+    },
+    statusIcon:{
+        "marginBottom" : "3em",
+        "text-align" : "center"
     }
   }));
 
@@ -45,14 +51,25 @@ export default function RecuperarPasword() {
     const [errorEmail, setErrorEmail] = useState(false);   
     const [emailSend, setEmailSend] = useState(false); 
 
-    const formSubmitHandler = (event) => { 
+    const formSubmitHandler = async(event) => { 
         var resultReset = null;  
         event.preventDefault();
         setErrorEmail(false);
         var email = document.getElementById("Email");
-        (email.value ===  undefined || email.value === '') ? setErrorEmail(true) : resultReset = sendEmailResetPassword(email.value);   
-        console.log(resultReset);
-        resultReset.statusResponse && setEmailSend(true);
+        (email.value ===  undefined || email.value === '') ? setErrorEmail(true) : resultReset = await sendEmailResetPassword(email.value);   
+        
+        if(resultReset.statusResponse)
+        {
+            console.log("Correo de recuperación enviado");
+            document.getElementById("passwordRecoveryForm").reset()
+            setEmailSend(true);
+        }
+        else
+        {
+            console.log("Error al enviar correo de recuperación");
+            setEmailSend(true);
+            setErrorEmail(true);
+        }
     };
 
     const handleClose = (event, reason) => {
@@ -60,47 +77,50 @@ export default function RecuperarPasword() {
           return;
         }    
         setEmailSend(false);
+        setErrorEmail(false);
       };
 
     return (
         <div>
-            <h3 style={{ textAlign: "center" }}>Recuperar contraseña</h3>
-            <Card>
-                <Container component="main" maxWidth="xs" className={classes.containerMain}>
-                    <form onSubmit={formSubmitHandler} className={classes.form} noValidate>
-                        <div className={classes.containerElements}>
-                            <div className={classes.titleRecovery}>
-                                
-                            </div>
-                            <TextField
-                                fullWidth
-                                required
-                                autoFocus
-                                id="Email"
-                                label="Correo electrónico"
-                                variant="outlined"
-                                type="email"
-                                className={classes.textFieldEmail}
-                                error={errorEmail}
-                            />
-                            <Button
-                                fullWidth
-                                variant="contained"
-                                color="primary"
-                                type="submit"
-                                size="large">Enviar correo                             
-                            </Button>
-                        </div>                                                   
-                    </form>
-                </Container>
-                <Stack spacing={2} sx={{ width: '100%' }}>
-                    <Snackbar open={emailSend} autoHideDuration={6000} onClose={handleClose}>
-                        <Alert onClose={handleClose} severity="success" sx={{ width: '100%' }}>
-                            Se ha enviado el correco exitosamente!
-                        </Alert>
-                    </Snackbar>
-                </Stack>
-            </Card>
+            <Container component="main" maxWidth="xs" className={classes.containerMain}>
+                <form onSubmit={formSubmitHandler} className={classes.form} id="passwordRecoveryForm" noValidate>
+                    <div className={classes.containerElements}>
+                        <div className={classes.titleRecovery}>
+                            <p>Recuperar contraseña</p>
+                        </div>
+                        <div className={classes.statusIcon} >
+                            <CancelIcon color = "error" fontSize='large' sx={{ fontSize: errorEmail ? '45px' : '0.5px' }}/>
+                            <CheckCircleRoundedIcon  color = "success" fontSize='large' sx={{ fontSize: emailSend ? '45px' : '0.5px' }}/>
+                        </div>
+                        <TextField
+                            fullWidth
+                            required
+                            autoFocus
+                            id="Email"
+                            label="Correo electrónico"
+                            variant="outlined"
+                            type="email"
+                            className={classes.textFieldEmail}
+                            error={errorEmail}
+                        />
+                        <Button
+                            fullWidth
+                            variant="contained"
+                            color="primary"
+                            type="submit"
+                            size="large">Enviar correo                             
+                        </Button>
+                    </div>                                                   
+                </form>
+                <br />
+            </Container>
+            <Stack spacing={2} sx={{ width: '100%' }}>
+                <Snackbar open={emailSend} autoHideDuration={6000} onClose={handleClose}>
+                    <Alert onClose={handleClose} severity={ !errorEmail ? "success" : "error" } sx={{ width: '100%' }}>
+                        { !errorEmail ? " Se ha enviado el correco exitosamente!" : " Se presentó un error en el envío de correo" }
+                    </Alert>
+                </Snackbar>
+            </Stack>
         </div>
     );
 }

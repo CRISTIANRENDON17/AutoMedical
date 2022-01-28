@@ -57,15 +57,15 @@ export const getUser = async(identification, email) => {
     return result;
 }
 
-export const sendEmailResetPassword = (email) => {
+export const sendEmailResetPassword = async(email) => {
     const result = { statusResponse: false, error: null};
     const auth = getAuth();
     try {
-        sendPasswordResetEmail(auth, email)
-        .then(() => {
-            console.log("Vamos bien: ",this);
-            result.statusResponse = true; 
-        }) 
+        await sendPasswordResetEmail(auth, email)
+            .then(e => {
+                console.log("Vamos bien: ",e);
+                result.statusResponse = true; 
+            }) 
     } catch (error) {
         console.log("Vaya!: ",error);
         result.error = error.message;
