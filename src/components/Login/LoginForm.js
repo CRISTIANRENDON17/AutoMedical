@@ -149,6 +149,7 @@ export default function LoginForm(props) {
                 endAdornment={
                   <InputAdornment position="end">
                     <IconButton
+                      color="primary"
                       aria-label="toggle password visibility"
                       onClick={handleClickShowPassword}
                       onMouseDown={handleMouseDownPassword}
@@ -233,6 +234,11 @@ export default function LoginForm(props) {
         >
         A ingresado con exito a la plataforma
         </Alert>
+        <br></br>
+        <br></br>
+        <br></br>
+        <br></br>
+        <br></br>
       </div>
     );
   };
