@@ -2,7 +2,7 @@ import React from "react";
 import LoginForm from "./LoginForm";
 import { Button, Card, CardContent, Snackbar } from "@material-ui/core";
 import { useNavigate } from 'react-router-dom';
-import { Mensaje } from "./LoginForm.js"; 
+import { Mensaje } from "./LoginForm.js";
 
 const mensaje = () =>{
   if(Mensaje() === "Ingreso Exitoso"){
@@ -23,9 +23,10 @@ export default function Login() {
 
   const handleClose = () => {
     setOpen(false);
-    history('/LandingPage')
+    if(mensaje()=== "Ingreso Exitoso"){
+      history('/LandingPage')
+    }
   };
-  
  
     return (
     <div>
