@@ -5,7 +5,8 @@ import { makeStyles } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
   avatar: {
-    margin: "15px;",
+    "margin" : "auto",
+    "marginTop" : "1em"
   },
 }));
 
@@ -30,12 +31,6 @@ export default function BoxSx() {
           margin= "5px"
           className={classes.avatar}
       />
-      <br></br> 
-      <br></br> 
-      <br></br>
-      <br></br>
-      <br></br> 
-      <br></br> 
     </div>
   );
 }

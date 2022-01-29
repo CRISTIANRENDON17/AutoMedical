@@ -201,7 +201,6 @@ export default function LoginForm(props) {
             </Alert>
            </Snackbar>
         </Stack>
-        <br></br>
       </div>
     );
   };

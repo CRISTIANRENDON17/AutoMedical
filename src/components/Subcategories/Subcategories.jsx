@@ -85,10 +85,6 @@ const Subcategories = () => {
                     })}
                 </Grid>
             </Box>
-            <br></br>
-            <br></br>
-            <br></br>
-            <br></br>
             <Dialog
                 open={open}
                 TransitionComponent={Transition}

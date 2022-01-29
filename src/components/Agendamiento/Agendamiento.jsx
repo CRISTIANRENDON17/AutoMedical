@@ -17,7 +17,7 @@ export default function Agendamiento() {
     };
 
   return (
-    <div>
+    <div style={{marginLeft : '2em'}}>
         <h3>Agendar cita</h3>
         <label>Cita médica para la fecha:</label>
         <br></br>

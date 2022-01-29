@@ -60,8 +60,7 @@ export default function RecuperarPasword() {
         
         if(resultReset.statusResponse)
         {
-            console.log("Correo de recuperación enviado");
-            document.getElementById("passwordRecoveryForm").reset()
+            console.log("Correo de recuperación enviado");            
             setEmailSend(true);
         }
         else
@@ -76,6 +75,7 @@ export default function RecuperarPasword() {
         if (reason === 'clickaway') {
           return;
         }    
+        document.getElementById("passwordRecoveryForm").reset();
         setEmailSend(false);
         setErrorEmail(false);
       };

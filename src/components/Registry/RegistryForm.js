@@ -341,11 +341,6 @@ export default function RegistryForm(props) {
            </Snackbar>
           </Stack>
           <div id="Alert"></div>
-          <br></br>
-          <br></br>
-          <br></br>
-          <br></br>
-          <br></br>
       </form>
     </div>
   );

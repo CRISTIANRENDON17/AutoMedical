@@ -40,10 +40,6 @@ const Categories = () => {
                     })}
                 </Grid>
             </Box>
-            <br></br>
-            <br></br>
-            <br></br>
-            <br></br>
         </div>
     );    
 }

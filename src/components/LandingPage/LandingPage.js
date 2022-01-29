@@ -9,7 +9,6 @@ export default function LandingPage() {
                     
                 </Grid>
             </Grid>
-            <br></br>
         </div>
     );
 }

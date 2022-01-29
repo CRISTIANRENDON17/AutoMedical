@@ -17,18 +17,23 @@ import * as React from "react";
 
 export const AppRouter = () => {
     return (
-        <BrowserRouter>
-            <Routes>
-                <Route path="/" element={<div><AppBar data={0}/><BoxSx /></div>} />
-                <Route path="/Registry" element={<div><AppBar data={0}/><Registry /></div>} />
-                <Route path="/Login" element={<div><AppBar data={0} /><Login /></div>} />
-                <Route path="/LandingPage" element={<div><AppBar data={1} /><LandingPage /></div>} />
-                <Route path="/SelfTriage" element={<div><AppBar data={1}/><SelfTriage/></div>}/>
-                <Route path="/SelfTriage/:categoryName" element={<div><AppBar data={1}/><Subcategories/></div>}/>
-                <Route path="/Agendamiento" element={<div><AppBar data={1}/><Agendamiento/></div>}/>
-                <Route path="/Recover" element={<div><AppBar data={0}/><RecuperarPasword/></div>}/>                
-            </Routes>
+        <div className="page-container">
+            <div className="content-wrap">
+                <BrowserRouter>
+                    <Routes>
+                        <Route path="/" element={<div><AppBar data={0}/><BoxSx /></div>} />
+                        <Route path="/Registry" element={<div><AppBar data={0}/><Registry /></div>} />
+                        <Route path="/Login" element={<div><AppBar data={0} /><Login /></div>} />
+                        <Route path="/LandingPage" element={<div><AppBar data={1} /><LandingPage /></div>} />
+                        <Route path="/SelfTriage" element={<div><AppBar data={1}/><SelfTriage/></div>}/>
+                        <Route path="/SelfTriage/:categoryName" element={<div><AppBar data={1}/><Subcategories/></div>}/>
+                        <Route path="/Agendamiento" element={<div><AppBar data={1}/><Agendamiento/></div>}/>
+                        <Route path="/Recover" element={<div><AppBar data={0}/><RecuperarPasword/></div>}/>                
+                    </Routes>
+                </BrowserRouter>
+            </div>
             <Footer/>
-        </BrowserRouter>
+        </div>  
+        
     )
 }

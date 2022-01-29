@@ -1,12 +1,12 @@
 footer {
     width: 100%;
-    bottom: 0px; 
-    left: 0px; 
+    margin-top: 2em;
     text-align: center; 
     background: #4054b4;
     color: white;
-    position: fixed;
-    margin-bottom: -20px
+    position: relative;
+    margin-bottom: -20px;
+    bottom: 0;
 }
 
 .iconFacebook:hover{
