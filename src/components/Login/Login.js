@@ -1,10 +1,8 @@
-import Button from "@material-ui/core/Button";
-import Card from "@material-ui/core/Card";
-import CardContent from "@material-ui/core/CardContent";
 import React from "react";
 import LoginForm from "./LoginForm";
-import { Snackbar } from "@material-ui/core";
-import {Mensaje} from "./LoginForm.js"; 
+import { Button, Card, CardContent, Snackbar } from "@material-ui/core";
+import { useNavigate } from 'react-router-dom';
+import { Mensaje } from "./LoginForm.js"; 
 
 const mensaje = () =>{
   if(Mensaje() === "Ingreso Exitoso"){
@@ -17,6 +15,7 @@ const mensaje = () =>{
 
 export default function Login() {
   const [open, setOpen] = React.useState(false);
+  const history = useNavigate();
 
   const handleClick = () => {
     setOpen(true);
@@ -24,6 +23,7 @@ export default function Login() {
 
   const handleClose = () => {
     setOpen(false);
+    history('/LandingPage')
   };
   
  

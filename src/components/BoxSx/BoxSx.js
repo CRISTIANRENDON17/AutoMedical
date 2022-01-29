@@ -1,20 +1,41 @@
-import * as React from "react";
-import Box from "@mui/material/Box";
+import { Avatar} from '@mui/material';
 import "./BoxSx.css";
+import Covid from './Covid.png';
+import { makeStyles } from '@material-ui/core';
+
+const useStyles = makeStyles((theme) => ({
+  avatar: {
+    margin: "15px;",
+  },
+}));
 
 export default function BoxSx() {
+  const classes = useStyles(); 
   return (
     <div>     
-      <Box
+      {/*<Box
         sx={{
           center:'center',
           width: '100%',
           height: 300,
           backgroundColor: "primary",
         }}
-      >
-        <p>Automedical</p>
-      </Box>
+      > 
+      </Box>*/}
+      <Avatar 
+          alt="Remy Sharp" 
+          src={Covid}  
+          sx={{height:"75%", width:"50%"}} 
+          variant="rounded"
+          margin= "5px"
+          className={classes.avatar}
+      />
+      <br></br> 
+      <br></br> 
+      <br></br>
+      <br></br>
+      <br></br> 
+      <br></br> 
     </div>
   );
 }

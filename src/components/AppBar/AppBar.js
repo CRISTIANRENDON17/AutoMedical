@@ -1,12 +1,15 @@
+import React from 'react';
 import AppBarMaterial from "@material-ui/core/AppBar";
 import Button from "@material-ui/core/Button";
-import { makeStyles } from "@material-ui/core/styles";
+import { makeStyles } from "@material-ui/core";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import LogoTipo from "../LogoTipo/LogoTipo.js";
-import "./AppBar.css";
 import { Link, NavLink } from "react-router-dom";
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import {faUser} from '@fortawesome/free-solid-svg-icons'
 
+import "./AppBar.css";
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -18,6 +21,7 @@ const useStyles = makeStyles(() => ({
 }));
 
 export default function AppBar({data}) {
+
   const classes = useStyles();
   if (data === 0) {
     return (
@@ -58,7 +62,7 @@ export default function AppBar({data}) {
       <div className={classes.root}>
         <AppBarMaterial position="static" color="transparent">
           <Toolbar>
-            <Link to="/SelfTriage">
+            <Link to="/LandingPage">
               <LogoTipo />
             </Link>
             <Typography variant="h2" className={classes.title}>
@@ -66,10 +70,23 @@ export default function AppBar({data}) {
                 activeclassname="active"
                 className={"styleButtonsNav"}
                 exact
-                to="/SelfTriage"
+                to="/LandingPage"
               >              
               </NavLink>
             </Typography>
+
+            <Button color="inherit">
+              <Typography variant="h6" className={classes.login}>
+                <NavLink
+                  activeclassname="active"
+                  className={"styleButtonsNav"}
+                  exact
+                  to="/SelfTriage"
+                >
+                Ingresar Síntomas
+                </NavLink>
+              </Typography>
+            </Button>
 
             <Button color="inherit">
               <Typography variant="h6" className={classes.registry}>
@@ -80,10 +97,17 @@ export default function AppBar({data}) {
                   to="/"
                   onClick={() => {this.data = 0}}
                 >
-                  Salir
+                  Cerrar Sesión
                 </NavLink>
               </Typography>
             </Button>
+
+            <Button color="inherit">
+              <Typography variant="h6">
+                <FontAwesomeIcon icon= {faUser} size='lg' className="iconNavBar"/>
+              </Typography>
+            </Button>
+
           </Toolbar>
         </AppBarMaterial>
       </div>

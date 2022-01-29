@@ -3,10 +3,9 @@ import { useState } from 'react';
 import { Link } from "react-router-dom";
 import { makeStyles, Checkbox, TextField, FormControlLabel, Button, Container, Snackbar, Grid } from '@material-ui/core';
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
-import { Avatar, Alert, Stack } from '@mui/material';
+import { Alert, Stack } from '@mui/material';
 import { FormControl, IconButton, InputAdornment, InputLabel, OutlinedInput } from '@mui/material';
 import { VisibilityOff, Visibility } from '@mui/icons-material';
-import Covid from './Covid.png';
 
 const useStyles = makeStyles((theme) => ({
   form: {
@@ -26,7 +25,6 @@ export const Mensaje = () => {
 };
 
 var mensaje = "";
-var isLoginOK = 0;
 
 const LoginButton = () => {
   const email = document.getElementById("Email").value;
@@ -36,7 +34,6 @@ const LoginButton = () => {
   .then((userCredential) => {    
     //const user = userCredential.user;
     mensaje = "Ingreso Exitoso";     
-    isLoginOK = 1;    
   })
   .catch((error) => {
     mensaje = "Ingreso Fallido";
@@ -208,45 +205,5 @@ export default function LoginForm(props) {
       </div>
     );
   };
-
-  /*Método cuando inicia sesión correctamente*/
-  const LoginOK = () => {
-    return (
-      <div>
-        <Avatar 
-          alt="Remy Sharp" 
-          src={Covid}  
-          sx={{height:"45%", width:"45%"}} 
-          variant="rounded" 
-        /> 
-        <Alert 
-          severity="info"
-          action={
-            <Link to="/SelfTriage">
-              <Button
-              onClick={LoginButton}
-              variant="contained"
-              color="primary"
-              type="submit">Registrar Síntomas
-              </Button>
-            </Link>
-          }
-        >
-        A ingresado con exito a la plataforma
-        </Alert>
-        <br></br>
-        <br></br>
-        <br></br>
-        <br></br>
-        <br></br>
-      </div>
-    );
-  };
-
-  /*Método para validar si se inicio correctamente la sesión o no; 1: Sesión OK, 0: Lo contrario*/
-  if (isLoginOK === 1) {
-    return LoginOK();
-  } else {
-    return Login();
-  }
+  return Login();
 }
