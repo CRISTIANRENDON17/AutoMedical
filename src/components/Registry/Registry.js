@@ -44,7 +44,8 @@ export default function Registry() {
           {/*onRegistry es una propiedad de RegistryForm creada para responder a un evento del elemento */}
         </CardContent>
       </Card>
-      <Snackbar /*Proporciona un mensaje corto propio de import Snackbar from '@material-ui/core/Snackbar';*/
+      {/*
+      <Snackbar 
         anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
         open={open} //abirr el mensaje
         autoHideDuration={2000} //Duracion del mensaje
@@ -53,11 +54,12 @@ export default function Registry() {
         action={
           //accion
           <Button color="secondary" size="small" onClick={handleClose}>
-            {/*boton que es de tamaño pequeño, color secundario propio del Snackbar y una funcion que retorna false*/}
+            
             Cerrar
           </Button>
         }
       />
+      */}
     </div>
   );
 }
