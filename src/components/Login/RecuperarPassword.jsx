@@ -117,7 +117,7 @@ export default function RecuperarPasword() {
             <Stack spacing={2} sx={{ width: '100%' }}>
                 <Snackbar open={emailSend} autoHideDuration={6000} onClose={handleClose}>
                     <Alert onClose={handleClose} severity={ !errorEmail ? "success" : "error" } sx={{ width: '100%' }}>
-                        { !errorEmail ? " Se ha enviado el correco exitosamente!" : " Se presentó un error en el envío de correo" }
+                        { !errorEmail ? " Se ha enviado el correo exitosamente!" : " Se presentó un error en el envío de correo" }
                     </Alert>
                 </Snackbar>
             </Stack>
