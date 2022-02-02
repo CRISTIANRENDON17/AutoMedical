@@ -1,154 +1,144 @@
-import * as React from 'react';
-import PropTypes from 'prop-types';
-import Box from '@mui/material/Box';
-import Collapse from '@mui/material/Collapse';
-import IconButton from '@mui/material/IconButton';
+import React from 'react';
+import { styled } from '@mui/material/styles';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
+import TableCell, { tableCellClasses } from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
-import Typography from '@mui/material/Typography';
 import Paper from '@mui/material/Paper';
-import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
-import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
+import './Agendamiento.css';
+import { Button, Skeleton } from '@mui/material';
+import DeleteIcon from '@mui/icons-material/Delete';
+import { Box } from '@mui/system';
+import { updateStateScheduleById } from '../../actions';
 
-function createData(name, calories, fat, carbs, protein, price) {
-  return {
-    name,
-    calories,
-    fat,
-    carbs,
-    protein,
-    price,
-    history: [
-      {
-        date: '2020-01-05',
-        customerId: '11091700',
-        amount: 3,
-      },
-      {
-        date: '2020-01-02',
-        customerId: 'Anonymous',
-        amount: 1,
-      },
-    ],
-  };
-}
+const StyledTableCell = styled(TableCell)(({ theme }) => ({
+  [`&.${tableCellClasses.head}`]: {
+    backgroundColor: "#4054b4",
+    color: theme.palette.common.white,
+  },
+  [`&.${tableCellClasses.body}`]: {
+    fontSize: 14,
+  },
+}));
 
-function Row(props) {
-  const { row } = props;
-  const [open, setOpen] = React.useState(false);
+const StyledTableRow = styled(TableRow)(({ theme }) => ({
+  '&:nth-of-type(odd)': {
+    backgroundColor: theme.palette.action.hover,
+  },
+  // hide last border
+  '&:last-child td, &:last-child th': {
+    border: 0,
+  },
+}));
+  
+function ListarAgendamientos(props) {  
+      
+  const agendas = props.ListaAgendas; 
+  console.log("Agendas desde la ListaAgendamiento: ", agendas);
+  console.log("propiedades: ", props);
 
-  return (
-    <React.Fragment>
-      <TableRow sx={{ '& > *': { borderBottom: 'unset' } }}>
-        <TableCell>
-          <IconButton
-            aria-label="expand row"
-            size="small"
-            onClick={() => setOpen(!open)}
-          >
-            {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
-          </IconButton>
-        </TableCell>
-        <TableCell component="th" scope="row">
-          {row.name}
-        </TableCell>
-        <TableCell align="right">{row.calories}</TableCell>
-        <TableCell align="right">{row.fat}</TableCell>
-        <TableCell align="right">{row.carbs}</TableCell>
-        <TableCell align="right">{row.protein}</TableCell>
-      </TableRow>
-      <TableRow>
-        <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
-          <Collapse in={open} timeout="auto" unmountOnExit>
-            <Box sx={{ margin: 1 }}>
-              <Typography variant="h6" gutterBottom component="div">
-                History
-              </Typography>
-              <Table size="small" aria-label="purchases">
-                <TableHead>
-                  <TableRow>
-                    <TableCell>Date</TableCell>
-                    <TableCell>Customer</TableCell>
-                    <TableCell align="right">Amount</TableCell>
-                    <TableCell align="right">Total price ($)</TableCell>
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  {row.history.map((historyRow) => (
-                    <TableRow key={historyRow.date}>
-                      <TableCell component="th" scope="row">
-                        {historyRow.date}
-                      </TableCell>
-                      <TableCell>{historyRow.customerId}</TableCell>
-                      <TableCell align="right">{historyRow.amount}</TableCell>
-                      <TableCell align="right">
-                        {Math.round(historyRow.amount * row.price * 100) / 100}
-                      </TableCell>
-                    </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
-            </Box>
-          </Collapse>
-        </TableCell>
-      </TableRow>
-    </React.Fragment>
-  );
-}
-
-Row.propTypes = {
-  row: PropTypes.shape({
-    calories: PropTypes.number.isRequired,
-    carbs: PropTypes.number.isRequired,
-    fat: PropTypes.number.isRequired,
-    history: PropTypes.arrayOf(
-      PropTypes.shape({
-        amount: PropTypes.number.isRequired,
-        customerId: PropTypes.string.isRequired,
-        date: PropTypes.string.isRequired,
-      }),
-    ).isRequired,
-    name: PropTypes.string.isRequired,
-    price: PropTypes.number.isRequired,
-    protein: PropTypes.number.isRequired,
-  }).isRequired,
-};
-
-var date = new Date();
-var currenteDate = String(date.getDate()).padStart(2, '0') + '/' + String(date.getMonth() + 1).padStart(2, '0') + '/' + date.getFullYear();
-
-const rows = [
-  createData(currenteDate, 159, 6.0, 24, 4.0, 3.99),
-  createData(currenteDate, 237, 9.0, 37, 4.3, 4.99),
-  createData(currenteDate, 262, 16.0, 24, 6.0, 3.79),
-  createData(currenteDate, 305, 3.7, 67, 4.3, 2.5),
-  createData(currenteDate, 356, 16.0, 49, 3.9, 1.5),
-];
-
-export default function CollapsibleTable() {
+  const eliminarAgenda = (idAgenda) => {
+    console.log("Se va a eliminar la agenda: ", idAgenda);
+    updateStateScheduleById(idAgenda); 
+    props.updateDataTable();
+    
+    console.log("Se ejecuta RefreshData");
+  }
+  
   return (
     <TableContainer component={Paper}>
-      <Table aria-label="collapsible table">
+      <Table sx={{ minWidth: 700 }} aria-label="customized table">
         <TableHead>
           <TableRow>
-            <TableCell />
-            <TableCell>Fecha cita</TableCell>
-            <TableCell align="right">Lugar de atención</TableCell>
-            <TableCell align="right">Médico</TableCell>
-            <TableCell align="right">Estado</TableCell>
-            <TableCell align="right">Acción</TableCell>
+            <StyledTableCell>Número documento</StyledTableCell>
+            <StyledTableCell align="right">Fecha cita</StyledTableCell>
+            <StyledTableCell align="right">Lugar de atención</StyledTableCell>
+            <StyledTableCell align="right">Médico</StyledTableCell>
+            <StyledTableCell align="right">Estado</StyledTableCell>
+            <StyledTableCell align="right">Acción</StyledTableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows.map((row) => (
-            <Row key={row.name} row={row} />
-          ))}
+          { agendas.length > 0 ? ( agendas.map((row) => (
+            <StyledTableRow key={row.id}>
+              <StyledTableCell align="right" scope='row'>{row.idUsuario}</StyledTableCell>
+              <StyledTableCell align="right">{row.fechaCita}</StyledTableCell>
+              <StyledTableCell align="right">{row.lugarAtencion}</StyledTableCell>
+              <StyledTableCell align="right">{row.nombreMedico}</StyledTableCell>
+              <StyledTableCell align="right">{row.estadoAgenda}</StyledTableCell> 
+              <StyledTableCell align="right">
+                {
+                  row.estadoAgenda === 'Activa' ? (
+                  <Button variant="outlined" startIcon={<DeleteIcon />} size="small" sx={{background : "#4054b4", color : "white"}} onClick={() => { eliminarAgenda(row.id)}}>
+                    Cancelar
+                  </Button>
+                  )
+                  :
+                  "-"
+                }
+              </StyledTableCell>
+            </StyledTableRow>
+            )) ) :  
+              agendas !== false ?
+              <StyledTableRow>
+                <StyledTableCell align="center">              
+                  <Box sx={{ width: 100 }}>
+                    <Skeleton />
+                    <Skeleton animation="wave" />
+                    <Skeleton animation={false} />
+                  </Box>
+                </StyledTableCell>
+                <StyledTableCell align="center">              
+                  <Box sx={{ width: 100 }}>
+                    <Skeleton />
+                    <Skeleton animation="wave" />
+                    <Skeleton animation={false} />
+                  </Box>
+                </StyledTableCell>
+                <StyledTableCell align="center">              
+                  <Box sx={{ width: 100 }}>
+                    <Skeleton />
+                    <Skeleton animation="wave" />
+                    <Skeleton animation={false} />
+                  </Box>
+                </StyledTableCell>
+                <StyledTableCell align="center">              
+                  <Box sx={{ width: 100 }}>
+                    <Skeleton />
+                    <Skeleton animation="wave" />
+                    <Skeleton animation={false} />
+                  </Box>
+                </StyledTableCell>
+                <StyledTableCell align="center">              
+                  <Box sx={{ width: 100 }}>
+                    <Skeleton />
+                    <Skeleton animation="wave" />
+                    <Skeleton animation={false} />
+                  </Box>
+                </StyledTableCell>
+                <StyledTableCell align="center">              
+                  <Box sx={{ width: 100 }}>
+                    <Skeleton />
+                    <Skeleton animation="wave" />
+                    <Skeleton animation={false} />
+                  </Box>
+                </StyledTableCell>
+              </StyledTableRow>    
+              :
+              <StyledTableRow>
+                <StyledTableCell align="right"></StyledTableCell> 
+                <StyledTableCell align="right"></StyledTableCell> 
+                <StyledTableCell align="right">Aún no tienes citas médicas agendadas.</StyledTableCell> 
+                <StyledTableCell align="right"></StyledTableCell> 
+                <StyledTableCell align="right"></StyledTableCell> 
+                <StyledTableCell align="right"></StyledTableCell> 
+              </StyledTableRow>       
+          }
         </TableBody>
-      </Table>
+      </Table>    
     </TableContainer>
   );
 }
+export default ListarAgendamientos

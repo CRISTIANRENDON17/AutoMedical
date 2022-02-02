@@ -2,7 +2,7 @@ import React from "react";
 import { useState } from 'react';
 import { Link } from "react-router-dom";
 import { makeStyles, Checkbox, TextField, FormControlLabel, Button, Container, Snackbar, Grid } from '@material-ui/core';
-import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import { browserSessionPersistence, getAuth, setPersistence, signInWithEmailAndPassword } from "firebase/auth";
 import { Alert, Stack } from '@mui/material';
 import { FormControl, IconButton, InputAdornment, InputLabel, OutlinedInput } from '@mui/material';
 import { VisibilityOff, Visibility } from '@mui/icons-material';
@@ -30,15 +30,31 @@ const LoginButton = () => {
   const email = document.getElementById("Email").value;
   const password = document.getElementById("contraseña").value;
   const auth = getAuth();
-  signInWithEmailAndPassword(auth, email, password)
-  .then((userCredential) => {    
-    //const user = userCredential.user;
-    mensaje = "Ingreso Exitoso";
+  setPersistence(auth, browserSessionPersistence)
+  .then(() => {
+    // Existing and future Auth states are now persisted in the current
+    // session only. Closing the window would clear any existing state even
+    // if a user forgets to sign out.
+    // ...
+    // New sign-in will be persisted with session persistence.    
+    console.log("setPersistence");
+    signInWithEmailAndPassword(auth, email, password)
+    .then((userCredential) => {    
+      // const user = userCredential.user;
+      mensaje = "Ingreso Exitoso";
+    })
+    .catch((error) => {
+      mensaje = "Ingreso Fallido";
+      console.log("Error al autenticar el usuario: ", error.code);
+    });
   })
   .catch((error) => {
-    mensaje = "Ingreso Fallido";
-    console.log("Error al autenticar el usuario: ", error.code);
+    // Handle Errors here.
+    const errorCode = error.code;
+    const errorMessage = error.message;
+    console.log("Error al autenticar el usuario: ", errorCode, " ", errorMessage);
   });
+
   return null;
 };
 

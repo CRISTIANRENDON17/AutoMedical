@@ -8,14 +8,22 @@ export default function BoxSx() {
 
   window.onload = function() {
       var counter = 1;
-      setInterval(function(){
-        document.getElementById('radio' + counter).checked = true;
-        counter++
-        if(counter > 4){
-          counter = 1;
-        }
-      }, 5000);
-  }
+      var navigationAuto = setInterval(function(){
+      var radioNavigation = document.getElementById('radio' + counter)
+      if(radioNavigation !== null && radioNavigation !== undefined){
+        radioNavigation.checked = true;
+      }
+      else{
+        clearInterval(navigationAuto);
+        return;
+      }
+      counter++
+      if(counter > 4){
+        counter = 1;
+      }
+    }, 5000);
+    
+  };
 
   return (
     <div>           

@@ -1,4 +1,4 @@
-import { addDoc, collection, getDocs, query, where } from 'firebase/firestore';
+import { addDoc, collection, doc, getDocs, query, setDoc, where } from 'firebase/firestore';
 import { getAuth, sendPasswordResetEmail } from "firebase/auth";
 import db from './firebase';
 
@@ -70,5 +70,57 @@ export const sendEmailResetPassword = async(email) => {
         console.log("Vaya!: ",error);
         result.error = error.message;
     }
+    return result;
+}
+
+export const registrarAgendamiento = async(data) => {
+    const result = { statusResponse: false, error: null};
+    try {
+        console.log("Datos a registrar: ",data);
+        const datos = await addDoc(collection(db,'agendamientos'), data);  
+                   
+        result.statusResponse =  true;        
+        result.data = datos.id;
+    } catch (error) {
+        console.log("Error al agendar: ",error);
+        result.error = error.message;
+    }
+    return result;
+}
+
+export const getSchedulesByUser = async(email) => {
+    console.log("Email usuario: ", email);
+    const result = { statusResponse: false, data: null, error: null };
+
+    try {
+        const queryAgendas = query(collection(db,"agendamientos"), where("correoUsuario", "==", email));
+        const agendas = await getDocs(queryAgendas);
+        const dataSchedules = agendas?.docs[0]?.data();  
+        const arrayAgendas = agendas.docs.map( doc => ({ id: doc.id, ...doc.data() }))
+                                           
+        result.statusResponse =  dataSchedules !== undefined && true;                    
+        result.data = dataSchedules !== undefined && arrayAgendas;
+        
+    } catch (error) {
+        result.error = error;        
+    }
+    
+    return result;
+}
+
+export const updateStateScheduleById = async(id) => {
+    const result = { statusResponse: false, data: null, error: null };
+
+    try {
+        //const deleteResult = await deleteDoc(doc(db, "agendamientos", id));  
+        const agenda = doc(db, 'agendamientos', id);
+        setDoc(agenda, { estadoAgenda: "Cancelada" }, { merge: true });                                          
+        result.statusResponse =  true;
+        
+    } catch (error) {
+        result.error = error;   
+        console.log("Error: ",error);     
+    }
+    
     return result;
 }
