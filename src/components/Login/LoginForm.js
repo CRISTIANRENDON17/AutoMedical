@@ -43,6 +43,7 @@ const LoginButton = () => {
     signInWithEmailAndPassword(auth, email, password)
     .then((userCredential) => {    
       // const user = userCredential.user;
+      isIngresoExitoso = true;
     })
     .catch((error) => {
       console.log("Error al autenticar el usuario: ", error.code);
