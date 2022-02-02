@@ -1,17 +1,9 @@
 import React from "react";
 import LoginForm from "./LoginForm";
-import { Button, Card, CardContent, Snackbar } from "@material-ui/core";
+import { Card, CardContent, Snackbar } from "@material-ui/core";
 import { useNavigate } from 'react-router-dom';
-import { Mensaje } from "./LoginForm.js";
-
-const mensaje = () =>{
-  if(Mensaje() === "Ingreso Exitoso"){
-    return("Ingreso Exitoso");
-  }else if(Mensaje()==="Ingreso Fallido"){
-    return("Ingreso Fallido, correo o clave incorrecta");
-  }
-
-};
+import { IngresoExitoso } from "./LoginForm.js";
+import { Stack } from '@mui/material';
 
 export default function Login() {
   const [open, setOpen] = React.useState(false);
@@ -23,12 +15,12 @@ export default function Login() {
 
   const handleClose = () => {
     setOpen(false);
-    if(mensaje()=== "Ingreso Exitoso"){
+    if(IngresoExitoso()){
       history('/LandingPage')
     }
   };
  
-    return (
+  return (
     <div>
       <h3 style={{ textAlign: "center" }}>Iniciar Sesión</h3>
       <Card>
@@ -36,20 +28,12 @@ export default function Login() {
           <LoginForm onLogin={handleClick} />
         </CardContent>
       </Card>
-      <Snackbar
-        anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
-        open={open}
-        autoHideDuration={2000}
-        onClose={handleClose}
-        message={mensaje()}
-        action={
-          <Button color="secondary" size="small" onClick={handleClose}>
-            Cerrar
-          </Button>
-        }
-      />
+      <Stack spacing={2} sx={{ width: '100%' }}>   
+        <Snackbar open={open} autoHideDuration={2500} onClose={handleClose}>
+          
+        </Snackbar>
+      </Stack>
     </div>
   );
-  
 }
 

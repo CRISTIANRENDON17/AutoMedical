@@ -20,11 +20,12 @@ const useStyles = makeStyles((theme) => ({
     "text-decoration-line": "underline"
   },
 }));
-export const Mensaje = () => {
-  return mensaje;
+
+export const IngresoExitoso = () => {
+  return isIngresoExitoso;
 };
 
-var mensaje = "";
+var isIngresoExitoso = false;
 
 const LoginButton = () => {
   const email = document.getElementById("Email").value;
@@ -32,12 +33,10 @@ const LoginButton = () => {
   const auth = getAuth();
   signInWithEmailAndPassword(auth, email, password)
   .then((userCredential) => {    
-    //const user = userCredential.user;
-    mensaje = "Ingreso Exitoso";
+    isIngresoExitoso = true;
   })
   .catch((error) => {
-    mensaje = "Ingreso Fallido";
-    console.log("Error al autenticar el usuario: ", error.code);
+    isIngresoExitoso = false;
   });
   return null;
 };
@@ -52,7 +51,7 @@ export default function LoginForm(props) {
   const classes = useStyles(); 
 
   const [errorEmail, setErrorEmail] = useState(false);   
-  const [errorPassword, setErrorPassword] = useState(false); 
+  const [errorPassword, setErrorPassword] = useState(false);
 
   const formSubmitHandler = (event) => {
     /*No se reinicia el form al darle al button*/
@@ -85,7 +84,7 @@ export default function LoginForm(props) {
       setErrorPassword(false);
     }
   };
-
+  
   /*Método para cerrar la alerta de información*/
   const handleClose = (event, reason) => {
     if (reason === 'clickaway') {
@@ -191,12 +190,12 @@ export default function LoginForm(props) {
         <Stack spacing={2} sx={{ width: '100%' }}>       
            <Snackbar open={errorEmail} autoHideDuration={6000} onClose={handleClose}>
             <Alert onClose={handleClose} severity="error" sx={{ width: '100%' }}>
-                El formato del Correo Electrónico es "micorreo@email.com".
+              El formato del Correo Electrónico es "micorreo@email.com".
             </Alert>
            </Snackbar>
            <Snackbar open={errorPassword} autoHideDuration={6000} onClose={handleClose}>
             <Alert onClose={handleClose} severity="error" sx={{ width: '100%' }}>
-                La Contraseña debe ser minímo de 4 caracteres y máximo 12 caracteres.
+              La Contraseña debe ser minímo de 4 caracteres y máximo 12 caracteres.
             </Alert>
            </Snackbar>
         </Stack>
