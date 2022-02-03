@@ -8,6 +8,8 @@ import { Button, Toolbar, Typography, makeStyles } from "@material-ui/core";
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import "./AppBar.css";
+import { getAuth, signOut } from "firebase/auth";
+import { useNavigate } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -23,6 +25,7 @@ export default function AppBar({data}) {
   
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
+  const history = useNavigate();
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -30,6 +33,17 @@ export default function AppBar({data}) {
   const handleClose = () => {
     setAnchorEl(null);
   };
+
+  const signOutSession = () => {
+    data = 0
+    const auth = getAuth();
+    signOut(auth).then(() => {
+      console.log("Sesión cerrada");
+      history('/', {replace : true});
+    }).catch((error) => {
+      console.log("Se presentó un error al intentar cerrar la sesión: ", error);
+    });
+  }
 
   const classes = useStyles();
   if (data === 0) {
@@ -44,7 +58,7 @@ export default function AppBar({data}) {
               <NavLink
                 activeclassname="active"
                 className={"styleButtonsNav"}
-                exact
+                // exact
                 to="/"
               >
               </NavLink>
@@ -55,7 +69,7 @@ export default function AppBar({data}) {
                 <NavLink
                   activeclassname="active"
                   className={"styleButtonsNav"}
-                  exact
+                  // exact
                   to="/Login"
                 >
                 Ingresar
@@ -78,7 +92,7 @@ export default function AppBar({data}) {
               <NavLink
                 activeclassname="active"
                 className={"styleButtonsNav"}
-                exact
+                // exact
                 to="/LandingPage"
               >              
               </NavLink>
@@ -89,7 +103,7 @@ export default function AppBar({data}) {
                 <NavLink
                   activeclassname="active"
                   className={"styleButtonsNav"}
-                  exact
+                  // exact
                   to="/SelfTriage"
                 >
                 Ingresar Síntomas
@@ -115,10 +129,10 @@ export default function AppBar({data}) {
               <NavLink
                 activeclassname="active"
                 className={"styleButtonsNav"}
-                exact
+                // exact
                 to="/ProfileUser"
               >
-                <FontAwesomeIcon icon= {faUser} size='md' className="iconNavBar"/>
+                <FontAwesomeIcon icon= {faUser} size='sm' className="iconNavBar"/>
                 &nbsp;Perfil
               </NavLink>
             </MenuItem>
@@ -126,25 +140,25 @@ export default function AppBar({data}) {
               <NavLink
                 activeclassname="active"
                 className={"styleButtonsNav"}
-                exact
+                // exact
                 to="/HelpPage"
               >
-                <FontAwesomeIcon icon= {faQuestionCircle} size='md' className="iconNavBar"/>
+                <FontAwesomeIcon icon= {faQuestionCircle} size='sm' className="iconNavBar"/>
                 &nbsp;Ayuda
               </NavLink>
             </MenuItem>
               <hr></hr>
             <MenuItem onClick={handleClose}>
-              <NavLink
+              <Button
                 activeclassname="active"
                 className={"styleButtonsNav"}
-                exact
-                to="/"
-                onClick={() => {this.data = 0}}
+                // exact
+                //to="/"
+                onClick={() => {signOutSession()}}
               >
-                <FontAwesomeIcon icon= {faSignOutAlt} size='md' className="iconNavBar"/>
+                <FontAwesomeIcon icon= {faSignOutAlt} size='sm' className="iconNavBar"/>
                 &nbsp;Cerrar Sesión
-              </NavLink>
+              </Button>
               </MenuItem>
             </Menu>
           </Toolbar>

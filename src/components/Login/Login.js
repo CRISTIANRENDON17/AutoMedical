@@ -3,7 +3,7 @@ import LoginForm from "./LoginForm";
 import { Card, CardContent, Snackbar } from "@material-ui/core";
 import { useNavigate } from 'react-router-dom';
 import { IngresoExitoso } from "./LoginForm.js";
-import { Stack } from '@mui/material';
+import { Stack } from "@mui/material";
 
 export default function Login() {
   const [open, setOpen] = React.useState(false);
@@ -20,7 +20,7 @@ export default function Login() {
     }
   };
  
-  return (
+    return (
     <div>
       <h3 style={{ textAlign: "center" }}>Iniciar Sesión</h3>
       <Card>
@@ -35,5 +35,6 @@ export default function Login() {
       </Stack>
     </div>
   );
+  
 }
 
