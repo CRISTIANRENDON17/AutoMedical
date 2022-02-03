@@ -68,7 +68,7 @@ export default function ProfileUser() {
                                                     id="outlined-size-small"
                                                     variant="standard"   
                                                     type="number"
-                                                    value={user.identification}                                  
+                                                    value={user != null ? user.identification : ""}                                  
                                                     className={classes.textField}
                                                     size="small"
                                                 />
@@ -82,7 +82,7 @@ export default function ProfileUser() {
                                                     id="edad"
                                                     variant="standard"
                                                     type="number"
-                                                    value={user.age}
+                                                    value={user != null ? user.age : ""}
                                                     className={classes.textField}
                                                     size="small"
                                                 />
@@ -96,7 +96,7 @@ export default function ProfileUser() {
                                                     id="celular"
                                                     variant="standard"
                                                     type="number"
-                                                    value={user.cellNumber}
+                                                    value={user != null ? user.cellNumber : ""}
                                                     className={classes.textField}
                                                     size="small"
                                                 />
@@ -110,7 +110,7 @@ export default function ProfileUser() {
                                                     id="telefono"
                                                     variant="standard"
                                                     type="number"
-                                                    value={user.phoneNumber}
+                                                    value={user != null ? user.phoneNumber : ""}
                                                     className={classes.textField}
                                                     size="small"
                                                 />
@@ -124,7 +124,7 @@ export default function ProfileUser() {
                                                     fullWidth 
                                                     id="email"
                                                     variant="standard"
-                                                    value={user.email}
+                                                    value={user != null ? user.email : ""}
                                                     type="email"
                                                     className={classes.textField}
                                                     size="small"
@@ -138,7 +138,7 @@ export default function ProfileUser() {
                                                     id="nombre"
                                                     variant="standard"
                                                     type="text"
-                                                    value={user.fullName}
+                                                    value={user != null ? user.fullName : ""}
                                                     className={classes.textField}
                                                     size="small" 
                                                 />
@@ -154,7 +154,7 @@ export default function ProfileUser() {
                                                     id="direccion"
                                                     variant="standard"
                                                     type="text"
-                                                    value={user.address}
+                                                    value={user != null ? user.address : ""}
                                                     className={classes.textField}
                                                     size="small"
                                                 />
