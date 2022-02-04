@@ -17,6 +17,12 @@ import db from './firebase';
     return result;
 }
 
+/**
+ * Método para insertar un usuario
+ * @param {} collectionName Nombre de la colección en Firebase
+ * @param {Usuario} data Objeto con la información del nuevo usuario
+ * @returns Object Usuario
+ */
 export const addUser = async(collectionName, data) => {
     const result = { statusResponse: false, data: null, error: null };
 
@@ -33,6 +39,12 @@ export const addUser = async(collectionName, data) => {
     return result;
 }
 
+/**
+ * Método para obtener un usuario por medio de la Identificación o el Correo Electrónico
+ * @param {} identification Identificación del usuario a buscar
+ * @param {} email Correo Electrónico del usuario a buscar
+ * @returns Identifiación o Correo Elctrónico 
+ */
 export const getUser = async(identification, email) => {
     const result = { statusResponse: false, data: null, error: null, userIdExiste: false, userEmailExiste: false };
 
@@ -57,6 +69,36 @@ export const getUser = async(identification, email) => {
     return result;
 }
 
+/**
+ * Método para actualizat un usuario por medio de la Identificación
+ * @param {} identification Identificación del usuario a actualizar
+ * @param {} data Información del usuario a actualizar
+ * @returns Estado 
+ */
+ export const updateUserById = async(identification, data) => {
+    const result = { statusResponse: false, data: null, error: null };
+
+    try {  
+        /*const qId = query(collection(db,"usuarios"), where("identification", "==", identification));
+        const userById = await getDocs(qId);
+        const dataIdUser = userById?.docs[0]?.data();  
+
+        const user = doc(db, 'usuarios', identification);
+        setDoc(user, { address : "CR XXX", age: "25" , cellNumber : "0001237788" }, { merge: true });                                        
+        */
+        result.statusResponse =  true; 
+    } catch (error) {
+        result.error = error;   
+        console.log("Error: ",error);     
+    }
+    return result;
+}
+
+/**
+ * Método para enviar el correo electrónico y restaurar la contraseña
+ * @param {} email Correo Electrónico usuario para enviar email
+ * @returns Estado respuesta envío de correo 
+ */
 export const sendEmailResetPassword = async(email) => {
     const result = { statusResponse: false, error: null};
     const auth = getAuth();
@@ -73,6 +115,11 @@ export const sendEmailResetPassword = async(email) => {
     return result;
 }
 
+/**
+ * Método para registrar el agendamiento de una cita
+ * @param {Agendamientos} data Objeto con la información del nuevo agendamiento
+ * @returns Object Agendamiento 
+ */
 export const registrarAgendamiento = async(data) => {
     const result = { statusResponse: false, error: null};
     try {
