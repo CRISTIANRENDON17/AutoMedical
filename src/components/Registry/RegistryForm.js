@@ -39,7 +39,7 @@ const variable = async() => {
     email: document.getElementById("email").value,
     password: document.getElementById("contraseña").value,
     confcontraseña: document.getElementById("confirmed_contraseña").value,
-    doctor: "no",
+    rol: "usuario",
   };
   /*
   console.log(typeof Usuario.id,typeof Usuario.name,typeof Usuario.age,typeof Usuario.phone,typeof Usuario.phone2,typeof Usuario.address,typeof Usuario.email,typeof Usuario.password,typeof Usuario.confcontraseña,typeof Usuario.doctor);

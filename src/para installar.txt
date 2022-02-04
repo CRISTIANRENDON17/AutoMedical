@@ -7,4 +7,9 @@ npm i @date-io/date-fns@1.x date-fns
 npm i firebase
 
 
+nuevo pa instalar :u ---------------
+npm install @mui/x-data-grid
+npm install @mui/x-data-grid-generator
+------------------------------
+
 
