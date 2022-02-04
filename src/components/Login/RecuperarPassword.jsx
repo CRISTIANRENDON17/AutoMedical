@@ -7,7 +7,9 @@ import { Alert, Stack } from '@mui/material';
 import { sendEmailResetPassword } from '../../actions';
 import CheckCircleRoundedIcon from '@mui/icons-material/CheckCircleRounded';
 import CancelIcon from '@mui/icons-material/Cancel';
-
+import { NavLink } from "react-router-dom";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 
 const useStyles = makeStyles((theme) => ({
     form: {
@@ -39,10 +41,14 @@ const useStyles = makeStyles((theme) => ({
     statusIcon:{
         "marginBottom" : "3em",
         "text-align" : "center"
-    }
-  }));
-
-  
+    },
+    styleIcon:{
+        "color" : "#6472BE",
+        '&:hover': {
+            "color" : "#4B5CB9",
+         },
+    },
+  })); 
 
 export default function RecuperarPasword() {
 
@@ -84,6 +90,16 @@ export default function RecuperarPasword() {
         <div>
             <Container component="main" maxWidth="xs" className={classes.containerMain}>
                 <form onSubmit={formSubmitHandler} className={classes.form} id="passwordRecoveryForm" noValidate>
+                    <div >
+                        <NavLink
+                            activeclassname="active"
+                            exact
+                            to="/Login"
+                            className={classes.styleIcon}
+                        >
+                            <FontAwesomeIcon icon= {faArrowLeft}/>
+                        </NavLink>
+                    </div>
                     <div className={classes.containerElements}>
                         <div className={classes.titleRecovery}>
                             <p>Recuperar contraseña</p>

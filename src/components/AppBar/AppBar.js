@@ -125,40 +125,40 @@ export default function AppBar({data}) {
                 'aria-labelledby': 'basic-button',
               }}
             >
-            <MenuItem onClick={handleClose}>
-              <NavLink
-                activeclassname="active"
-                className={"styleButtonsNav"}
-                // exact
-                to="/ProfileUser"
-              >
-                <FontAwesomeIcon icon= {faUser} size='sm' className="iconNavBar"/>
-                &nbsp;Perfil
-              </NavLink>
-            </MenuItem>
-            <MenuItem onClick={handleClose}>
-              <NavLink
-                activeclassname="active"
-                className={"styleButtonsNav"}
-                // exact
-                to="/HelpPage"
-              >
-                <FontAwesomeIcon icon= {faQuestionCircle} size='sm' className="iconNavBar"/>
-                &nbsp;Ayuda
-              </NavLink>
-            </MenuItem>
+                <MenuItem onClick={handleClose}>
+                <NavLink
+                  activeclassname="active"
+                  className={"styleButtonsNav"}
+                  // exact
+                  to="/ProfileUser"
+                >
+                  <FontAwesomeIcon icon= {faUser} className="iconNavBar"/>
+                  &nbsp;Perfil
+                </NavLink>
+              </MenuItem>
+              <MenuItem onClick={handleClose}>
+                <NavLink
+                  activeclassname="active"
+                  className={"styleButtonsNav"}
+                  // exact
+                  to="/HelpPage"
+                >
+                  <FontAwesomeIcon icon= {faQuestionCircle} className="iconNavBar"/>
+                  &nbsp;Ayuda
+                </NavLink>
+              </MenuItem>
               <hr></hr>
-            <MenuItem onClick={handleClose}>
-              <Button
-                activeclassname="active"
-                className={"styleButtonsNav"}
-                // exact
-                //to="/"
-                onClick={() => {signOutSession()}}
-              >
-                <FontAwesomeIcon icon= {faSignOutAlt} size='sm' className="iconNavBar"/>
-                &nbsp;Cerrar Sesión
-              </Button>
+              <MenuItem onClick={handleClose}>
+                <Button
+                  activeclassname="active"
+                  className={"styleButtonsNav"}
+                  // exact
+                  //to="/"  
+                  onClick={() => {signOutSession()}}
+                >
+                  <FontAwesomeIcon icon= {faSignOutAlt} className="iconNavBar"/>
+                  &nbsp;Cerrar Sesión
+                </Button>
               </MenuItem>
             </Menu>
           </Toolbar>
