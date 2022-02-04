@@ -19,7 +19,6 @@ export default function Agendamiento() {
 
     useEffect(() => {
       (async => {
-        console.log("Carga agendamiento.");
         const auth = getAuth(); 
         setTimeout(function (){ 
           const email = auth.currentUser?.email;  
@@ -28,19 +27,15 @@ export default function Agendamiento() {
           } 
           else {
             setAgendas(false);
-            console.log("Valor de agenda en este momento despues de false: ", agendas);
             history('/Login', {replace : true});            
           }       
         }, 1000); 
 
         const getAgendas = async(email) => {
           const ageData = await getSchedulesByUser(email);
-          console.log("Agendas1: ", ageData.data);
-          console.log("Estado de la consulta: ", ageData.statusResponse);
+          console.log("Agendas: ", ageData.data);
           setAgendas(ageData.data);
         }
-
-        console.log("Este es el valor de agendaRegistrada: ", agendaRegistrada);
       })()
     }, [agendaRegistrada, history]);
 

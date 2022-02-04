@@ -7,7 +7,7 @@ import db from './firebase';
     
     try {
         const datos = await getDocs(collection(db, collectionName));
-        result.data = datos;
+        result.data = datos.docs.map( doc => ({ id: doc.id, ...doc.data() }))
         result.statusResponse =  true;
         
     } catch (error) {
