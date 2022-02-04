@@ -70,6 +70,48 @@ export const getUser = async(identification, email) => {
 }
 
 /**
+ * Método para obtener un usuario por medio de la Identificación o el Correo Electrónico
+ * @param {} identification Identificación del usuario a buscar
+ * @returns Identifiación o Correo Elctrónico 
+ */
+ export const getIdUser = async(identification) => {
+    const result = { statusResponse: false, data: null, error: null };
+
+    try {
+        const qId = query(collection(db,"usuarios"), where("identification", "==", identification));
+        const userById = await getDocs(qId);
+        const dataIdUser = userById.docs.map(doc => doc.id);       
+                                            
+        result.statusResponse =  true;                    
+        result.data = dataIdUser !== undefined && dataIdUser;
+        
+    } catch (error) {
+        result.error = error;        
+    }
+    
+    return result;
+}
+
+/**
+ * Método para obtener un usuario por medio de la Identificación o el Correo Electrónico
+ * @param {} data Identificación del id del usuario y datos a actualizar
+ * @returns Resultado del 
+ */
+ export const updateFieldUser = async(data) => {
+    const result = { statusResponse: false, data: null, error: null };
+
+    try {
+        const usuarios = doc(db, 'usuarios', data.identificacion); 
+        var obj = {}
+        obj[data.fieldName] = data.value;
+        await setDoc(usuarios, obj, { merge: true }).then(() =>{ result.statusResponse = true; });                 
+    } catch (error) {
+        result.error = error;        
+    }    
+    return result;
+}
+
+/**
  * Método para actualizat un usuario por medio de la Identificación
  * @param {} identification Identificación del usuario a actualizar
  * @param {} data Información del usuario a actualizar
