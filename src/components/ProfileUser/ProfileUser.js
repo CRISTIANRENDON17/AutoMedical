@@ -1,10 +1,10 @@
 import React, { useEffect } from 'react';
 import { useState } from 'react';
-import { Card, CardContent, TextField, Button, makeStyles, Container, Grid } from '@material-ui/core';
+import { Card, CardContent, TextField, Button, makeStyles, Container, Grid, Snackbar} from '@material-ui/core';
 import { getAuth } from "firebase/auth";
 import { getUser, updateUserById } from '../../actions';
 import { useNavigate } from 'react-router-dom';
-import { Box, Skeleton } from '@mui/material';
+import { Box, Skeleton, Alert, Stack } from '@mui/material';
 
 const useStyles = makeStyles((theme) => ({
     form: {
@@ -22,7 +22,7 @@ const useStyles = makeStyles((theme) => ({
 /**
  * Método para validar las modificaciones realizadas por el Usuario
  */
-const validarGuardarPerfil = async () => {
+const validarGuardarPerfil = async (usuarioActualizado, e) => { 
     const Usuario = {
         identification: document.getElementById("identificacion").value,
         fullName: document.getElementById("nombre").value,
@@ -31,16 +31,16 @@ const validarGuardarPerfil = async () => {
         phoneNumber: document.getElementById("telefono").value,
         address: document.getElementById("direccion").value
     };
-    actualizarUsuario(Usuario);
+    actualizarUsuario(Usuario, usuarioActualizado);
 }
 
 
 /**
  * Método para guardar las modificaciones realizadas por el Usuario
  */
-const actualizarUsuario = async (userUpdate) => {
-    const result = await updateUserById(userUpdate.identification, userUpdate);
-    console.log("Usuario actualizado exitosamente: ", result.statusResponse);
+const actualizarUsuario = async (userUpdate, usuarioActualizado) => {
+    const result = await updateUserById(userUpdate);
+    usuarioActualizado = result.statusResponse;
 };
 
 export default function ProfileUser() {
@@ -48,6 +48,7 @@ export default function ProfileUser() {
     const [logueado, setLogueado] = useState(false);
     const [user, setUser] = useState([]);
     const [usuarioRetornado, setUsuarioRetornado] = useState(false);
+    const [usuarioActualizado, setUsuarioActualizado] = useState(false);
     const [isEdit, setIsEdit] = useState(false);
     const history = useNavigate();
 
@@ -88,6 +89,13 @@ export default function ProfileUser() {
         setIsEdit(isEdit);
     }
 
+      /*Método para cerrar la alerta de información*/
+    const handleClose = (event, reason) => {
+        if (reason === 'clickaway') {
+        return;
+        }
+        //setErrors(false);
+    };
     /**
      * Funcionalidad de retorno a mostrar en pantalla, si no está logeado se redirige al Login
      */
@@ -264,7 +272,6 @@ export default function ProfileUser() {
                                                     />
                                                 </Grid>
                                                 <Grid item xs={12} sm={6} md={3} lg={3}>
-                                                    
                                                     <TextField
                                                         //disabled
                                                         label="Edad"
@@ -273,38 +280,33 @@ export default function ProfileUser() {
                                                         id="edad"
                                                         variant="outlined"
                                                         type="number"
-                                                        //value={user != null ? user.age : ""}
                                                         defaultValue={user != null ? user.age : ""}
                                                         className={classes.textField}
                                                         size="small"
                                                     />
                                                 </Grid>
                                                 <Grid item xs={12} sm={6} md={3} lg={3}>
-                                                    
                                                     <TextField
                                                         label="Celular"
-                                                        //disabled
                                                         fullWidth
                                                         required
                                                         id="celular"
                                                         variant="outlined"
                                                         type="number"
-                                                        value={user != null ? user.cellNumber : ""}
+                                                        defaultValue={user != null ? user.cellNumber : ""}
                                                         className={classes.textField}
                                                         size="small"
                                                     />
                                                 </Grid>
                                                 <Grid item xs={12} sm={6} md={3} lg={3}>
-                                                    
                                                     <TextField
                                                         label="Teléfono"
-                                                        //disabled
                                                         fullWidth
                                                         required
                                                         id="telefono"
                                                         variant="outlined"
                                                         type="number"
-                                                        value={user != null ? user.phoneNumber : ""}
+                                                        defaultValue={user != null ? user.phoneNumber : ""}
                                                         className={classes.textField}
                                                         size="small"
                                                     />
@@ -312,7 +314,6 @@ export default function ProfileUser() {
                                             </Grid>
                                             <Grid container spacing={2}>
                                                 <Grid item xs={12} sm={6} md={6} lg={6}>
-                                                    
                                                     <TextField
                                                         label="Correo Electrónico"
                                                         disabled
@@ -326,16 +327,14 @@ export default function ProfileUser() {
                                                     />
                                                 </Grid>
                                                 <Grid item xs={12} sm={6} md={6} lg={6}>
-                                                    
                                                     <TextField
                                                         label="Nombre Completo"
-                                                        //disabled
                                                         fullWidth
                                                         required
                                                         id="nombre"
                                                         variant="outlined"
                                                         type="text"
-                                                        value={user != null ? user.fullName : ""}
+                                                        defaultValue={user != null ? user.fullName : ""}
                                                         className={classes.textField}
                                                         size="small"
                                                     />
@@ -343,16 +342,14 @@ export default function ProfileUser() {
                                             </Grid>
                                             <Grid container spacing={2}>
                                                 <Grid item xs={12} sm={12} md={12} lg={12}>
-                                                    
                                                     <TextField
                                                         label="Dirección"
-                                                        //disabled
                                                         fullWidth
                                                         required
                                                         id="direccion"
                                                         variant="outlined"
                                                         type="text"
-                                                        value={user != null ? user.address : ""}
+                                                        defaultValue={user != null ? user.address : ""}
                                                         className={classes.textField}
                                                         size="small"
                                                     />
@@ -375,9 +372,18 @@ export default function ProfileUser() {
                                                     <Button
                                                         variant="contained"
                                                         color="primary"
-                                                        onClick={validarGuardarPerfil}
+                                                       // onClick={validarGuardarPerfil}
+                                                        onClick={(e) => validarGuardarPerfil(usuarioActualizado, e)}
+                                                        //type="submit"
                                                     >Guardar Perfil
                                                     </Button>
+                                                    <Stack spacing={2} sx={{ width: '100%' }}>       
+                                                    <Snackbar open={usuarioActualizado} autoHideDuration={6000} onClose={handleClose}>
+                                                        <Alert onClose={handleClose} severity="error" sx={{ width: '100%' }}>
+                                                            Usuario Actualizado ok
+                                                        </Alert>
+                                                    </Snackbar>
+                                                    </Stack>
                                                 </center>
                                             </Grid>
                                         </Grid>

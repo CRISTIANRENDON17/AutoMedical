@@ -112,23 +112,24 @@ export const getUser = async(identification, email) => {
 }
 
 /**
- * Método para actualizat un usuario por medio de la Identificación
- * @param {} identification Identificación del usuario a actualizar
+ * Método para actualizar campos del usuario
  * @param {} data Información del usuario a actualizar
  * @returns Estado 
  */
- export const updateUserById = async(identification, data) => {
+ export const updateUserById = async(data) => {
     const result = { statusResponse: false, data: null, error: null };
 
     try {  
-        /*const qId = query(collection(db,"usuarios"), where("identification", "==", identification));
+        const qId = query(collection(db,"usuarios"), where("identification", "==", data.identification));
         const userById = await getDocs(qId);
-        const dataIdUser = userById?.docs[0]?.data();  
-
-        const user = doc(db, 'usuarios', identification);
-        setDoc(user, { address : "CR XXX", age: "25" , cellNumber : "0001237788" }, { merge: true });                                        
-        */
-        result.statusResponse =  true; 
+        const user = doc(db, 'usuarios', userById?.docs[0]?.id);
+        setDoc(user,{   address : data.address,
+                        age: data.age, 
+                        cellNumber : data.cellNumber,
+                        phoneNumber : data.phoneNumber,
+                        fullName : data.fullName,
+                    }, { merge: true }
+        ).then(() =>{ result.statusResponse = true; });                          
     } catch (error) {
         result.error = error;   
         console.log("Error: ",error);     
