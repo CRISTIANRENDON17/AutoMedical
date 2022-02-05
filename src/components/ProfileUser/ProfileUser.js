@@ -1,10 +1,10 @@
 import React, { useEffect } from 'react';
 import { useState } from 'react';
-import { Card, CardContent, TextField, Button, makeStyles, Container, Grid, Snackbar} from '@material-ui/core';
+import { Card, CardContent, TextField, Button, makeStyles, Container, Grid } from '@material-ui/core';
 import { getAuth } from "firebase/auth";
 import { getUser, updateUserById } from '../../actions';
 import { useNavigate } from 'react-router-dom';
-import { Box, Skeleton, Alert, Stack } from '@mui/material';
+import { Box, Skeleton } from '@mui/material';
 
 const useStyles = makeStyles((theme) => ({
     form: {
@@ -22,7 +22,7 @@ const useStyles = makeStyles((theme) => ({
 /**
  * Método para validar las modificaciones realizadas por el Usuario
  */
-const validarGuardarPerfil = async (usuarioActualizado, e) => { 
+const validarGuardarPerfil = async () => {
     const Usuario = {
         identification: document.getElementById("identificacion").value,
         fullName: document.getElementById("nombre").value,
@@ -31,16 +31,15 @@ const validarGuardarPerfil = async (usuarioActualizado, e) => {
         phoneNumber: document.getElementById("telefono").value,
         address: document.getElementById("direccion").value
     };
-    actualizarUsuario(Usuario, usuarioActualizado);
+    actualizarUsuario(Usuario);
 }
-
 
 /**
  * Método para guardar las modificaciones realizadas por el Usuario
  */
-const actualizarUsuario = async (userUpdate, usuarioActualizado) => {
+const actualizarUsuario = async (userUpdate) => {
     const result = await updateUserById(userUpdate);
-    usuarioActualizado = result.statusResponse;
+    console.log("Perfil actualizado", result.statusResponse)
 };
 
 export default function ProfileUser() {
@@ -48,9 +47,9 @@ export default function ProfileUser() {
     const [logueado, setLogueado] = useState(false);
     const [user, setUser] = useState([]);
     const [usuarioRetornado, setUsuarioRetornado] = useState(false);
-    const [usuarioActualizado, setUsuarioActualizado] = useState(false);
     const [isEdit, setIsEdit] = useState(false);
     const history = useNavigate();
+    const [errorMessage, setErrorMessage] = useState(false);
 
     /**
      * Método para obtener el Correo Electrónico por medio de la autenticación del Usuario logeado
@@ -82,6 +81,10 @@ export default function ProfileUser() {
         })()
     }, [usuarioRetornado, logueado, history]);
 
+    const formSubmitHandler = (event) => {
+        event.preventDefault();
+    };
+
     /**
      * Método para actualizar la variable isEdit, para visualizar la actualización del perfil
      */
@@ -89,13 +92,15 @@ export default function ProfileUser() {
         setIsEdit(isEdit);
     }
 
-      /*Método para cerrar la alerta de información*/
-    const handleClose = (event, reason) => {
-        if (reason === 'clickaway') {
-        return;
+    const validarCampo = () => {
+        var edad = document.getElementById("edad");
+        if (!/^\d{1,2}$/.test(edad.value)) {
+            setErrorMessage(true);
+        }else{
+            setErrorMessage(false);
         }
-        //setErrors(false);
-    };
+    }
+
     /**
      * Funcionalidad de retorno a mostrar en pantalla, si no está logeado se redirige al Login
      */
@@ -254,7 +259,7 @@ export default function ProfileUser() {
                     <CardContent>
                         <div>
                             <Container component="main" maxWidth="md">
-                                <form id="formulario" className={classes.form} noValidate>
+                                <form onSubmit={formSubmitHandler} className={classes.form} noValidate>
                                     <Grid container spacing={1}>
                                         <Grid item xs={12} sm={12} md={12} lg={12}>
                                             <Grid container spacing={2}>
@@ -273,7 +278,6 @@ export default function ProfileUser() {
                                                 </Grid>
                                                 <Grid item xs={12} sm={6} md={3} lg={3}>
                                                     <TextField
-                                                        //disabled
                                                         label="Edad"
                                                         fullWidth
                                                         required
@@ -283,6 +287,8 @@ export default function ProfileUser() {
                                                         defaultValue={user != null ? user.age : ""}
                                                         className={classes.textField}
                                                         size="small"
+                                                        onBlur={validarCampo}
+                                                        error={errorMessage}                 
                                                     />
                                                 </Grid>
                                                 <Grid item xs={12} sm={6} md={3} lg={3}>
@@ -372,18 +378,10 @@ export default function ProfileUser() {
                                                     <Button
                                                         variant="contained"
                                                         color="primary"
-                                                       // onClick={validarGuardarPerfil}
-                                                        onClick={(e) => validarGuardarPerfil(usuarioActualizado, e)}
-                                                        //type="submit"
+                                                        type="submit"
+                                                        onClick={validarGuardarPerfil}
                                                     >Guardar Perfil
                                                     </Button>
-                                                    <Stack spacing={2} sx={{ width: '100%' }}>       
-                                                    <Snackbar open={usuarioActualizado} autoHideDuration={6000} onClose={handleClose}>
-                                                        <Alert onClose={handleClose} severity="error" sx={{ width: '100%' }}>
-                                                            Usuario Actualizado ok
-                                                        </Alert>
-                                                    </Snackbar>
-                                                    </Stack>
                                                 </center>
                                             </Grid>
                                         </Grid>

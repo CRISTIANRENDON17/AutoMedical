@@ -129,7 +129,8 @@ export const getUser = async(identification, email) => {
                         phoneNumber : data.phoneNumber,
                         fullName : data.fullName,
                     }, { merge: true }
-        ).then(() =>{ result.statusResponse = true; });                          
+        ); 
+        result.statusResponse =  true;                        
     } catch (error) {
         result.error = error;   
         console.log("Error: ",error);     
