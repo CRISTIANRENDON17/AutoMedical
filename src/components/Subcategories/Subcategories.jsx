@@ -33,8 +33,13 @@ const Item = styled(Paper)(({ theme }) => ({
 
 const Subcategories = () => {
 
+    var categoriesIcons = [faHeart, faEye, faBone, faLungs, faBrain, faGoogleWallet, faHeadSideCough, faAssistiveListeningSystems, 
+        faHeadSideMask, faShoePrints, faBacteria, faCarCrash, faDiagnoses, faHeadSideVirus, faAngry, faSlash];
     const [logueado, setLogueado] = useState(false);
     const [open, setOpen] = useState(false);
+    const {categoryName} = useParams();
+    const [categories] = React.useState(CategoriesList);
+    const [sintomas, setSintomas] = useState();
     const history = useNavigate();
 
     useEffect(() => {
@@ -53,23 +58,29 @@ const Subcategories = () => {
       }, [logueado, history]);
 
 
-    const handleClickOpen = () => {
-      setOpen(true);
+    const handleClickOpen = (category, subcategory) => {
+        const dataSintomas = [{categoria: category, subcategoria: subcategory}];
+        setSintomas(dataSintomas);
+        setOpen(true);
+        console.log("Sintomas después del set: ",sintomas);
     };
   
     const handleClose = () => {
       setOpen(false);
-      history('/Agendamiento')
+      //history('/Agendamiento', {replace : true});
+      console.log("Sintomas desde el aceptar: ",sintomas);
+      history('/Agendamiento', {
+        state: {
+          arraySintomas: sintomas,
+        }
+      });
     };
 
     const handJustClose = () => {
+        console.log("Sintomas desde el cancel: ",sintomas);
         setOpen(false);
     }
 
-    const {categoryName} = useParams();
-    const [categories] = React.useState(CategoriesList);
-    var categoriesIcons = [faHeart, faEye, faBone, faLungs, faBrain, faGoogleWallet, faHeadSideCough, faAssistiveListeningSystems, 
-        faHeadSideMask, faShoePrints, faBacteria, faCarCrash, faDiagnoses, faHeadSideVirus, faAngry, faSlash];
 
         
     return(
@@ -92,7 +103,7 @@ const Subcategories = () => {
                                             category.subcategories.map((subcategory) => {
                                             return(                                
                                                 <Grid item xs={12} md={6} lg={4} key={subcategory.idSubcategory}> 
-                                                    <Item className='itemCategory' onClick={handleClickOpen}><FontAwesomeIcon icon ={categoriesIcons[category.id]} size='lg' className='iconCategory'/>{subcategory.subcategoryName}</Item>                                            
+                                                    <Item className='itemCategory' onClick={() => handleClickOpen(categoryName, subcategory.subcategoryName)}><FontAwesomeIcon icon ={categoriesIcons[category.id]} size='lg' className='iconCategory'/>{subcategory.subcategoryName}</Item>                                            
                                                 </Grid>
                                             );
                                         }));   

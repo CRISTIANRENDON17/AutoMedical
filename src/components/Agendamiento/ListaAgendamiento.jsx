@@ -36,11 +36,8 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 function ListarAgendamientos(props) {  
       
   const agendas = props.ListaAgendas; 
-  console.log("Agendas desde la ListaAgendamiento: ", agendas);
-  console.log("propiedades: ", props);
 
   const eliminarAgenda = (idAgenda) => {
-    console.log("Se va a eliminar la agenda: ", idAgenda);
     updateStateScheduleById(idAgenda); 
     props.updateDataTable();
     
@@ -55,6 +52,7 @@ function ListarAgendamientos(props) {
             <StyledTableCell>Número documento</StyledTableCell>
             <StyledTableCell align="right">Fecha cita</StyledTableCell>
             <StyledTableCell align="right">Lugar de atención</StyledTableCell>
+            <StyledTableCell align="right">Síntomas</StyledTableCell>
             <StyledTableCell align="right">Médico</StyledTableCell>
             <StyledTableCell align="right">Estado</StyledTableCell>
             <StyledTableCell align="right">Acción</StyledTableCell>
@@ -66,6 +64,7 @@ function ListarAgendamientos(props) {
               <StyledTableCell align="right" scope='row'>{row.idUsuario}</StyledTableCell>
               <StyledTableCell align="right">{row.fechaCita}</StyledTableCell>
               <StyledTableCell align="right">{row.lugarAtencion}</StyledTableCell>
+              <StyledTableCell align="right">{row.sintomas}</StyledTableCell>
               <StyledTableCell align="right">{row.nombreMedico}</StyledTableCell>
               <StyledTableCell align="right">{row.estadoAgenda}</StyledTableCell> 
               <StyledTableCell align="right">
@@ -80,9 +79,16 @@ function ListarAgendamientos(props) {
                 }
               </StyledTableCell>
             </StyledTableRow>
-            )) ) :  
+            )) ) :   
               agendas !== false ?
               <StyledTableRow>
+                <StyledTableCell align="center">              
+                  <Box sx={{ width: 100 }}>
+                    <Skeleton />
+                    <Skeleton animation="wave" />
+                    <Skeleton animation={false} />
+                  </Box>
+                </StyledTableCell>
                 <StyledTableCell align="center">              
                   <Box sx={{ width: 100 }}>
                     <Skeleton />
@@ -128,6 +134,7 @@ function ListarAgendamientos(props) {
               </StyledTableRow>    
               :
               <StyledTableRow>
+                <StyledTableCell align="right"></StyledTableCell> 
                 <StyledTableCell align="right"></StyledTableCell> 
                 <StyledTableCell align="right"></StyledTableCell> 
                 <StyledTableCell align="right">Aún no tienes citas médicas agendadas.</StyledTableCell> 

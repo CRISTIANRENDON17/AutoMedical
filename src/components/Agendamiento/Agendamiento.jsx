@@ -1,13 +1,17 @@
-import React, {useEffect} from 'react';
+import React, { useEffect} from 'react';
 import {KeyboardDateTimePicker} from '@material-ui/pickers';
 import { useState } from 'react';
 import { ConfirmacionAgenda } from "./ConfirmacionAgenda";
 import ListaAgendamiento from "./ListaAgendamiento"
 import { getUser, registrarAgendamiento, getSchedulesByUser } from '../../actions';
 import { getAuth } from "firebase/auth";
-import { useNavigate } from 'react-router-dom';
-import { Box } from '@material-ui/core';
-import { Skeleton } from '@mui/material';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { Box, Button, DialogActions, DialogContentText } from '@material-ui/core';
+import { Dialog, DialogContent, DialogTitle, Skeleton, Slide } from '@mui/material';
+
+const Transition = React.forwardRef(function Transition(props, ref) {
+  return <Slide direction="up" ref={ref} {...props} />;
+});
 
 export default function Agendamiento() {
 
@@ -15,8 +19,14 @@ export default function Agendamiento() {
     const [page, setPage] = useState("");
     const [agendas, setAgendas] = useState(false); 
     const [agendaRegistrada, setAgendaRegistrada] = useState(false);
-    const history = useNavigate();
-
+    const [logueado, setLogueado] = useState(false);
+    const [scheduleActive, setScheduleActive] = useState(false);    
+    const [open, setOpen] = useState(false);
+    const navigate = useNavigate();
+    const stateParams = useLocation();
+    console.log("Sintomas desde el agendamiento: ",stateParams);
+    
+    
     useEffect(() => {
       (async => {
         const auth = getAuth(); 
@@ -24,30 +34,48 @@ export default function Agendamiento() {
           const email = auth.currentUser?.email;  
           if(email !== undefined){
             getAgendas(email);
+            setLogueado(true)
           } 
           else {
             setAgendas(false);
-            history('/Login', {replace : true});            
+            navigate('/Login', {replace : true});            
           }       
-        }, 1000); 
+        }, 1000);  
 
         const getAgendas = async(email) => {
           const ageData = await getSchedulesByUser(email);
           console.log("Agendas: ", ageData.data);
           setAgendas(ageData.data);
+          validateScheduleActive(ageData)
         }
+        
       })()
-    }, [agendaRegistrada, history]);
+    }, [agendaRegistrada, navigate]);
+
+    const validateScheduleActive = (agendasUser) => {
+      var agendaActiva = false;
+      console.log("Agendas a validar: ",agendasUser);
+      agendasUser.data.map( agenda => 
+          agenda.estadoAgenda === 'Activa' && (agendaActiva = true)
+      );
+      setScheduleActive(agendaActiva);
+      console.log("estado scheculeActive: ", scheduleActive);
+    }
 
     const actualizarFecha = (date) => {
       cambiarFechaSeleccionada(date);
-      setPage("agendaConfirmada");                      
-      getAuth();  
-      setTimeout(() => {  
-        var userEmail = getAuth()?.currentUser?.email; 
-        manejadorRegistroAgendamiento(date, userEmail);
-        }, 1000
-      );  
+      if(stateParams.state !== undefined){
+        setPage("agendaConfirmada");                      
+        getAuth();  
+        setTimeout(() => {  
+          var userEmail = getAuth()?.currentUser?.email; 
+          manejadorRegistroAgendamiento(date, userEmail);
+          }, 1000
+        );  
+      }
+      else{
+        setOpen(true);
+      }
     };
 
     const manejadorRegistroAgendamiento = async(date, userEmail) => {
@@ -60,10 +88,22 @@ export default function Agendamiento() {
         console.log("Datos usuario: ", dataUser);
         if(result.statusResponse)
         {
-          var datos = { fechaCita : date.toLocaleString(), lugarAtencion : "IPS presencial", nombreMedico : "Mauricio Gomez", estadoAgenda : "Activa", 
-                        correoUsuario : email, nombreUsuario : dataUser.fullName, idUsuario : dataUser.identification };
-          registrarAgendamiento(datos);
-          setAgendaRegistrada(true);
+          const paramsLocation = stateParams?.state?.arraySintomas[0];
+          const sintomasData = paramsLocation?.categoria + ": " + paramsLocation?.subcategoria;
+          console.log("Sintomas a registrar: ",sintomasData);
+          console.log("valor undefined: ", stateParams.state);
+          if(stateParams.state !== undefined){
+            var datos = { fechaCita : date.toLocaleString(), lugarAtencion : "IPS presencial", sintomas: sintomasData, nombreMedico : "Mauricio Gomez", 
+                        estadoAgenda : "Activa", correoUsuario : email, nombreUsuario : dataUser.fullName, idUsuario : dataUser.identification };
+            console.log("Datos de la agenda a registrar: ", datos);
+            console.log("Props en registrar: ",paramsLocation);                       
+            registrarAgendamiento(datos);
+            RemoveStateUseLocation();
+            setAgendaRegistrada(!agendaRegistrada);
+          }
+          else{
+              console.log("El state está limpio", stateParams); 
+          }
         }
         else
         {
@@ -76,20 +116,36 @@ export default function Agendamiento() {
       }    
     }
 
+    const RemoveStateUseLocation =() => {
+      stateParams.state = undefined;
+      setLogueado(false);
+      console.log("Se limpia el state", stateParams);
+    }
+
     const refreshData = () => {
       console.log("Tabla Agendamientos actualizada");
-      setAgendaRegistrada(false);
+      setAgendaRegistrada(!agendaRegistrada);
     }
+
+    
+    const handleClose = () => {
+      setOpen(false);
+      navigate('/SelfTriage', {replace : true});
+    };
+
+    const handJustClose = () => {
+        setOpen(false);
+    }    
 
   return ( 
     <div>
       {
         <div className='container'>
           {                      
-            (agendas && agendas !== []) ? 
+            ((agendas && agendas !== []) || logueado) ? 
               <div className='container'>
-                <div className='row'>
-                  <h3>Agendar cita {console.log("Valor de agendas en el return: ", agendas)}</h3>
+                <div className='row' style={{display : scheduleActive ? 'none' : 'block'}}>
+                  <h3>Agendar cita</h3>
                   <label>Cita médica para la fecha:</label> 
                   <br></br>
                   <KeyboardDateTimePicker 
@@ -120,6 +176,29 @@ export default function Agendamiento() {
               }
         </div>
       }
+      <div>
+        <Dialog
+            open={open}
+            TransitionComponent={Transition}
+            keepMounted
+            onClose={handleClose}
+            aria-describedby="alert-dialog-slide-description"
+        >
+            <DialogTitle>{"Información"}</DialogTitle>
+            <DialogContent>
+            <DialogContentText id="alert-dialog-slide-description">
+                Para agendar una nueva cita médica, debes ingresar tus síntomas.
+                <br></br>
+                <br></br>
+                <strong>¿Deseas registrar tus síntomas?</strong>
+            </DialogContentText>
+            </DialogContent>
+            <DialogActions>
+              <Button onClick={handJustClose}>Cancelar</Button>
+              <Button onClick={handleClose}>Aceptar</Button>
+            </DialogActions>
+        </Dialog>
+      </div>
     </div>
   );
 }
