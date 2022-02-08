@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { useState } from 'react';
-import { Card, CardContent, TextField, Button, makeStyles, Container, Grid } from '@material-ui/core';
+import { Alert, Stack } from '@mui/material';
+import { Card, CardContent, TextField, Button, makeStyles, Container, Grid, Snackbar} from '@material-ui/core';
 import { getAuth } from "firebase/auth";
 import { getUser, updateUserById } from '../../actions';
 import { useNavigate } from 'react-router-dom';
@@ -31,7 +32,7 @@ const validarGuardarPerfil = async () => {
         phoneNumber: document.getElementById("telefono").value,
         address: document.getElementById("direccion").value
     };
-    actualizarUsuario(Usuario);
+    return actualizarUsuario(Usuario);
 }
 
 /**
@@ -39,7 +40,8 @@ const validarGuardarPerfil = async () => {
  */
 const actualizarUsuario = async (userUpdate) => {
     const result = await updateUserById(userUpdate);
-    console.log("Perfil actualizado", result.statusResponse)
+    console.log("Perfil actualizado", result.statusResponse);
+    return result.statusResponse;
 };
 
 export default function ProfileUser() {
@@ -49,7 +51,56 @@ export default function ProfileUser() {
     const [usuarioRetornado, setUsuarioRetornado] = useState(false);
     const [isEdit, setIsEdit] = useState(false);
     const history = useNavigate();
-    const [errorMessage, setErrorMessage] = useState(false);
+    const [alert, setAlert] = useState(false);
+    const [alertOK, setAlertOK] = useState(false);
+
+    const [target, setTarget] = useState([{ id:"", value:"" }]);
+    const [touched, setTouched] = useState(false);
+    const [errorMessageAge, setErrorMessageAge] = useState([]);
+    const [errorMessageCellphone, setErrorMessageCellphone] = useState([]);
+
+    /* Método para validar los campos del formulario*/
+    useEffect(() => {
+        if(target.id === 'edad'){
+            if(target.value) {
+                if (!/^[0-9]{1,2}$/.test(target.value)) {
+                    setErrorMessageAge(["Solo valores numéricos entre 1 y 99"]);
+                } else {
+                    setErrorMessageAge([]);
+                }
+            }else{
+                setErrorMessageAge(["Este campo es obligatorio"]);
+            }
+        }else if(target.id === 'celular'){
+            if(target.value){
+                if (!/^\d{10}$/.test(target.value)) {
+                    setErrorMessageCellphone(["Debe tener solo 10 números"]);
+                }else{
+                    setErrorMessageCellphone([]);
+                }
+            }else{
+                setErrorMessageCellphone(["Este campo es obligatorio"]);
+            }
+        }
+    }, [target]);
+
+    /* Método para capturar el campo y guardarlo en variable */
+    const handleChange = (event) => {
+        setTarget({id:event.target.id, value: event.target.value});
+    };
+
+    const handleTouch = () => {
+        setTouched(true);
+    };
+
+    /* Método para cerrar la alerta en pantalla */
+    const handleClose = (event, reason) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+        setAlert(false);
+        setAlertOK(false);
+    };
 
     /**
      * Método para obtener el Correo Electrónico por medio de la autenticación del Usuario logeado
@@ -83,6 +134,12 @@ export default function ProfileUser() {
 
     const formSubmitHandler = (event) => {
         event.preventDefault();
+        if(errorMessageAge.length === 0 && errorMessageCellphone.length === 0){
+            validarGuardarPerfil();
+            setAlertOK(true);
+        }else{
+            setAlert(true);
+        }
     };
 
     /**
@@ -90,15 +147,9 @@ export default function ProfileUser() {
      */
     const editarPerfil = (isEdit, e) => {
         setIsEdit(isEdit);
-    }
-
-    const validarCampo = () => {
-        var edad = document.getElementById("edad");
-        if (!/^\d{1,2}$/.test(edad.value)) {
-            setErrorMessage(true);
-        }else{
-            setErrorMessage(false);
-        }
+        /*if(alertOK){
+            window.location.reload(true);
+        }*/
     }
 
     /**
@@ -287,8 +338,11 @@ export default function ProfileUser() {
                                                         defaultValue={user != null ? user.age : ""}
                                                         className={classes.textField}
                                                         size="small"
-                                                        onBlur={validarCampo}
-                                                        error={errorMessage}                 
+
+                                                        error={touched && Boolean(errorMessageAge.length)}
+                                                        helperText={touched && errorMessageAge[0]}
+                                                        onChange={handleChange}
+                                                        onFocus={handleTouch}
                                                     />
                                                 </Grid>
                                                 <Grid item xs={12} sm={6} md={3} lg={3}>
@@ -302,6 +356,11 @@ export default function ProfileUser() {
                                                         defaultValue={user != null ? user.cellNumber : ""}
                                                         className={classes.textField}
                                                         size="small"
+
+                                                        error={touched && Boolean(errorMessageCellphone.length)}
+                                                        helperText={touched && errorMessageCellphone[0]}
+                                                        onChange={handleChange}
+                                                        onFocus={handleTouch}
                                                     />
                                                 </Grid>
                                                 <Grid item xs={12} sm={6} md={3} lg={3}>
@@ -379,13 +438,26 @@ export default function ProfileUser() {
                                                         variant="contained"
                                                         color="primary"
                                                         type="submit"
-                                                        onClick={validarGuardarPerfil}
                                                     >Guardar Perfil
                                                     </Button>
                                                 </center>
                                             </Grid>
                                         </Grid>
                                     </Grid>
+                                    <Stack spacing={2} sx={{ width: '100%' }}>       
+                                        <Snackbar open={alert} autoHideDuration={3000} onClose={handleClose}>
+                                            <Alert onClose={handleClose} severity="error" sx={{ width: '100%' }}>
+                                                Existen campos sin corregir
+                                            </Alert>
+                                        </Snackbar>
+                                    </Stack>
+                                    <Stack spacing={2} sx={{ width: '100%' }}>       
+                                        <Snackbar open={alertOK} autoHideDuration={2000} onClose={handleClose}>
+                                            <Alert onClose={handleClose} severity="success" sx={{ width: '100%' }}>
+                                                Perfil guardado
+                                            </Alert>
+                                        </Snackbar>
+                                    </Stack>
                                 </form>
                             </Container>
                         </div>
