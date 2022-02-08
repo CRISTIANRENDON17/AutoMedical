@@ -147,9 +147,9 @@ export default function ProfileUser() {
      */
     const editarPerfil = (isEdit, e) => {
         setIsEdit(isEdit);
-        /*if(alertOK){
+        if(alertOK){
             window.location.reload(true);
-        }*/
+        }
     }
 
     /**
