@@ -1,6 +1,6 @@
 import { addUser, getUser } from "../../actions.js";
 import { Alert, Stack } from '@mui/material';
-import { makeStyles, TextField, Button, Snackbar, Grid} from '@material-ui/core';
+import { makeStyles, TextField, Button, Snackbar, Container, Grid} from '@material-ui/core';
 import { Link } from "react-router-dom";
 import React from "react";
 import {getAuth, createUserWithEmailAndPassword} from 'firebase/auth';
@@ -32,8 +32,8 @@ const variable = async() => {
     fullName: document.getElementById("nombre").value,
     age: document.getElementById("edad").value,
     cellNumber: document.getElementById("celular").value,
-    phoneNumber: document.getElementById("telefono").value,
-    address: document.getElementById("direccion").value,
+    phoneNumber: "",
+    address: "",
     email: document.getElementById("email").value,
     password: document.getElementById("contraseña").value,
     confcontraseña: document.getElementById("confirmarContraseña").value,
@@ -64,15 +64,6 @@ const variable = async() => {
     mensaje =
       mensaje +
       `<div><li>Celular solo acepta 10 valores numéricos<br></li></div>`;
-  }
-  if (!/^\d{7}$/.test(Usuario.phoneNumber)) {
-    mensaje =
-      mensaje +
-      `<div><li>Teléfono solo acepta 7 valores numéricos<br></li></div>`;
-  }
-  if (!/^[^]+$/.test(Usuario.address)) {
-    mensaje =
-      mensaje + `<div><li>Dirección no puede estar vacía<br></li></div>`;
   }
   if (!/^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/.test(Usuario.email)) {
     mensaje =
@@ -147,8 +138,6 @@ const LimpiarForm = () => {
   document.getElementById("nombre").value = "";
   document.getElementById("edad").value = "";
   document.getElementById("celular").value = "";
-  document.getElementById("telefono").value = "";
-  document.getElementById("direccion").value = "";
   document.getElementById("email").value = "";
   document.getElementById("contraseña").value = "";
   document.getElementById("confirmarContraseña").value = "";
@@ -185,158 +174,140 @@ export default function RegistryForm(props) {
 
   return (
     <div>
-      <form onSubmit={formSubmitHandler} id="forrmulario" className={classes.form} noValidate>
-          <Grid container spacing={2}>
-            <Grid item xs={12} sm={12} md={6} lg={6}>
-              <Grid container spacing={2}>
-                <Grid item xs={4}>  
-                  <TextField
-                    fullWidth
-                    required
-                    autoFocus
-                    id="identificacion"
-                    label="Identificación"
-                    variant="outlined"
-                    type="number"
-                    error={errors}
-                    className={classes.textField}
-                    size="small"
-                  />
+      <Container component="main" maxWidth="md">
+        <form onSubmit={formSubmitHandler} id="forrmulario" className={classes.form} noValidate>
+            <Grid container spacing={2}>
+              <Grid item xs={12} sm={12} md={6} lg={6}>
+                <Grid container spacing={2}>
+                  <Grid item xs={4}>  
+                    <TextField
+                      fullWidth
+                      required
+                      autoFocus
+                      id="identificacion"
+                      label="Identificación"
+                      variant="outlined"
+                      type="number"
+                      error={errors}
+                      className={classes.textField}
+                      size="small"
+                    />
+                  </Grid>
+                  <Grid item xs={8}>
+                    <TextField
+                      fullWidth
+                      required
+                      id="nombre"
+                      label="Nombre Completo"
+                      variant="outlined"
+                      type="text"
+                      className={classes.textField}
+                      size="small"
+                    /> 
+                  </Grid>
                 </Grid>
-                <Grid item xs={8}>
-                  <TextField
-                    fullWidth
-                    required
-                    id="nombre"
-                    label="Nombre Completo"
-                    variant="outlined"
-                    type="text"
-                    className={classes.textField}
-                    size="small"
-                  /> 
-                </Grid>
-              </Grid>
-              <Grid container spacing={2}>
-                <Grid item xs>  
-                  <TextField
-                    fullWidth
-                    required
-                    id="edad"
-                    label="Edad"
-                    variant="outlined"
-                    type="number"
-                    className={classes.textField}
-                    size="small"
-                  />
-                </Grid>
-                <Grid item xs>  
-                  <TextField
-                    fullWidth
-                    required
-                    id="celular"
-                    label="Celular"
-                    variant="outlined"
-                    type="number"
-                    className={classes.textField}
-                    size="small"
-                  />
-                </Grid>
-                <Grid item xs> 
-                  <TextField
-                    fullWidth
-                    required
-                    id="telefono"
-                    label="Teléfono"
-                    variant="outlined"
-                    type="number"
-                    className={classes.textField}
-                    size="small"
-                  />
-                </Grid> 
-              </Grid>
-              <Grid container spacing={2} >
-                <Grid item xs>
-                  <TextField
-                    fullWidth
-                    required
-                    id="direccion"
-                    label="Dirección"
-                    variant="outlined"
-                    type="text"
-                    className={classes.textField}
-                    size="small"
-                  />
+                <Grid container spacing={2}>
+                  <Grid item xs>  
+                    <TextField
+                      fullWidth
+                      required
+                      id="edad"
+                      label="Edad"
+                      variant="outlined"
+                      type="number"
+                      className={classes.textField}
+                      size="small"
+                    />
+                  </Grid>
+                  <Grid item xs>  
+                    <TextField
+                      fullWidth
+                      required
+                      id="celular"
+                      label="Celular"
+                      variant="outlined"
+                      type="number"
+                      className={classes.textField}
+                      size="small"
+                    />
+                  </Grid>
                 </Grid>
               </Grid>
-            </Grid>
 
-            <Grid item xs={12} sm={12} md={6} lg={6}>
-              <Grid container spacing={2}>
-                <Grid item xs>
-                  <TextField
-                    fullWidth
-                    required 
-                    id="email"
-                    label="Correo"
-                    variant="outlined"
-                    type="email"
-                    className={classes.textField}
-                    size="small"
-                  />
+              <Grid item xs={12} sm={12} md={6} lg={6}>
+                <Grid container spacing={2}>
+                  <Grid item xs>
+                    <TextField
+                      fullWidth
+                      required 
+                      id="email"
+                      label="Correo Electrónico"
+                      variant="outlined"
+                      type="email"
+                      className={classes.textField}
+                      size="small"
+                    />
+                  </Grid>
                 </Grid>
+                <Grid container spacing={2}>
+                  <Grid item xs={6}>
+                    <TextField
+                      fullWidth
+                      required
+                      id="contraseña"
+                      label="Contraseña"
+                      variant="outlined"
+                      type="password"
+                      className={classes.textField}
+                      size="small"
+                    />
+                  </Grid>
+                  <Grid item xs>
+                    <TextField
+                      fullWidth
+                      required
+                      id="confirmarContraseña"
+                      label="Confirmar Contraseña"
+                      variant="outlined"
+                      type="password"
+                      className={classes.textField}
+                      pattern="[A-Za-z0-9!?-]{8,12}"
+                      size="small"
+                    />
+                  </Grid>
+                </Grid>  
               </Grid>
-              <Grid container spacing={2}>
-                <Grid item xs={6}>
-                  <TextField
-                    fullWidth
-                    required
-                    id="contraseña"
-                    label="Contraseña"
-                    variant="outlined"
-                    type="password"
-                    className={classes.textField}
-                    size="small"
-                  />
-                </Grid>
-                <Grid item xs>
-                  <TextField
-                    fullWidth
-                    required
-                    id="confirmarContraseña"
-                    label="Confirmar Contraseña"
-                    variant="outlined"
-                    type="password"
-                    className={classes.textField}
-                    pattern="[A-Za-z0-9!?-]{8,12}"
-                    size="small"
-                  />
-                </Grid>
-              </Grid>  
             </Grid>
-          </Grid>   
-          <Button
-            variant="contained"
-            color="primary"
-            type="submit"
-            onClick={variable}
-          >Registrar
-          </Button>
-          <Grid container justifyContent="flex-end">
-            <Grid item>
-              <Link to="/Login" className={classes.link}>
-                ¿Ya tienes cuenta?, ¡Ingresa!
-              </Link>
+            <Grid container spacing={5}>
+              <Grid item xs={12} sm={12} md={12} lg={12}>
+                <center>
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    type="submit"
+                    onClick={variable}
+                  >Registrar
+                  </Button>
+                </center>
+              </Grid>
             </Grid>
-          </Grid>
-          <Stack spacing={2} sx={{ width: '100%' }}>       
-           <Snackbar open={errors} autoHideDuration={6000} onClose={handleClose}>
-            <Alert onClose={handleClose} severity="error" sx={{ width: '100%' }}>
+            <Grid container justifyContent="flex-end">
+              <Grid item>
+                <Link to="/Login" className={classes.link}>
+                  ¿Ya tienes cuenta?, ¡Ingresa!
+                </Link>
+              </Grid>
+            </Grid>
+            <Stack spacing={2} sx={{ width: '100%' }}>       
+            <Snackbar open={errors} autoHideDuration={6000} onClose={handleClose}>
+              <Alert onClose={handleClose} severity="error" sx={{ width: '100%' }}>
                 Los campos con (*) son obligatorios.
-            </Alert>
-           </Snackbar>
-          </Stack>
-          <div id="Alert"></div>
-      </form>
+              </Alert>
+            </Snackbar>
+            </Stack>
+            <div id="Alert"></div>
+        </form>
+      </Container>
     </div>
   );
 }
