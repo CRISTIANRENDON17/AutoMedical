@@ -6,20 +6,18 @@ import React from "react";
 import {getAuth, createUserWithEmailAndPassword} from 'firebase/auth';
 
 const useStyles = makeStyles((theme) => ({
-  /*estilos del formulario y del texto*/
   form: {
     display: "flex",
     "flex-direction":
-      "column" /*atributo para que apile todo el contenido en columna uno despues de otro*/,
+      "column",
   },
   textField: {
     "margin-bottom":
-      "1rem" /*Propiedad para añadir margen en la parte inferior de los input del formulario;*/,
+      "1rem",
   },
   link:{
     "font-size": "0.85rem",
-    "text-decoration-line": "underline"
-    /*Propiedades para el link que lo lleva a registrar usuario*/,
+    "text-decoration-line": "underline",
   },
 }));
 
@@ -31,14 +29,14 @@ var mensaje = "";
 const variable = async() => {
   const Usuario = {
     identification: document.getElementById("identificacion").value,
-    fullName: document.getElementById("Nombre").value,
-    age: document.getElementById("Edad").value,
-    cellNumber: document.getElementById("Celular").value,
-    phoneNumber: document.getElementById("Telefono").value,
-    address: document.getElementById("Direccion").value,
+    fullName: document.getElementById("nombre").value,
+    age: document.getElementById("edad").value,
+    cellNumber: document.getElementById("celular").value,
+    phoneNumber: document.getElementById("telefono").value,
+    address: document.getElementById("direccion").value,
     email: document.getElementById("email").value,
     password: document.getElementById("contraseña").value,
-    confcontraseña: document.getElementById("confirmed_contraseña").value,
+    confcontraseña: document.getElementById("confirmarContraseña").value,
     rol: "usuario",
   };
   /*
@@ -146,33 +144,31 @@ const CrearUsuarioAutenticacion = (Usuario) => {
 
 const LimpiarForm = () => {
   document.getElementById("identificacion").value = "";
-  document.getElementById("Nombre").value = "";
-  document.getElementById("Edad").value = "";
-  document.getElementById("Celular").value = "";
-  document.getElementById("Telefono").value = "";
-  document.getElementById("Direccion").value = "";
+  document.getElementById("nombre").value = "";
+  document.getElementById("edad").value = "";
+  document.getElementById("celular").value = "";
+  document.getElementById("telefono").value = "";
+  document.getElementById("direccion").value = "";
   document.getElementById("email").value = "";
   document.getElementById("contraseña").value = "";
-  document.getElementById("confirmed_contraseña").value = "";
+  document.getElementById("confirmarContraseña").value = "";
 };
 
 export default function RegistryForm(props) {
   const [errors, setErrors] = React.useState(false);
-
-  //props es el objeto que por defecto todos los componentes de react tienen acceso, alli se encuentran por ejemplo las propiedades que le envia el padre al componente hijo
-  const classes = useStyles(); /*guardar los estilos en la variable classes*/
+  
+  const classes = useStyles();
 
   const formSubmitHandler = (event) => {
-    //el "event" es una propiedad que por defecto se tiene acceso cuando se aplica un Evento en un elemento de HTML, alli se puede encontrar por ejemplo las propiedades del elemento el cual inicio el evento.
-    event.preventDefault(); /*No se reinicia el form al darle al button*/
+    event.preventDefault();
     validarFormulario();
-    props.onRegistry(); /*Propiedades de padre a hijo*/
+    props.onRegistry();
   };
 
   const validarFormulario = ()=> {
     var identificacion = document.getElementById("identificacion");
     if(identificacion.value ===  undefined || identificacion.value === '' || 
-       (!/^\d{7,14}$/.test(identificacion.value))){
+      (!/^\d{7,14}$/.test(identificacion.value))){
       setErrors(true);
     }else{
       setErrors(false);
@@ -185,15 +181,12 @@ export default function RegistryForm(props) {
       return;
     }
     setErrors(false);
-} ;
+  };
 
   return (
     <div>
       <form onSubmit={formSubmitHandler} id="forrmulario" className={classes.form} noValidate>
-        {/*cuando se le de submit envia el formulario a la funcion formSubmitHandler y aparte llama a la clase del form qu elo hace flex y lo agrupa todo en columna */}
-          {/* Contenedor formulario */}
           <Grid container spacing={2}>
-            {/* Primer columna */}
             <Grid item xs={12} sm={12} md={6} lg={6}>
               <Grid container spacing={2}>
                 <Grid item xs={4}>  
@@ -207,17 +200,19 @@ export default function RegistryForm(props) {
                     type="number"
                     error={errors}
                     className={classes.textField}
+                    size="small"
                   />
                 </Grid>
                 <Grid item xs={8}>
                   <TextField
                     fullWidth
                     required
-                    id="Nombre"
+                    id="nombre"
                     label="Nombre Completo"
                     variant="outlined"
                     type="text"
                     className={classes.textField}
+                    size="small"
                   /> 
                 </Grid>
               </Grid>
@@ -226,33 +221,36 @@ export default function RegistryForm(props) {
                   <TextField
                     fullWidth
                     required
-                    id="Edad"
+                    id="edad"
                     label="Edad"
                     variant="outlined"
                     type="number"
                     className={classes.textField}
+                    size="small"
                   />
                 </Grid>
                 <Grid item xs>  
                   <TextField
                     fullWidth
                     required
-                    id="Celular"
+                    id="celular"
                     label="Celular"
                     variant="outlined"
                     type="number"
                     className={classes.textField}
+                    size="small"
                   />
                 </Grid>
                 <Grid item xs> 
                   <TextField
                     fullWidth
                     required
-                    id="Telefono"
+                    id="telefono"
                     label="Teléfono"
                     variant="outlined"
                     type="number"
                     className={classes.textField}
+                    size="small"
                   />
                 </Grid> 
               </Grid>
@@ -261,21 +259,21 @@ export default function RegistryForm(props) {
                   <TextField
                     fullWidth
                     required
-                    id="Direccion"
+                    id="direccion"
                     label="Dirección"
                     variant="outlined"
                     type="text"
                     className={classes.textField}
+                    size="small"
                   />
                 </Grid>
               </Grid>
-            </Grid> {/* Fin Grid Item 6 */}
+            </Grid>
 
-            {/* Segunda columna */}
             <Grid item xs={12} sm={12} md={6} lg={6}>
               <Grid container spacing={2}>
                 <Grid item xs>
-                  <TextField /*propio del '@material-ui/core/TextField'; si fuera html este seria nuestro input */
+                  <TextField
                     fullWidth
                     required 
                     id="email"
@@ -283,6 +281,7 @@ export default function RegistryForm(props) {
                     variant="outlined"
                     type="email"
                     className={classes.textField}
+                    size="small"
                   />
                 </Grid>
               </Grid>
@@ -296,35 +295,32 @@ export default function RegistryForm(props) {
                     variant="outlined"
                     type="password"
                     className={classes.textField}
+                    size="small"
                   />
                 </Grid>
                 <Grid item xs>
                   <TextField
                     fullWidth
                     required
-                    id="confirmed_contraseña"
+                    id="confirmarContraseña"
                     label="Confirmar Contraseña"
                     variant="outlined"
                     type="password"
                     className={classes.textField}
                     pattern="[A-Za-z0-9!?-]{8,12}"
+                    size="small"
                   />
                 </Grid>
               </Grid>  
-            
-            </Grid> {/* Fin Grid Item 6 */}
-          </Grid> {/* Fin Grid container */}
-          
+            </Grid>
+          </Grid>   
           <Button
             variant="contained"
             color="primary"
             type="submit"
             onClick={variable}
-          >
-            {/*Boton propio de import Button from '@material-ui/core/Button'; */}
-            Registrar
+          >Registrar
           </Button>
-
           <Grid container justifyContent="flex-end">
             <Grid item>
               <Link to="/Login" className={classes.link}>
@@ -332,7 +328,6 @@ export default function RegistryForm(props) {
               </Link>
             </Grid>
           </Grid>
-
           <Stack spacing={2} sx={{ width: '100%' }}>       
            <Snackbar open={errors} autoHideDuration={6000} onClose={handleClose}>
             <Alert onClose={handleClose} severity="error" sx={{ width: '100%' }}>
