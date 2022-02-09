@@ -21,9 +21,9 @@ const useStyles = makeStyles((theme) => ({
 
 
 /**
- * Método para validar las modificaciones realizadas por el Usuario
+ * Método para obtener los datos a guardar y actualziar la información
  */
-const validarGuardarPerfil = async () => {
+const guardarPerfil = async () => {
     const Usuario = {
         identification: document.getElementById("identificacion").value,
         fullName: document.getElementById("nombre").value,
@@ -32,17 +32,8 @@ const validarGuardarPerfil = async () => {
         phoneNumber: document.getElementById("telefono").value,
         address: document.getElementById("direccion").value
     };
-    return actualizarUsuario(Usuario);
+    await updateUserById(Usuario);
 }
-
-/**
- * Método para guardar las modificaciones realizadas por el Usuario
- */
-const actualizarUsuario = async (userUpdate) => {
-    const result = await updateUserById(userUpdate);
-    console.log("Perfil actualizado", result.statusResponse);
-    return result.statusResponse;
-};
 
 export default function ProfileUser() {
     const classes = useStyles();
@@ -51,19 +42,25 @@ export default function ProfileUser() {
     const [usuarioRetornado, setUsuarioRetornado] = useState(false);
     const [isEdit, setIsEdit] = useState(false);
     const history = useNavigate();
-    const [alert, setAlert] = useState(false);
+
+    /* Variables para mostrar las alertas de: Error o Success al dar clic en guardar */
+    const [alertError, setAlertError] = useState(false);
     const [alertOK, setAlertOK] = useState(false);
 
+    /* Variables para mostrar los mensajes de error de los campos */
     const [target, setTarget] = useState([{ id:"", value:"" }]);
     const [touched, setTouched] = useState(false);
     const [errorMessageAge, setErrorMessageAge] = useState([]);
     const [errorMessageCellphone, setErrorMessageCellphone] = useState([]);
+    const [errorMessagePhoneNumber, setErrorMessagePhoneNumber] = useState([]);
+    const [errorMessageFullName, setErrorMessageFullName] = useState([]);
+    const [errorMessageAddress, setErrorMessageAddress] = useState([]);
 
-    /* Método para validar los campos del formulario*/
+    /* Método para validar los campos del formulario con expresiones regulares */
     useEffect(() => {
         if(target.id === 'edad'){
             if(target.value) {
-                if (!/^[0-9]{1,2}$/.test(target.value)) {
+                if (!/^(([1-9]{1})([0-9]{1})?)$/.test(target.value)) {
                     setErrorMessageAge(["Solo valores numéricos entre 1 y 99"]);
                 } else {
                     setErrorMessageAge([]);
@@ -73,13 +70,49 @@ export default function ProfileUser() {
             }
         }else if(target.id === 'celular'){
             if(target.value){
-                if (!/^\d{10}$/.test(target.value)) {
-                    setErrorMessageCellphone(["Debe tener solo 10 números"]);
+                if (!/^(([3]{1})([0-9]{9}))$/.test(target.value)) {
+                    setErrorMessageCellphone(["Solo 10 números, iniciar con 3"]);
                 }else{
                     setErrorMessageCellphone([]);
                 }
             }else{
                 setErrorMessageCellphone(["Este campo es obligatorio"]);
+            }
+        }else if(target.id === 'telefono'){
+            if(target.value){
+                if (!/^\d{7}$/.test(target.value)) {
+                    setErrorMessagePhoneNumber(["Debe tener solo 7 números"]);
+                }else{
+                    setErrorMessagePhoneNumber([]);
+                }
+            }else{
+                setErrorMessagePhoneNumber(["Este campo es obligatorio"]);
+            }
+        }else if(target.id === 'nombre'){
+            if(target.value){
+                if (!/^[a-zA-ZñÑáéíóúÁÉÍÓÚ\s]+$/.test(target.value)) {
+                    setErrorMessageFullName(["Solo valores alfabéticos"]);
+                }else if(!/^[a-zA-ZñÑáéíóúÁÉÍÓÚ\s]{2,70}$/.test(target.value)) {
+                    setErrorMessageFullName(["Cantidad máxima de dígitos (70), mínima (2)"]);
+                }
+                else{
+                    setErrorMessageFullName([]);
+                }
+            }else{
+                setErrorMessageFullName(["Este campo es obligatorio"]);
+            }
+        }else if(target.id === 'direccion'){
+            if(target.value){
+                if (!/^[0-9a-zA-ZñÑáéíóúÁÉÍÓÚ\-\#\,\;\:\.\s]+$/.test(target.value)) {
+                    setErrorMessageAddress(["Solo valores alfabéticos"]);
+                }else if(!/^[0-9a-zA-ZñÑáéíóúÁÉÍÓÚ\-\#\,\;\:\.\s]{5,200}$/.test(target.value)) {
+                    setErrorMessageAddress(["Cantidad máxima de dígitos (200), mínima (5)"]);
+                }
+                else{
+                    setErrorMessageAddress([]);
+                }
+            }else{
+                setErrorMessageAddress(["Este campo es obligatorio"]);
             }
         }
     }, [target]);
@@ -89,6 +122,7 @@ export default function ProfileUser() {
         setTarget({id:event.target.id, value: event.target.value});
     };
 
+    /* Método para validar si se da clic en el campo */
     const handleTouch = () => {
         setTouched(true);
     };
@@ -98,12 +132,13 @@ export default function ProfileUser() {
         if (reason === 'clickaway') {
             return;
         }
-        setAlert(false);
+        setAlertError(false);
         setAlertOK(false);
     };
 
     /**
      * Método para obtener el Correo Electrónico por medio de la autenticación del Usuario logeado
+     * Y posteriormente obtener la información completa del Usuario
      */
     useEffect(() => {
         (async => {
@@ -114,6 +149,7 @@ export default function ProfileUser() {
                     getObjectUser(emailUserAuth);
                     setLogueado(true);
                 } else {
+                    /* Si el usuario NO está logeado lo redirige al Login*/
                     setUsuarioRetornado(false);
                     setUser(null);
                     history('/Login', { replace: true });
@@ -132,23 +168,32 @@ export default function ProfileUser() {
         })()
     }, [usuarioRetornado, logueado, history]);
 
+    /* Se ejecuta con el Submit y valida si guardar modificaciones o no; sacando alertas*/
     const formSubmitHandler = (event) => {
         event.preventDefault();
-        if(errorMessageAge.length === 0 && errorMessageCellphone.length === 0){
-            validarGuardarPerfil();
+        if(errorMessageAge.length === 0 && errorMessageCellphone.length === 0
+            && errorMessagePhoneNumber.length === 0 && errorMessageFullName.length === 0
+            && errorMessageAddress.length === 0){
+            guardarPerfil();
             setAlertOK(true);
         }else{
-            setAlert(true);
+            setAlertError(true);
         }
     };
 
     /**
-     * Método para actualizar la variable isEdit, para visualizar la actualización del perfil
+     * Método para actualizar la variable isEdit, para visualizar la interfaz de actualización del perfil
      */
     const editarPerfil = (isEdit, e) => {
         setIsEdit(isEdit);
         if(alertOK){
             window.location.reload(true);
+        }else{
+            setErrorMessageAge([]);
+            setErrorMessageCellphone([]);
+            setErrorMessagePhoneNumber([]);
+            setErrorMessageFullName([]);
+            setErrorMessageAddress([]);
         }
     }
 
@@ -374,6 +419,11 @@ export default function ProfileUser() {
                                                         defaultValue={user != null ? user.phoneNumber : ""}
                                                         className={classes.textField}
                                                         size="small"
+
+                                                        error={touched && Boolean(errorMessagePhoneNumber.length)}
+                                                        helperText={touched && errorMessagePhoneNumber[0]}
+                                                        onChange={handleChange}
+                                                        onFocus={handleTouch}
                                                     />
                                                 </Grid>
                                             </Grid>
@@ -402,6 +452,11 @@ export default function ProfileUser() {
                                                         defaultValue={user != null ? user.fullName : ""}
                                                         className={classes.textField}
                                                         size="small"
+
+                                                        error={touched && Boolean(errorMessageFullName.length)}
+                                                        helperText={touched && errorMessageFullName[0]}
+                                                        onChange={handleChange}
+                                                        onFocus={handleTouch}
                                                     />
                                                 </Grid>
                                             </Grid>
@@ -417,6 +472,11 @@ export default function ProfileUser() {
                                                         defaultValue={user != null ? user.address : ""}
                                                         className={classes.textField}
                                                         size="small"
+
+                                                        error={touched && Boolean(errorMessageAddress.length)}
+                                                        helperText={touched && errorMessageAddress[0]}
+                                                        onChange={handleChange}
+                                                        onFocus={handleTouch}
                                                     />
                                                 </Grid>
                                             </Grid>
@@ -445,7 +505,7 @@ export default function ProfileUser() {
                                         </Grid>
                                     </Grid>
                                     <Stack spacing={2} sx={{ width: '100%' }}>       
-                                        <Snackbar open={alert} autoHideDuration={3000} onClose={handleClose}>
+                                        <Snackbar open={alertError} autoHideDuration={3000} onClose={handleClose}>
                                             <Alert onClose={handleClose} severity="error" sx={{ width: '100%' }}>
                                                 Existen campos sin corregir
                                             </Alert>
