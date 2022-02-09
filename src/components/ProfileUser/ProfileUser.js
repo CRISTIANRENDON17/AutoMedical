@@ -62,7 +62,7 @@ export default function ProfileUser() {
             if(target.value) {
                 if (!/^(([1-9]{1})([0-9]{1})?)$/.test(target.value)) {
                     setErrorMessageAge(["Solo valores numéricos entre 1 y 99"]);
-                } else {
+                }else{
                     setErrorMessageAge([]);
                 }
             }else{
@@ -94,8 +94,7 @@ export default function ProfileUser() {
                     setErrorMessageFullName(["Solo valores alfabéticos"]);
                 }else if(!/^[a-zA-ZñÑáéíóúÁÉÍÓÚ\s]{2,70}$/.test(target.value)) {
                     setErrorMessageFullName(["Cantidad máxima de dígitos (70), mínima (2)"]);
-                }
-                else{
+                }else{
                     setErrorMessageFullName([]);
                 }
             }else{
@@ -107,8 +106,7 @@ export default function ProfileUser() {
                     setErrorMessageAddress(["Solo valores alfabéticos"]);
                 }else if(!/^[0-9a-zA-ZñÑáéíóúÁÉÍÓÚ\-#,;:.\s]{5,200}$/.test(target.value)) {
                     setErrorMessageAddress(["Cantidad máxima de dígitos (200), mínima (5)"]);
-                }
-                else{
+                }else{
                     setErrorMessageAddress([]);
                 }
             }else{
@@ -168,7 +166,7 @@ export default function ProfileUser() {
         })()
     }, [usuarioRetornado, logueado, history]);
 
-    /* Se ejecuta con el Submit y valida si guardar modificaciones o no; sacando alertas*/
+    /* Se ejecuta con el Submit y valida si guardar modificaciones o no; sacando alertas */
     const formSubmitHandler = (event) => {
         event.preventDefault();
         if(errorMessageAge.length === 0 && errorMessageCellphone.length === 0
