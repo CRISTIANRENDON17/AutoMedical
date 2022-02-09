@@ -103,9 +103,9 @@ export default function ProfileUser() {
             }
         }else if(target.id === 'direccion'){
             if(target.value){
-                if (!/^[0-9a-zA-ZñÑáéíóúÁÉÍÓÚ\-\#\,\;\:\.\s]+$/.test(target.value)) {
+                if (!/^[0-9a-zA-ZñÑáéíóúÁÉÍÓÚ\-#,;:.\s]+$/.test(target.value)) {
                     setErrorMessageAddress(["Solo valores alfabéticos"]);
-                }else if(!/^[0-9a-zA-ZñÑáéíóúÁÉÍÓÚ\-\#\,\;\:\.\s]{5,200}$/.test(target.value)) {
+                }else if(!/^[0-9a-zA-ZñÑáéíóúÁÉÍÓÚ\-#,;:.\s]{5,200}$/.test(target.value)) {
                     setErrorMessageAddress(["Cantidad máxima de dígitos (200), mínima (5)"]);
                 }
                 else{
