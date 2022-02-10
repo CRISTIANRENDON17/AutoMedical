@@ -32,7 +32,7 @@ export const AppRouter = () => {
                         <Route path="/SelfTriage" element={<div><AppBar data={1}/><SelfTriage/></div>}/>
                         <Route path="/SelfTriage/:categoryName" element={<div><AppBar data={1}/><Subcategories/></div>}/>
                         <Route path="/Agendamiento" element={<div><AppBar data={1}/><Agendamiento/></div>}/>
-                        <Route path="/ListUser" element={<div><AppBar data={1}/><Container><ListUser/></Container></div>}/>
+                        <Route path="/ListUser" element={<div><AppBar data={2}/><Container><ListUser/></Container></div>}/>
                         <Route path="/Recover" element={<div><AppBar data={0}/><RecuperarPasword/></div>}/>
                         <Route path="*" element={<div><Error404Page /></div>} />               
                     </Routes>

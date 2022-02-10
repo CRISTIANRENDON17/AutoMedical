@@ -35,7 +35,7 @@ export default function AppBar({data}) {
   };
 
   const signOutSession = () => {
-    data = 0
+    data = 0;
     const auth = getAuth();
     signOut(auth).then(() => {
       console.log("Sesión cerrada");
@@ -43,7 +43,7 @@ export default function AppBar({data}) {
     }).catch((error) => {
       console.log("Se presentó un error al intentar cerrar la sesión: ", error);
     });
-  }
+  };
 
   const classes = useStyles();
   if (data === 0) {
@@ -107,6 +107,92 @@ export default function AppBar({data}) {
                   to="/SelfTriage"
                 >
                 Ingresar Síntomas
+                </NavLink>
+              </Typography>
+            </Button>
+
+            <Button color="inherit" onClick={handleClick}>
+              <Typography variant="h6">
+                <FontAwesomeIcon icon= {faUserCircle} size='lg' className="iconNavBar"/>
+              </Typography>
+            </Button>
+            <Menu
+              id="basic-menu"
+              anchorEl={anchorEl}
+              open={open}
+              onClose={handleClose}
+              MenuListProps={{
+                'aria-labelledby': 'basic-button',
+              }}
+            >
+                <MenuItem onClick={handleClose}>
+                <NavLink
+                  activeclassname="active"
+                  className={"styleButtonsNav"}
+                  // exact
+                  to="/ProfileUser"
+                >
+                  <FontAwesomeIcon icon= {faUser} className="iconNavBar"/>
+                  &nbsp;Perfil
+                </NavLink>
+              </MenuItem>
+              <MenuItem onClick={handleClose}>
+                <NavLink
+                  activeclassname="active"
+                  className={"styleButtonsNav"}
+                  // exact
+                  to="/HelpPage"
+                >
+                  <FontAwesomeIcon icon= {faQuestionCircle} className="iconNavBar"/>
+                  &nbsp;Ayuda
+                </NavLink>
+              </MenuItem>
+              <hr></hr>
+              <MenuItem onClick={handleClose}>
+                <Button
+                  activeclassname="active"
+                  className={"styleButtonsNav"}
+                  // exact
+                  //to="/"  
+                  onClick={() => {signOutSession()}}
+                >
+                  <FontAwesomeIcon icon= {faSignOutAlt} className="iconNavBar"/>
+                  &nbsp;Cerrar Sesión
+                </Button>
+              </MenuItem>
+            </Menu>
+          </Toolbar>
+        </AppBarMaterial>
+      </div>
+    );
+  }
+  else if (data === 2) {
+    return (
+      <div className={classes.root}>
+        <AppBarMaterial position="static" color="transparent">
+          <Toolbar>
+            <Link to="/LandingPage">
+              <LogoTipo />
+            </Link>
+            <Typography variant="h2" className={classes.title}>
+              <NavLink
+                activeclassname="active"
+                className={"styleButtonsNav"}
+                // exact
+                to="/LandingPage"
+              >              
+              </NavLink>
+            </Typography>
+
+            <Button color="inherit">
+              <Typography variant="h6" className={classes.login}>
+                <NavLink
+                  activeclassname="active"
+                  className={"styleButtonsNav"}
+                  // exact
+                  to="/ListUser"
+                >
+                Listar Usuarios
                 </NavLink>
               </Typography>
             </Button>
