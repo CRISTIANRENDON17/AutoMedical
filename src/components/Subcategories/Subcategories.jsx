@@ -159,6 +159,11 @@ const Subcategories = () => {
                                 onClick={agendarCita}
                             >Aceptar
                             </Button>
+                            <Button 
+                                variant="outlined"
+                                color="secondary"
+                            >Solo Asesoría telefónica
+                            </Button>
                         </DialogActions>
                     </Dialog>
                     </div>
