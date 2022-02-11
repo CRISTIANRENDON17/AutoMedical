@@ -277,13 +277,23 @@ const columnsAdmin = [
   },
   {
     field:"Activar",
-    headerName: "Activar",
-    renderCell: (props) =>{return(<Button id="Activado" variant="contained" size="medium" sx={{ fontSize: 11 }} onClick={console.log(props)} >Activar</Button>)},
+    headerName: "Estado",
+    renderCell: () =>{
+      const [estado, setEstado] = useState('Borrado');
+      return(
+      <Button color="primary" variant="contained" size="medium" sx={{ fontSize: 11 }}
+      onClick={() =>
+        setEstado((current) =>
+            current === 'Borrado' ? 'Activado' : 'Borrado',
+          )
+        }
+      > {estado === 'Borrado' ? 'Activado' : 'Borrado'}</Button>
+    )},
   },
   {
     field:"Desactivar",
     headerName: "Desactivar",
-    renderCell: (props) =>{return(<Button  id="Desactivado" variant="contained" color="error" size="medium" sx={{ fontSize: 11 }}>Desactivar</Button>)},
+    //renderCell: (props) =>{return(<Button  id="Desactivado" variant="contained" color="error" size="medium" sx={{ fontSize: 11 }}>Desactivar</Button>)},
   },
 ];
 
