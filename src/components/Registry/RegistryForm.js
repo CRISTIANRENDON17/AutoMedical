@@ -35,7 +35,7 @@ const registrarUsuario = async() => {
     cellNumber: document.getElementById("celular").value,
     phoneNumber: "",
     address: "",
-    email: document.getElementById("email").value,
+    email: document.getElementById("email").value.toLowerCase(),
     password: document.getElementById("contraseña").value,
     confcontraseña: document.getElementById("confirmarContraseña").value,
     rol: "usuario",
@@ -58,7 +58,8 @@ const registrarUsuario = async() => {
       mensaje +
       `<div><li>Celular solo acepta 10 valores numéricos empezando con 3<br></li></div>`;
   }
-  if (!/^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/.test(Usuario.email)) {
+  if (!/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+  .test(Usuario.email)) {
     mensaje =
       mensaje +
       `<div><li>Correo no puede estar vacío, debe detener caracteres antes y despues del @ con una dirección <br></li></div>`;
@@ -183,8 +184,9 @@ export default function RegistryForm(props) {
       }
     }else if(target.id === 'email'){
       if(target.value){
-        if (!/^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/.test(target.value)) {
-          setErrorMessageEmail(["Caracteres antes y después del @ con una dirección"]);
+        if (!/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+            .test(target.value)) {
+          setErrorMessageEmail(["Formato incorrecto. Ejemplo \"micorreo@email.com\" "]);
         } else{
           setErrorMessageEmail([]);
         }
