@@ -2,6 +2,7 @@
     {
         "id" : 0,
         "categoryName" : "Cardiovascular",
+        "prioridad" : 1,
         "subcategories" : [
             {
                 "idSubcategory" : 0,
@@ -44,6 +45,7 @@
     {
         "id" : 1,
         "categoryName" : "Oftamológico",
+        "prioridad" : 1,
         "subcategories" : [
             {
                 "idSubcategory" : 0,
@@ -86,6 +88,7 @@
     {
         "id" : 2,
         "categoryName" : "Ortopedia o músculos esqueléticos",
+        "prioridad" : 1,
         "subcategories" : [
             {
                 "idSubcategory" : 0,
@@ -124,6 +127,7 @@
     {
         "id" : 3,
         "categoryName" : "Respiratorio",
+        "prioridad" : 1,
         "subcategories" : [
             {
                 "idSubcategory" : 0,
@@ -166,6 +170,7 @@
     {
         "id" : 4,
         "categoryName" : "Neurológico y cabeza",
+        "prioridad" : 1,
         "subcategories" : [
             {
                 "idSubcategory" : 0,
@@ -212,6 +217,7 @@
     {
         "id" : 5,
         "categoryName" : "Abdominal o gastrointestinal",
+        "prioridad" : 2,
         "subcategories" : [
             {
                 "idSubcategory" : 0,
@@ -258,6 +264,7 @@
     {
         "id" : 6,
         "categoryName" : "Boca, garganta y cuello",
+        "prioridad" : 3,
         "subcategories" : [
             {
                 "idSubcategory" : 0,
@@ -288,6 +295,7 @@
     {
         "id" : 7,
         "categoryName" : "Oídos",
+        "prioridad" : 3,
         "subcategories" : [
             {
                 "idSubcategory" : 0,
@@ -318,6 +326,7 @@
     {
         "id" : 8,
         "categoryName" : "Nariz",
+        "prioridad" : 3,
         "subcategories" : [
             {
                 "idSubcategory" : 0,
@@ -352,6 +361,7 @@
     {
         "id" : 9,
         "categoryName" : "Vascular periférico",
+        "prioridad" : 3,
         "subcategories" : [
             {
                 "idSubcategory" : 0,
@@ -370,6 +380,7 @@
     {
         "id" : 10,
         "categoryName" : "Genito urinario",
+        "prioridad" : 2,
         "subcategories" : [
             {
                 "idSubcategory" : 0,
@@ -400,6 +411,7 @@
     {
         "id" : 11,
         "categoryName" : "Caídas, accidentes, traumas",
+        "prioridad" : 1,
         "subcategories" : [
             {
                 "idSubcategory" : 0,
@@ -438,6 +450,7 @@
     {
         "id" : 12,
         "categoryName" : "Piel, uñas, cabello, pestañas",
+        "prioridad" : 3,
         "subcategories" : [
             {
                 "idSubcategory" : 0,
@@ -488,6 +501,7 @@
     {
         "id" : 13,
         "categoryName" : "Salud mental",
+        "prioridad" : 3,
         "subcategories" : [
             {
                 "idSubcategory" : 0,
@@ -530,6 +544,7 @@
     {
         "id" : 14,
         "categoryName" : "Violencia",
+        "prioridad" : 3,
         "subcategories" : [
             {
                 "idSubcategory" : 0,

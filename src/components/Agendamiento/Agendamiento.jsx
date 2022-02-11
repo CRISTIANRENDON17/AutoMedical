@@ -90,10 +90,19 @@ export default function Agendamiento() {
         {
           const paramsLocation = stateParams?.state?.arraySintomas[0];
           const sintomasData = paramsLocation?.categoria + ": " + paramsLocation?.subcategoria;
+          const priority = paramsLocation?.prioridad;
+          var placeAtention = "";
+          if(priority === 1){
+            placeAtention = "IPS Presencial";
+          }else if (priority === 2){
+            placeAtention = "IPS Presencial - General";
+          }else if (priority === 3){
+            placeAtention = "Vía Telefónica";
+          }
           console.log("Sintomas a registrar: ",sintomasData);
           console.log("valor undefined: ", stateParams.state);
           if(stateParams.state !== undefined){
-            var datos = { fechaCita : date.toLocaleString(), lugarAtencion : "IPS presencial", sintomas: sintomasData, nombreMedico : "Mauricio Gomez", 
+            var datos = { fechaCita : date.toLocaleString(), lugarAtencion : placeAtention, sintomas: sintomasData, nombreMedico : "Mauricio Gomez", 
                         estadoAgenda : "Activa", correoUsuario : email, nombreUsuario : dataUser.fullName, idUsuario : dataUser.identification };
             console.log("Datos de la agenda a registrar: ", datos);
             console.log("Props en registrar: ",paramsLocation);                       
@@ -194,8 +203,18 @@ export default function Agendamiento() {
             </DialogContentText>
             </DialogContent>
             <DialogActions>
-              <Button onClick={handJustClose}>Cancelar</Button>
-              <Button onClick={handleClose}>Aceptar</Button>
+              <Button 
+                variant="outlined"
+                color="primary"
+                onClick={handJustClose}
+              >Cancelar
+              </Button>
+              <Button
+                variant="contained"
+                color="primary"
+                onClick={handleClose}
+              >Aceptar
+              </Button>
             </DialogActions>
         </Dialog>
       </div>

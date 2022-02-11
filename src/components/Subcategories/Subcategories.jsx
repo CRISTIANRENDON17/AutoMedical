@@ -12,7 +12,7 @@ import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faGoogleWallet} from '@fortawesome/free-brands-svg-icons';
 import {faHeart, faEye, faBone, faLungs, faBrain, faHeadSideCough, faAssistiveListeningSystems, faDiagnoses, 
         faHeadSideVirus, faAngry, faCarCrash, faBacteria, faShoePrints, faHeadSideMask, faSlash} from '@fortawesome/free-solid-svg-icons';
-import Button from '@mui/material/Button';
+import { Button } from '@material-ui/core';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
@@ -40,6 +40,7 @@ const Subcategories = () => {
     const {categoryName} = useParams();
     const [categories] = React.useState(CategoriesList);
     const [sintomas, setSintomas] = useState();
+    const [prioridad, setPrioridad] = useState([{ tipoPrioridad :"", textoPrioridad :""}]);
     const history = useNavigate();
 
     useEffect(() => {
@@ -57,34 +58,42 @@ const Subcategories = () => {
         })()
       }, [logueado, history]);
 
-
-    const handleClickOpen = (category, subcategory) => {
-        const dataSintomas = [{categoria: category, subcategoria: subcategory}];
+    /* Método para abrir la modal de diálogo */
+    const handleClickOpen = (category, priority, subcategory) => {
+        const dataSintomas = [{categoria: category, prioridad: priority, subcategoria: subcategory}];
         setSintomas(dataSintomas);
+        if(priority === 1){
+            setPrioridad({ tipoPrioridad : "prioritaria", textoPrioridad : "De acuerdo con sus respuestas, la atención más adecuada requiere una" + 
+            "valoración prioritaria presencial, por lo que se sugiere una cita presencial prioritaria en la IPS."});
+        }else if(priority === 2){
+            setPrioridad({ tipoPrioridad : "general", textoPrioridad : "De acuerdo con sus respuestas, la atención más adecuada requiere una" + 
+            "valoración general presencial, por lo que se sugiere una cita presencial general en la IPS."});
+        }else if(priority === 3){
+            setPrioridad({ tipoPrioridad : "telefónica", textoPrioridad : "De acuerdo con sus respuestas, la atención más adecuada requiere una" + 
+            "sugerencia telefónica, por lo que se sugiere una cita por vía telefónica."});
+        }
         setOpen(true);
-        console.log("Sintomas después del set: ",sintomas);
+        console.log("Sintomas después del set: ", sintomas);
     };
   
+    /* Método para cerrar la modal de diálogo */
     const handleClose = () => {
-      setOpen(false);
-      //history('/Agendamiento', {replace : true});
-      console.log("Sintomas desde el aceptar: ",sintomas);
-      history('/Agendamiento', {
-        state: {
-          arraySintomas: sintomas,
-        }
-      });
+        setOpen(false);
+        console.log("Sintomas desde el cancel o clic por fuera de la modal: ", sintomas);
     };
 
-    const handJustClose = () => {
-        console.log("Sintomas desde el cancel: ",sintomas);
+    /* Método para redirigirlo al Agendamiento de citas */
+    const agendarCita = () => {
         setOpen(false);
+        console.log("Sintomas desde el aceptar: ", sintomas);
+        history('/Agendamiento', {
+            state: {
+              arraySintomas: sintomas,
+            }
+        });
     }
 
-
-        
     return(
-    
         <div>
             {
                 <div>
@@ -103,7 +112,7 @@ const Subcategories = () => {
                                             category.subcategories.map((subcategory) => {
                                             return(                                
                                                 <Grid item xs={12} md={6} lg={4} key={subcategory.idSubcategory}> 
-                                                    <Item className='itemCategory' onClick={() => handleClickOpen(categoryName, subcategory.subcategoryName)}><FontAwesomeIcon icon ={categoriesIcons[category.id]} size='lg' className='iconCategory'/>{subcategory.subcategoryName}</Item>                                            
+                                                    <Item className='itemCategory' onClick={() => handleClickOpen(categoryName, category.prioridad, subcategory.subcategoryName)}><FontAwesomeIcon icon ={categoriesIcons[category.id]} size='lg' className='iconCategory'/>{subcategory.subcategoryName}</Item>                                            
                                                 </Grid>
                                             );
                                         }));   
@@ -128,17 +137,28 @@ const Subcategories = () => {
                     >
                         <DialogTitle>{"Información"}</DialogTitle>
                         <DialogContent>
-                        <DialogContentText id="alert-dialog-slide-description">
-                            De acuerdo con tus respuestas, la atención más adecuada para ti requiere una valoración prioritaria presencial,
-                            Por lo que te direccionamos a una  cita presencial prioritaria a tu IPS.
-                            <br></br>
-                            <br></br>
-                            <strong>¿Deseas realizar el agendamiento de tu cita?</strong>
-                        </DialogContentText>
+                            <DialogContentText id="alert-dialog-slide-description">
+                                    
+                                {prioridad.textoPrioridad}
+                                    
+                                <br></br>
+                                <br></br>
+                                <strong>¿Deseas realizar el agendamiento de tu cita {prioridad.tipoPrioridad}?</strong>
+                            </DialogContentText>
                         </DialogContent>
                         <DialogActions>
-                        <Button onClick={handJustClose}>Cancelar</Button>
-                        <Button onClick={handleClose}>Aceptar</Button>
+                            <Button 
+                                variant="outlined"
+                                color="primary"
+                                onClick={handleClose}
+                            >Cancelar
+                            </Button>
+                            <Button 
+                                variant="contained"
+                                color="primary"
+                                onClick={agendarCita}
+                            >Aceptar
+                            </Button>
                         </DialogActions>
                     </Dialog>
                     </div>

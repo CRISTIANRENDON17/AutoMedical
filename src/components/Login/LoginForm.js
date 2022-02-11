@@ -83,7 +83,8 @@ export default function LoginForm(props) {
   const validarEmail = () => {  
     var email = document.getElementById("Email");
     if(email.value ===  undefined || email.value === '' ||
-      (!/^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/.test(email.value))){
+        (!/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+        .test(email.value))){
       setErrorEmail(true);
     }else{
       setErrorEmail(false);
