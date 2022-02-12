@@ -93,11 +93,11 @@ export default function Agendamiento() {
           const priority = paramsLocation?.prioridad;
           var placeAtention = "";
           if(priority === 1){
-            placeAtention = "IPS Presencial";
+            placeAtention = "IPS Presencial - Prioritaria";
           }else if (priority === 2){
             placeAtention = "IPS Presencial - General";
           }else if (priority === 3){
-            placeAtention = "Vía Telefónica";
+            placeAtention = "Sugerencia Telefónica";
           }
           console.log("Sintomas a registrar: ",sintomasData);
           console.log("valor undefined: ", stateParams.state);
@@ -187,35 +187,35 @@ export default function Agendamiento() {
       }
       <div>
         <Dialog
-            open={open}
-            TransitionComponent={Transition}
-            keepMounted
-            onClose={handleClose}
-            aria-describedby="alert-dialog-slide-description"
+          open={open}
+          TransitionComponent={Transition}
+          keepMounted
+          onClose={handleClose}
+          aria-describedby="alert-dialog-slide-description"
         >
-            <DialogTitle>{"Información"}</DialogTitle>
-            <DialogContent>
+          <DialogTitle>{"Información"}</DialogTitle>
+          <DialogContent>
             <DialogContentText id="alert-dialog-slide-description">
                 Para agendar una nueva cita médica, debes ingresar tus síntomas.
                 <br></br>
                 <br></br>
                 <strong>¿Deseas registrar tus síntomas?</strong>
             </DialogContentText>
-            </DialogContent>
-            <DialogActions>
-              <Button 
-                variant="outlined"
-                color="primary"
-                onClick={handJustClose}
-              >Cancelar
-              </Button>
-              <Button
-                variant="contained"
-                color="primary"
-                onClick={handleClose}
-              >Aceptar
-              </Button>
-            </DialogActions>
+          </DialogContent>
+          <DialogActions>
+            <Button 
+              variant="outlined"
+              color="primary"
+              onClick={handJustClose}
+            >Cancelar
+            </Button>
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={handleClose}
+            >Aceptar
+            </Button>
+          </DialogActions>
         </Dialog>
       </div>
     </div>

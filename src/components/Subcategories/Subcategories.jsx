@@ -82,7 +82,7 @@ const Subcategories = () => {
         console.log("Sintomas desde el cancel o clic por fuera de la modal: ", sintomas);
     };
 
-    /* Método para redirigirlo al Agendamiento de citas */
+    /* Método para redirigirlo al Agendamiento de citas, decisión del sistema */
     const agendarCita = () => {
         setOpen(false);
         console.log("Sintomas desde el aceptar: ", sintomas);
@@ -91,6 +91,20 @@ const Subcategories = () => {
               arraySintomas: sintomas,
             }
         });
+    }
+
+    /* Método para redirigirlo al Agendamiento de citas, decisión del usuario */
+    const asesoriaTelefonica = () => {
+        setOpen(false);
+        const dataSintomas = sintomas;
+        dataSintomas[0].prioridad = 3;  
+        console.log("Sintomas desde el solo asería telefónica: ", sintomas);
+        setSintomas(dataSintomas);
+        history('/Agendamiento', {
+            state: {
+              arraySintomas: sintomas,
+            }
+        }); 
     }
 
     return(
@@ -159,11 +173,15 @@ const Subcategories = () => {
                                 onClick={agendarCita}
                             >Aceptar
                             </Button>
+                            
                             <Button 
-                                variant="outlined"
-                                color="secondary"
+                                variant="contained"
+                                color="primary"
+                                onClick={asesoriaTelefonica}
+                                disabled={prioridad.tipoPrioridad === "telefónica"}
                             >Solo Asesoría telefónica
                             </Button>
+
                         </DialogActions>
                     </Dialog>
                     </div>
