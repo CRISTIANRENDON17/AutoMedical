@@ -13,6 +13,9 @@ import { useState } from "react";
 import { Box } from "@mui/material";
 import { addSeconds } from "date-fns/esm";
 import Button from '@mui/material/Button';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPlus } from '@fortawesome/free-solid-svg-icons';
+
 
 function Herramientas() {
   return (
@@ -33,10 +36,15 @@ function validateEmail(email) {
   return re.test(String(email).toLowerCase());
 }
 
-
-
 export default function ListUser() {
   const [users, setUsers] = useState([]);
+
+  /* Método para agregar un nuevo usuario */
+  const handleAddRow = () => {
+    const numeroRows = users.length;
+    console.log("Número de filas", numeroRows);
+    console.log("Abre desde el Agregar Usuario", columnsAdmin);
+  };
 
   useEffect(() => {
     const arrayUsers = [];
@@ -137,6 +145,11 @@ export default function ListUser() {
         },
       }}
     >
+      <Button
+        onClick={handleAddRow}>
+        <FontAwesomeIcon icon= {faPlus} size='md'/>
+        &nbsp;&nbsp;Agregar Usuario
+      </Button>
       <DataGrid
         components={{
           Toolbar: Herramientas,
@@ -144,7 +157,6 @@ export default function ListUser() {
         rows={users}
         columns={getcolumns()}
         onEditRowsModelChange={handleEditRowsModelChange}
-      
       />
     </Box>
     </div>
@@ -164,13 +176,14 @@ const getcolumns = () => {
 const columnsDoctor = [
   {
     field: "id",
-    headerName: "id",
+    headerName: "Identificación",
     dataGeneratorUniquenessEnabled: true,
+    width: 110,
     filterable: true,
   },
   {
     field: "fullName",
-    headerName: "Nombre",
+    headerName: "Nombre Completo",
     width: 180,
     editable: false,
   },
@@ -194,13 +207,13 @@ const columnsDoctor = [
   },
   {
     field: "phoneNumber",
-    headerName: "Telefono",
+    headerName: "Teléfono",
     width: 100,
     editable: false,
   },
   {
     field: "address",
-    headerName: "Direccion",
+    headerName: "Dirección",
     dataGeneratorUniquenessEnabled: true,
     width: 200,
     editable: false,
@@ -217,8 +230,9 @@ const columnsDoctor = [
 const columnsAdmin = [
   {
     field: "id",
-    headerName: "id",
+    headerName: "Identificación",
     dataGeneratorUniquenessEnabled: true,
+    width: 110,
     filterable: true,
   },
   {
@@ -257,13 +271,13 @@ const columnsAdmin = [
   },
   {
     field: "phoneNumber",
-    headerName: "Telefono",
+    headerName: "Teléfono",
     width: 100,
     editable: true,
   },
   {
     field: "address",
-    headerName: "Direccion",
+    headerName: "Dirección",
     dataGeneratorUniquenessEnabled: true,
     width: 200,
     editable: true,
