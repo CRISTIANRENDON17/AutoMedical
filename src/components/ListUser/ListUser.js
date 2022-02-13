@@ -12,10 +12,10 @@ import { getCollection, getIdUser, updateFieldUser } from "../../actions";
 import { useEffect } from "react";
 import { useState } from "react";
 import { Box } from "@mui/material";
-//import { addSeconds } from "date-fns/esm";
+import { addSeconds } from "date-fns/esm";
 import Button from '@mui/material/Button';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPlus } from '@fortawesome/free-solid-svg-icons';
+import { faDatabase, faPlus } from '@fortawesome/free-solid-svg-icons';
 
 
 function Herramientas() {
@@ -209,6 +209,19 @@ const columnsDoctor = [
     editable: false,
   },
   {
+    field: "phoneNumber",
+    headerName: "Teléfono",
+    width: 100,
+    editable: false,
+  },
+  {
+    field: "address",
+    headerName: "Dirección",
+    dataGeneratorUniquenessEnabled: true,
+    width: 200,
+    editable: false,
+  },
+  {
     field: "rol",
     headerName: "Rol",
     dataGeneratorUniquenessEnabled: true,
@@ -260,6 +273,19 @@ const columnsAdmin = [
     editable: true,
   },
   {
+    field: "phoneNumber",
+    headerName: "Teléfono",
+    width: 100,
+    editable: true,
+  },
+  {
+    field: "address",
+    headerName: "Dirección",
+    dataGeneratorUniquenessEnabled: true,
+    width: 200,
+    editable: true,
+  },
+  {
     field: "rol",
     headerName: "Rol",
     dataGeneratorUniquenessEnabled: true,
@@ -295,7 +321,7 @@ const columnsAdmin = [
               value:thisRow.estado,
             };
             //console.log("Data a actualizar: ", data);
-            await updateFieldUser(data);
+            const statusUpdate = await updateFieldUser(data);
             //console.log("Estado actualización: ", statusUpdate);
           //console.log(JSON.stringify(thisRow, null, 4))
         //return alert(JSON.stringify(thisRow, null, 4));
@@ -305,7 +331,7 @@ const columnsAdmin = [
       //console.log(params.row.estado);
       var estado = params.row.estado; 
       //console.log(estado);
-      return <Button onClick={onClick}>{estado !== 'Activo' ? 'Inactivo' : 'Activo'}</Button>;
+      return <Button onClick={onClick}>{estado != 'Activo' ? 'Inactivo' : 'Activo'}</Button>;
     },
     /*renderCell: () =>{
       const [estado, setEstado] = useState('Inactivo');
