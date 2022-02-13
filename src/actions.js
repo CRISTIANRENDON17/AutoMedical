@@ -33,6 +33,7 @@ export const addUser = async(collectionName, data) => {
         result.statusResponse =  true;        
         result.data = datos.id;
     } catch (error) {
+        console.log("Error al registrar usuario: ", error);
         result.error = error;        
     }
     

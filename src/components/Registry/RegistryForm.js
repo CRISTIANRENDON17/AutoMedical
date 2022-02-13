@@ -82,8 +82,7 @@ const registrarUsuario = async() => {
   if (mensaje === "<di><l1>Error</li></div>") {
     const result = await validarUsuario(Usuario);
     if(!result.usuarioExiste) {    
-      guardarUsuario(Usuario); 
-      crearUsuarioAutenticacion(Usuario);
+      guardarUsuario(Usuario);
       limpiarForm();
       mensaje = "";
     }else{        
@@ -105,9 +104,11 @@ const validarUsuario = async(Usuario) => {
   return result;
 };
 
-const guardarUsuario = async(newUser) => {
-  const result = await addUser('usuarios', newUser);
-  console.log("Usuario registrado exitosamente: ", result.data);
+const   guardarUsuario = async(newUser) => {
+  await addUser('usuarios', newUser).then((result) =>{    
+    console.log("Usuario registrado exitosamente: ", result);
+    crearUsuarioAutenticacion(newUser);
+  }); 
   mensaje ="";
 };
 
