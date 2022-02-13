@@ -39,6 +39,7 @@ const registrarUsuario = async() => {
     password: document.getElementById("contraseña").value,
     confcontraseña: document.getElementById("confirmarContraseña").value,
     rol: "usuario",
+    estado:"Activo",
   };
 
   mensaje = "<di><l1>Error</li></div>";

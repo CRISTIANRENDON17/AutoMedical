@@ -1,5 +1,6 @@
 import * as React from "react";
 import {
+  GridCellValue,
   DataGrid,
   GridToolbarContainer,
   GridToolbarColumnsButton,
@@ -14,7 +15,7 @@ import { Box } from "@mui/material";
 import { addSeconds } from "date-fns/esm";
 import Button from '@mui/material/Button';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPlus } from '@fortawesome/free-solid-svg-icons';
+import { faDatabase, faPlus } from '@fortawesome/free-solid-svg-icons';
 
 
 function Herramientas() {
@@ -42,6 +43,7 @@ export default function ListUser() {
   /* Método para agregar un nuevo usuario */
   const handleAddRow = () => {
     const numeroRows = users.length;
+    //setUsers(users.push(data));
     console.log("Número de filas", numeroRows);
     console.log("Abre desde el Agregar Usuario", columnsAdmin);
   };
@@ -64,6 +66,7 @@ export default function ListUser() {
             address: user.data().address,
             rol: user.data().rol,
             password: user.data().password,
+            estado: user.data().estado,
           });
         } else if (user.data().rol !== UserActualRol & UserActualRol === "doctor" & user.data().rol !== "admin") {
           //este seria el list del doctor
@@ -82,7 +85,7 @@ export default function ListUser() {
 
       setUsers(arrayUsers);
     })();
-  }, []);
+  }, [users]);
 
   const handleEditRowsModelChange = React.useCallback((model) => {
     console.log("Modelo entrada: ", model);
@@ -106,7 +109,7 @@ export default function ListUser() {
         arrayDato[4].replace('"', "").replace('"}}}', "")?.replace("}}}", "");
       // Se obtiene el id encriptado del documento según la identificación del usuario
       // Se actualiza el campo modificado en la tabla
-      (async () => {
+      /*(async () => {
         const idUserData = await getIdUser(id);
         const data = {
           identificacion: idUserData.data[0],
@@ -118,7 +121,7 @@ export default function ListUser() {
         const statusUpdate =
           data.error !== "true" && (await updateFieldUser(data));
         console.log("Estado actualización: ", statusUpdate);
-      })();
+      })();*/
     }
   }, []);
 
@@ -290,24 +293,58 @@ const columnsAdmin = [
     editable: true,
   },
   {
-    field:"Activar",
+    field:"estado",
     headerName: "Estado",
-    renderCell: () =>{
-      const [estado, setEstado] = useState('Borrado');
+    renderCell: (params) => {
+      const onClick = async (e) => {
+        e.stopPropagation(); // don't select this row after clicking
+        const api: GridApi = params.api;
+        const thisRow: Record<string, GridCellValue> = {};
+        api
+          .getAllColumns()
+          .filter((c) => c.field !== '__check__' && !!c)
+          .forEach(
+            (c) => (thisRow[c.field] = params.getValue(params.id, c.field)),
+          );
+          //console.log("1 ",thisRow.estado);
+            if(thisRow.estado === "Activo"){
+              thisRow.estado = "Inactivo";
+            }
+            else if(thisRow.estado === "Inactivo"){
+              thisRow.estado = "Activo";
+            }
+            //console.log(JSON.stringify(thisRow, null, 4))         
+            const idUserData = await getIdUser(thisRow.id);
+            const data = {
+              identificacion: idUserData.data[0],
+              fieldName: "estado",
+              value:thisRow.estado,
+            };
+            //console.log("Data a actualizar: ", data);
+            const statusUpdate = await updateFieldUser(data);
+            //console.log("Estado actualización: ", statusUpdate);
+          //console.log(JSON.stringify(thisRow, null, 4))
+        //return alert(JSON.stringify(thisRow, null, 4));
+        return null;
+       // return(alert(thisRow));
+      };
+      //console.log(params.row.estado);
+      var estado = params.row.estado; 
+      //console.log(estado);
+      return <Button onClick={onClick}>{estado != 'Activo' ? 'Inactivo' : 'Activo'}</Button>;
+    },
+    /*renderCell: () =>{
+      const [estado, setEstado] = useState('Inactivo');
       return(
       <Button color="primary" variant="contained" size="medium" sx={{ fontSize: 11 }}
       onClick={() =>
         setEstado((current) =>
-            current === 'Borrado' ? 'Activado' : 'Borrado',
+            current === 'Inactivo' ? 'Activo' : 'Inactivo',
           )
         }
-      > {estado === 'Borrado' ? 'Activado' : 'Borrado'}</Button>
-    )},
+      > {estado === 'Inactivo' ? 'Activo' : 'Inactivo'}</Button>
+    )},*/
   },
-  {
-    field:"Desactivar",
-    headerName: "Desactivar",
-    //renderCell: (props) =>{return(<Button  id="Desactivado" variant="contained" color="error" size="medium" sx={{ fontSize: 11 }}>Desactivar</Button>)},
-  },
+
 ];
 
