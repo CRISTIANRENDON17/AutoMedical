@@ -33,8 +33,6 @@ const registrarUsuario = async() => {
     fullName: document.getElementById("nombre").value,
     age: document.getElementById("edad").value,
     cellNumber: document.getElementById("celular").value,
-    phoneNumber: "",
-    address: "",
     email: document.getElementById("email").value.toLowerCase(),
     password: document.getElementById("contraseña").value,
     confcontraseña: document.getElementById("confirmarContraseña").value,
