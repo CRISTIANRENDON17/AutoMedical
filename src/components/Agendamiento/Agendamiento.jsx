@@ -5,7 +5,7 @@ import { ConfirmacionAgenda } from "./ConfirmacionAgenda";
 import ListaAgendamiento from "./ListaAgendamiento"
 import { getUser, registrarAgendamiento, getSchedulesByUser } from '../../actions';
 import { getAuth } from "firebase/auth";
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate, Link } from 'react-router-dom';
 import { Box, Button, DialogActions, DialogContentText } from '@material-ui/core';
 import { Dialog, DialogContent, DialogTitle, Skeleton, Slide } from '@mui/material';
 
@@ -55,16 +55,22 @@ export default function Agendamiento() {
     const validateScheduleActive = (agendasUser) => {
       var agendaActiva = false;
       console.log("Agendas a validar: ",agendasUser);
-      agendasUser.data.map( agenda => 
-          agenda.estadoAgenda === 'Activa' && (agendaActiva = true)
-      );
+      if(stateParams.state === undefined || stateParams.state === null){
+        agendaActiva = true;
+      }
+      else{
+        agendasUser.statusResponse && agendasUser.data.map( agenda => 
+            agenda.estadoAgenda === 'Activa' && (agendaActiva = true)
+        );
+      }
       setScheduleActive(agendaActiva);
+      (stateParams.state === undefined || stateParams.state === null) && setScheduleActive(true);
       console.log("estado scheculeActive: ", scheduleActive);
     }
 
     const actualizarFecha = (date) => {
       cambiarFechaSeleccionada(date);
-      if(stateParams.state !== undefined){
+      if(stateParams.state !== undefined || stateParams.state !== null){
         setPage("agendaConfirmada");                      
         getAuth();  
         setTimeout(() => {  
@@ -165,6 +171,11 @@ export default function Agendamiento() {
                     id='fechaCita'
                     />
                   {page === "agendaConfirmada" && <ConfirmacionAgenda fecha={fechaSeleccionada.toLocaleString()}/>}    
+                </div>
+                <div className='row' style={{display : scheduleActive ? 'block' : 'none'}}>
+                  <Link to="/SelfTriage">                
+                    <Button variant="contained" style={{backgroundColor : "#4054b4", color: "white", marginTop : "1em"}}>Registrar síntomas</Button>
+                  </Link>
                 </div>
                 <br />
                 <div className='row'>

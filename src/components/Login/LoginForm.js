@@ -21,11 +21,12 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+
+var isIngresoExitoso = false;
+
 export const IngresoExitoso = () => {
   return isIngresoExitoso;
 };
-
-var isIngresoExitoso = false;
 
 const LoginButton = () => {
   const email = document.getElementById("Email").value;
@@ -42,6 +43,7 @@ const LoginButton = () => {
     signInWithEmailAndPassword(auth, email, password)
     .then((userCredential) => {    
       // const user = userCredential.user;
+      console.log("Ingreso exitoso al iniciar sesión");
       isIngresoExitoso = true;
     })
     .catch((error) => {
