@@ -70,16 +70,18 @@ export default function ListUser() {
           });
         } else if (user.data().rol !== UserActualRol & UserActualRol === "doctor" & user.data().rol !== "admin") {
           //este seria el list del doctor
-          arrayUsers.push({
-            id: user.data().identification,
-            fullName: user.data().fullName,
-            age: user.data().age,
-            email: user.data().email,
-            cellNumber: user.data().cellNumber,
-            phoneNumber: user.data().phoneNumber,
-            address: user.data().address,
-            rol: user.data().rol,
-          });
+          if(user.data().estado !== "Inactivo"){
+            arrayUsers.push({
+              id: user.data().identification,
+              fullName: user.data().fullName,
+              age: user.data().age,
+              email: user.data().email,
+              cellNumber: user.data().cellNumber,
+              phoneNumber: user.data().phoneNumber,
+              address: user.data().address,
+              rol: user.data().rol,
+            });
+          }
         }
       });
 
@@ -213,6 +215,8 @@ const columnsDoctor = [
     headerName: "Teléfono",
     width: 100,
     editable: false,
+    hide:true,
+    
   },
   {
     field: "address",
@@ -220,6 +224,7 @@ const columnsDoctor = [
     dataGeneratorUniquenessEnabled: true,
     width: 200,
     editable: false,
+    hide:true,
   },
   {
     field: "rol",
@@ -277,13 +282,14 @@ const columnsAdmin = [
     headerName: "Teléfono",
     width: 100,
     editable: true,
+    hide:true,
   },
   {
     field: "address",
     headerName: "Dirección",
-    dataGeneratorUniquenessEnabled: true,
     width: 200,
     editable: true,
+    hide:true,
   },
   {
     field: "rol",
@@ -331,7 +337,7 @@ const columnsAdmin = [
       //console.log(params.row.estado);
       var estado = params.row.estado; 
       //console.log(estado);
-      return <Button onClick={onClick}>{estado != 'Activo' ? 'Inactivo' : 'Activo'}</Button>;
+      return <Button onClick={onClick}>{estado !== 'Activo' ? 'Inactivo' : 'Activo'}</Button>;
     },
     /*renderCell: () =>{
       const [estado, setEstado] = useState('Inactivo');
