@@ -21,6 +21,7 @@ export default function Agendamiento() {
     const [agendaRegistrada, setAgendaRegistrada] = useState(false);
     const [logueado, setLogueado] = useState(false);
     const [scheduleActive, setScheduleActive] = useState(false);    
+    const [dataSintomas, setdataSintomas] = useState(false);    
     const [open, setOpen] = useState(false);
     const navigate = useNavigate();
     const stateParams = useLocation();
@@ -54,18 +55,25 @@ export default function Agendamiento() {
 
     const validateScheduleActive = (agendasUser) => {
       var agendaActiva = false;
-      console.log("Agendas a validar: ",agendasUser);
-      if(stateParams.state === undefined || stateParams.state === null){
-        agendaActiva = true;
-      }
-      else{
-        agendasUser.statusResponse && agendasUser.data.map( agenda => 
-            agenda.estadoAgenda === 'Activa' && (agendaActiva = true)
-        );
-      }
+      
+      agendasUser.statusResponse && agendasUser.data.map( agenda => 
+        agenda.estadoAgenda === 'Activa' && (agendaActiva = true)
+      );
+      console.log("Estado de la agenda antes: ", agendaActiva);        
       setScheduleActive(agendaActiva);
-      (stateParams.state === undefined || stateParams.state === null) && setScheduleActive(true);
-      console.log("estado scheculeActive: ", scheduleActive);
+      
+      //(scheduleActive === false && (stateParams.state === undefined || stateParams.state === null)) && setdataSintomas(!dataSintomas);
+      if(!agendaActiva && (stateParams.state === undefined || stateParams.state === null))
+      {
+        console.log("Estado del registrar sintomas: ", dataSintomas);
+        console.log("Agenda activa aquí? Here: ", scheduleActive);
+        setdataSintomas(true);
+        setScheduleActive(true);
+      }
+      else
+      {
+        console.log("Hay agenda activa o no hay sintomas");
+      }
     }
 
     const actualizarFecha = (date) => {
@@ -139,9 +147,10 @@ export default function Agendamiento() {
 
     const refreshData = () => {
       console.log("Tabla Agendamientos actualizada");
+      setScheduleActive(false);
+      setdataSintomas(false);
       setAgendaRegistrada(!agendaRegistrada);
     }
-
     
     const handleClose = () => {
       setOpen(false);
@@ -172,7 +181,7 @@ export default function Agendamiento() {
                     />
                   {page === "agendaConfirmada" && <ConfirmacionAgenda fecha={fechaSeleccionada.toLocaleString()}/>}    
                 </div>
-                <div className='row' style={{display : scheduleActive ? 'block' : 'none'}}>
+                <div className='row' style={{display : dataSintomas ? 'block' : 'none'}}>
                   <Link to="/SelfTriage">                
                     <Button variant="contained" style={{backgroundColor : "#4054b4", color: "white", marginTop : "1em"}}>Registrar síntomas</Button>
                   </Link>

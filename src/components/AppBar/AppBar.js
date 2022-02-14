@@ -141,6 +141,17 @@ export default function AppBar({data}) {
                   activeclassname="active"
                   className={"styleButtonsNav"}
                   // exact
+                  to="/Agendamiento"
+                >
+                  <FontAwesomeIcon icon= {faUser} className="iconNavBar"/>
+                  &nbsp;Agendamientos
+                </NavLink>
+              </MenuItem>
+              <MenuItem onClick={handleClose}>
+                <NavLink
+                  activeclassname="active"
+                  className={"styleButtonsNav"}
+                  // exact
                   to="/HelpPage"
                 >
                   <FontAwesomeIcon icon= {faQuestionCircle} className="iconNavBar"/>
