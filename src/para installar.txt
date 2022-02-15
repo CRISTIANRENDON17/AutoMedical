@@ -5,11 +5,9 @@ npm i --save @fortawesome/fontawesome-svg-core @fortawesome/free-solid-svg-icons
 npm i  @material-ui/pickers
 npm i @date-io/date-fns@1.x date-fns
 npm i firebase
-
-
-nuevo pa instalar :u ---------------
 npm install @mui/x-data-grid
-npm install @mui/x-data-grid-generator
-------------------------------
+npm install @mui/x-data-grid-generatofa-rotate-180
 
 
+PARA INSTALAR
+npm install sweetalert --save

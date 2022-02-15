@@ -8,7 +8,7 @@ import {
   GridToolbarExport,
   GridToolbarDensitySelector,
 } from "@mui/x-data-grid";
-import { getCollection, getIdUser, updateFieldUser } from "../../actions";
+import { getCollection, getIdUser, updateFieldUser, getSchedulesByUser } from "../../actions";
 import { useEffect } from "react";
 import { useState } from "react";
 import { Box } from "@mui/material";
@@ -16,7 +16,8 @@ import { addSeconds } from "date-fns/esm";
 import Button from '@mui/material/Button';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faDatabase, faPlus } from '@fortawesome/free-solid-svg-icons';
-
+//import ScrollDialog from "./ListUserModal.js";
+import swal from 'sweetalert';
 
 function Herramientas() {
   return (
@@ -29,7 +30,7 @@ function Herramientas() {
   );
 }
 
-const UserActualRol = "admin";
+const UserActualRol = "doctor";
 
 function validateEmail(email) {
   const re =
@@ -64,7 +65,8 @@ export default function ListUser() {
             cellNumber: user.data().cellNumber,
             phoneNumber: user.data().phoneNumber,
             address: user.data().address,
-            rol: user.data().rol,
+           // modal: user.data().modal,
+           rol: user.data().rol,
             password: user.data().password,
             estado: user.data().estado,
           });
@@ -80,6 +82,7 @@ export default function ListUser() {
               phoneNumber: user.data().phoneNumber,
               address: user.data().address,
               rol: user.data().rol,
+            //  modal: user.data().modal,
             });
           }
         }
@@ -150,11 +153,7 @@ export default function ListUser() {
         },
       }}
     >
-      <Button
-        onClick={handleAddRow}>
-        <FontAwesomeIcon icon= {faPlus} size='md'/>
-        &nbsp;&nbsp;Agregar Usuario
-      </Button>
+      
       <DataGrid
         components={{
           Toolbar: Herramientas,
@@ -163,6 +162,12 @@ export default function ListUser() {
         columns={getcolumns()}
         onEditRowsModelChange={handleEditRowsModelChange}
       />
+      <Button
+        onClick={handleAddRow}>
+        <FontAwesomeIcon icon= {faPlus} size='md'/>
+        &nbsp;&nbsp;Agregar Usuario
+      </Button>
+      
     </Box>
     </div>
   );
@@ -232,6 +237,67 @@ const columnsDoctor = [
     dataGeneratorUniquenessEnabled: true,
     width: 70,
     editable: false,
+  },
+  {
+    field: "modal",
+    headerName: "Modal",
+    dataGeneratorUniquenessEnabled: true,
+    width: 150,
+    editable: false,
+    renderCell: (params) => {
+      const onClick = async (e) => {
+        e.stopPropagation(); // don't select this row after clicking
+        const api: GridApi = params.api;
+        const thisRow: Record<string, GridCellValue> = {};
+        api
+          .getAllColumns()
+          .filter((c) => c.field !== '__check__' && !!c)
+          .forEach(
+            (c) => (thisRow[c.field] = params.getValue(params.id, c.field)),
+          );       
+            const data = await getSchedulesByUser(thisRow.email);
+
+            let aux = "";
+            for(let i = 0 ; i < data.data.length; i++)
+            {
+              aux = aux + "Id: " + data.data[i].idUsuario + "\n";
+              aux = aux + "Nombre: " + data.data[i].nombreUsuario + "\n";
+              aux = aux + "Lugar Atencion: " + data.data[i].lugarAtencion + "\n";
+              aux = aux + "EstadoAgenda: " + data.data[i].estadoAgenda + "\n";
+              aux = aux + "Fecha Cita: " + data.data[i].fechaCita + "\n";
+              aux = aux + "Sintomas: " + data.data[i].sintomas + "\n";
+              aux = aux + "\n" + "\n";
+            }
+            if(aux === "")
+            {
+              aux = "No tiene agendas registradas";
+            }
+          //  let aux = data.data.map(({data})=> {"Nombre"+data.nombreUsuario+"\n"+sata});
+            //console.log(aux);
+            console.log(data.data[0]);
+            swal({
+              title: "Historial de Agendas",
+              text: `${aux}`,
+              button: "Salir",
+            });
+            /**
+             * {
+    "id": "7VccZqQ8n1pummhau15S",
+    "lugarAtencion": "IPS Presencial - Prioritaria",
+    "estadoAgenda": "Cancelada",
+    "correoUsuario": "gabi@gmail.com",
+    "sintomas": "Cardiovascular: Palpitación o taquicardia",
+    "nombreMedico": "Ángel Guzmán",
+    "nombreUsuario": "Gabriela Perez",
+    "idUsuario": "1009876543",
+    "fechaCita": "19/2/2022, 10:30:00"
+}
+             */
+          
+        return (null);
+      };
+      return (<div><Button onClick={onClick}>Descripcion</Button></div>);
+    },
   },
 ];
 
