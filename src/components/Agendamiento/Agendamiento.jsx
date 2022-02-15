@@ -7,14 +7,17 @@ import { getUser, registrarAgendamiento, getSchedulesByUser } from '../../action
 import { getAuth } from "firebase/auth";
 import { useLocation, useNavigate, Link } from 'react-router-dom';
 import { Box, Button, DialogActions, DialogContentText } from '@material-ui/core';
-import { Dialog, DialogContent, DialogTitle, Skeleton, Slide } from '@mui/material';
+import { Dialog, DialogContent, DialogTitle, Grid, Skeleton, Slide } from '@mui/material';
+import ListaDoctores from './ListaDoctores';
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
+
 export default function Agendamiento() {
 
+    const [doctor, setDoctor] = useState('');
     const [fechaSeleccionada, cambiarFechaSeleccionada] = useState(new Date());
     const [page, setPage] = useState("");
     const [agendas, setAgendas] = useState(false); 
@@ -116,7 +119,7 @@ export default function Agendamiento() {
           console.log("Sintomas a registrar: ",sintomasData);
           console.log("valor undefined: ", stateParams.state);
           if(stateParams.state !== undefined){
-            var datos = { fechaCita : date.toLocaleString(), lugarAtencion : placeAtention, sintomas: sintomasData, nombreMedico : "Mauricio Gomez", 
+            var datos = { fechaCita : date.toLocaleString(), lugarAtencion : placeAtention, sintomas: sintomasData, nombreMedico : doctor, 
                         estadoAgenda : "Activa", correoUsuario : email, nombreUsuario : dataUser.fullName, idUsuario : dataUser.identification };
             console.log("Datos de la agenda a registrar: ", datos);
             console.log("Props en registrar: ",paramsLocation);                       
@@ -161,26 +164,42 @@ export default function Agendamiento() {
         setOpen(false);
     }    
 
+    const handleChangeDoctor = (event) => {
+      setDoctor(event.doctorName);
+      console.log("Data doctor capturado: ", event.doctorName);
+    }
+
   return ( 
     <div>
       {
         <div className='container'>
           {                      
             ((agendas && agendas !== []) || logueado) ? 
-              <div className='container'>
-                <div className='row' style={{display : scheduleActive ? 'none' : 'block'}}>
-                  <h3>Agendar cita</h3>
-                  <label>Cita médica para la fecha:</label> 
-                  <br></br>
-                  <KeyboardDateTimePicker 
-                    format="dd/MM/yyyy hh:mm a"
-                    value={fechaSeleccionada} 
-                    onChange={actualizarFecha} 
-                    disablePast="true" 
-                    id='fechaCita'
-                    />
-                  {page === "agendaConfirmada" && <ConfirmacionAgenda fecha={fechaSeleccionada.toLocaleString()}/>}    
-                </div>
+              
+              <Box sx={{ flexGrow: 1 }}>
+                <Grid style={{display : scheduleActive ? 'none' : 'block'}}>
+                  <Box sx={{ flexGrow: 1 }}>
+                    <Grid container spacing={2}>
+                      <Grid item xs={12} sm={12} md={4}>
+                        <h3>Agendar cita</h3>
+                        <label>Cita médica para la fecha:</label>
+                      </Grid>
+                      <Grid item xs={12} sm={4} md={4} sx={{ display: "flex", alignItems: "flex-end" }}>
+                        <ListaDoctores setDoctor={(event) => handleChangeDoctor(event)} />
+                      </Grid>
+                      <Grid item xs={12} sm={12} md={4} sx={{ display: !doctor ? "none" : "flex", alignItems: "flex-end" }}>
+                        <KeyboardDateTimePicker 
+                                format="dd/MM/yyyy hh:mm a"
+                                value={fechaSeleccionada} 
+                                onChange={actualizarFecha} 
+                                disablePast="true" 
+                                id='fechaCita'
+                                />
+                        {page === "agendaConfirmada" && <ConfirmacionAgenda fecha={fechaSeleccionada.toLocaleString()}/>}
+                      </Grid>
+                    </Grid>
+                  </Box>
+                </Grid>
                 <div className='row' style={{display : dataSintomas ? 'block' : 'none'}}>
                   <Link to="/SelfTriage">                
                     <Button variant="contained" style={{backgroundColor : "#4054b4", color: "white", marginTop : "1em"}}>Registrar síntomas</Button>
@@ -190,7 +209,7 @@ export default function Agendamiento() {
                 <div className='row'>
                   <ListaAgendamiento ListaAgendas={agendas} updateDataTable={refreshData}/>
                 </div>
-              </div>
+              </Box>
               :
               <div className='container'>
                 <br />

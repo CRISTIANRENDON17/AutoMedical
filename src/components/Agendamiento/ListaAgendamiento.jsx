@@ -136,8 +136,8 @@ function ListarAgendamientos(props) {
               <StyledTableRow>
                 <StyledTableCell align="right"></StyledTableCell> 
                 <StyledTableCell align="right"></StyledTableCell> 
-                <StyledTableCell align="right"></StyledTableCell> 
                 <StyledTableCell align="right">Aún no tienes citas médicas agendadas.</StyledTableCell> 
+                <StyledTableCell align="right"></StyledTableCell> 
                 <StyledTableCell align="right"></StyledTableCell> 
                 <StyledTableCell align="right"></StyledTableCell> 
                 <StyledTableCell align="right"></StyledTableCell> 

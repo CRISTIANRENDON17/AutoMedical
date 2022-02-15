@@ -216,3 +216,27 @@ export const updateStateScheduleById = async(id) => {
     
     return result;
 }
+
+/**
+ * Método para obtener los usuarios con rol doctor
+ * @returns Lista de doctores 
+ */
+ export const getDoctores = async() => {
+    const result = { statusResponse: false, data: null, error: null };
+
+    try {
+        const qId = query(collection(db,"usuarios"), where("rol", "==", "doctor"));
+        const doctors = await getDocs(qId);
+        const doctorsData = doctors?.docs[0]?.data();
+        const arrayDoctores = doctors.docs.map( doc => ({ id: doc.id, ...doc.data() }))
+                                      
+        result.statusResponse =  true;                    
+        result.data = doctorsData !== undefined && arrayDoctores;
+        
+    } catch (error) {
+        result.statusResponse =  false; 
+        result.error = error;        
+    }
+    
+    return result;
+}
