@@ -114,7 +114,7 @@ export default function ListUser() {
         arrayDato[4].replace('"', "").replace('"}}}', "")?.replace("}}}", "");
       // Se obtiene el id encriptado del documento según la identificación del usuario
       // Se actualiza el campo modificado en la tabla
-      /*(async () => {
+      (async () => {
         const idUserData = await getIdUser(id);
         const data = {
           identificacion: idUserData.data[0],
@@ -126,7 +126,7 @@ export default function ListUser() {
         const statusUpdate =
           data.error !== "true" && (await updateFieldUser(data));
         console.log("Estado actualización: ", statusUpdate);
-      })();*/
+      })();
     }
   }, []);
 
@@ -274,26 +274,12 @@ const columnsDoctor = [
             }
           //  let aux = data.data.map(({data})=> {"Nombre"+data.nombreUsuario+"\n"+sata});
             //console.log(aux);
-            console.log(data.data[0]);
+            //console.log(data.data[0]);
             swal({
               title: "Historial de Agendas",
               text: `${aux}`,
               button: "Salir",
             });
-            /**
-             * {
-    "id": "7VccZqQ8n1pummhau15S",
-    "lugarAtencion": "IPS Presencial - Prioritaria",
-    "estadoAgenda": "Cancelada",
-    "correoUsuario": "gabi@gmail.com",
-    "sintomas": "Cardiovascular: Palpitación o taquicardia",
-    "nombreMedico": "Ángel Guzmán",
-    "nombreUsuario": "Gabriela Perez",
-    "idUsuario": "1009876543",
-    "fechaCita": "19/2/2022, 10:30:00"
-}
-             */
-          
         return (null);
       };
       return (<div><Button onClick={onClick}>Descripcion</Button></div>);
