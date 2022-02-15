@@ -12,12 +12,13 @@ import { getCollection, getIdUser, updateFieldUser, getSchedulesByUser } from ".
 import { useEffect } from "react";
 import { useState } from "react";
 import { Box } from "@mui/material";
-import { addSeconds } from "date-fns/esm";
 import Button from '@mui/material/Button';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faDatabase, faPlus } from '@fortawesome/free-solid-svg-icons';
+import { faPlus } from '@fortawesome/free-solid-svg-icons';
 //import ScrollDialog from "./ListUserModal.js";
 import swal from 'sweetalert';
+import { getAuth } from "firebase/auth";
+import { useNavigate } from "react-router-dom";
 
 function Herramientas() {
   return (
@@ -30,7 +31,7 @@ function Herramientas() {
   );
 }
 
-const UserActualRol = "doctor";
+//var UserActualRol = "";
 
 function validateEmail(email) {
   const re =
@@ -40,6 +41,9 @@ function validateEmail(email) {
 
 export default function ListUser() {
   const [users, setUsers] = useState([]);
+  //const [logueado, setLogueado] = useState(false);
+  const [rolUser, setRolUser] = useState("");
+  const history = useNavigate();
 
   /* Método para agregar un nuevo usuario */
   const handleAddRow = () => {
@@ -53,9 +57,22 @@ export default function ListUser() {
     const arrayUsers = [];
     (async () => {
       var DataUsers = await getCollection("usuarios");
-      const data = DataUsers.data.docs;
-      data.map((user) => {
-        if (user.data().rol !== UserActualRol & UserActualRol === "admin") {
+      const data = DataUsers?.data?.docs;
+      const auth = getAuth(); 
+      setTimeout(function (){ 
+        const email = auth.currentUser?.email;  
+        if(email !== undefined){
+            //setLogueado(true);
+            const rolUserLogueaded = data.filter((user) => user.data().email === email)[0].data().rol;
+            rolUserLogueaded && setRolUser(rolUserLogueaded);
+            console.log("User desde el ListUser: ", rolUserLogueaded);
+        } 
+        else {
+          history('/Login', {replace : true});            
+        }       
+      }, 1000); 
+        (data && rolUser) && data.map((user) => {
+        if (user.data().rol !== rolUser & rolUser === "admin") {
           //list del admin
           arrayUsers.push({
             id: user.data().identification,
@@ -70,7 +87,7 @@ export default function ListUser() {
             password: user.data().password,
             estado: user.data().estado,
           });
-        } else if (user.data().rol !== UserActualRol & UserActualRol === "doctor" & user.data().rol !== "admin") {
+        } else if (user.data().rol !== rolUser & rolUser === "doctor" & user.data().rol !== "admin") {
           //este seria el list del doctor
           if(user.data().estado !== "Inactivo"){
             arrayUsers.push({
@@ -86,11 +103,22 @@ export default function ListUser() {
             });
           }
         }
+        return null;
       });
 
       setUsers(arrayUsers);
     })();
-  }, [users]);
+  }, [rolUser, history]);
+
+  const getcolumns = () => {
+    if (rolUser === "doctor") {
+      return columnsDoctor;
+    } else if (rolUser === "admin") {
+      return columnsAdmin;
+    } else {
+      return columnsAdmin;
+    }
+  };
 
   const handleEditRowsModelChange = React.useCallback((model) => {
     console.log("Modelo entrada: ", model);
@@ -164,24 +192,17 @@ export default function ListUser() {
       />
       <Button
         onClick={handleAddRow}>
-        <FontAwesomeIcon icon= {faPlus} size='md'/>
+        <FontAwesomeIcon icon= {faPlus} size='sm'/>
         &nbsp;&nbsp;Agregar Usuario
       </Button>
       
     </Box>
     </div>
   );
-}
 
-const getcolumns = () => {
-  if (UserActualRol === "doctor") {
-    return columnsDoctor;
-  } else if (UserActualRol === "admin") {
-    return columnsAdmin;
-  } else {
-    return null;
-  }
-};
+
+
+}
 
 const columnsDoctor = [
   {
@@ -266,7 +287,7 @@ const columnsDoctor = [
               aux = aux + "EstadoAgenda: " + data.data[i].estadoAgenda + "\n";
               aux = aux + "Fecha Cita: " + data.data[i].fechaCita + "\n";
               aux = aux + "Sintomas: " + data.data[i].sintomas + "\n";
-              aux = aux + "\n" + "\n";
+              aux = aux + "\n \n";
             }
             if(aux === "")
             {
@@ -379,7 +400,7 @@ const columnsAdmin = [
               value:thisRow.estado,
             };
             //console.log("Data a actualizar: ", data);
-            const statusUpdate = await updateFieldUser(data);
+            await updateFieldUser(data);
             //console.log("Estado actualización: ", statusUpdate);
           //console.log(JSON.stringify(thisRow, null, 4))
         //return alert(JSON.stringify(thisRow, null, 4));
