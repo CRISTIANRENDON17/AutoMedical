@@ -8,7 +8,7 @@ import {
   GridToolbarExport,
   GridToolbarDensitySelector,
 } from "@mui/x-data-grid";
-import { getCollection, getIdUser, updateFieldUser, getSchedulesByUser } from "../../actions";
+import { getCollection, getIdUser, updateFieldUser, getSchedulesByUser, addUser} from "../../actions";
 import { useEffect } from "react";
 import { useState } from "react";
 import { Box } from "@mui/material";
@@ -43,14 +43,42 @@ export default function ListUser() {
   const [users, setUsers] = useState([]);
   //const [logueado, setLogueado] = useState(false);
   const [rolUser, setRolUser] = useState("");
-  const history = useNavigate();
 
+  const history = useNavigate();
   /* Método para agregar un nuevo usuario */
   const handleAddRow = () => {
-    const numeroRows = users.length;
-    //setUsers(users.push(data));
-    console.log("Número de filas", numeroRows);
-    console.log("Abre desde el Agregar Usuario", columnsAdmin);
+    console.log("entro");
+    swal("Ingresa Cedula", {
+      content: "input",
+    })
+    .then((value) => {
+      let bandera = false;
+      users.map((data) =>{
+        if(data.id === value){
+          bandera = true;
+        } 
+      });
+      console.log(bandera);
+       if(bandera === false){
+        swal(`Usuario agregado con Exito`);
+        const Usuario = {
+          identification: `${value}`,
+          fullName: "Nombre",
+          age: "",
+          cellNumber: "",
+          phoneNumber: "",
+          address: "",
+          email: `${Math.floor(Math.random() * (1000 - 100)) + 100}@gmail.com`,
+          password: "",
+          confcontraseña: "",
+          rol: "usuario",
+          estado:"Activo",
+        }
+        addUser("usuarios",Usuario);
+      }else{
+        swal(`Usuario Ya existente`);
+      }
+    })
   };
 
   useEffect(() => {
@@ -65,7 +93,7 @@ export default function ListUser() {
             //setLogueado(true);
             const rolUserLogueaded = data.filter((user) => user.data().email === email)[0].data().rol;
             rolUserLogueaded && setRolUser(rolUserLogueaded);
-            console.log("User desde el ListUser: ", rolUserLogueaded);
+            //console.log("User desde el ListUser: ", rolUserLogueaded);
         } 
         else {
           history('/Login', {replace : true});            
@@ -108,7 +136,7 @@ export default function ListUser() {
 
       setUsers(arrayUsers);
     })();
-  }, [rolUser, history]);
+  }, [rolUser, history,users]);
 
   const getcolumns = () => {
     if (rolUser === "doctor") {
@@ -121,10 +149,10 @@ export default function ListUser() {
   };
 
   const handleEditRowsModelChange = React.useCallback((model) => {
-    console.log("Modelo entrada: ", model);
+    //console.log("Modelo entrada: ", model);
     if (JSON.stringify(model) !== JSON.stringify({})) {
       //Se organiza la data para que llegue limpia a la función del action
-      console.log("Modelo actua: ", model);
+     // console.log("Modelo actua: ", model);
       const arrayDato = JSON.stringify(model).split(":", 5);
       arrayDato.toString().replace("{", "");
       const id = arrayDato[0]
@@ -150,10 +178,10 @@ export default function ListUser() {
           value: dataValue,
           error: dataError,
         };
-        console.log("Data a actualizar: ", data);
+       // console.log("Data a actualizar: ", data);
         const statusUpdate =
           data.error !== "true" && (await updateFieldUser(data));
-        console.log("Estado actualización: ", statusUpdate);
+        //console.log("Estado actualización: ", statusUpdate);
       })();
     }
   }, []);
@@ -181,6 +209,7 @@ export default function ListUser() {
         },
       }}
     >
+        { rolUser !== "doctor" ? <Button onClick={handleAddRow}><FontAwesomeIcon icon= {faPlus} size='sm'/> &nbsp;&nbsp;Agregar Usuario</Button> : null}
       
       <DataGrid
         components={{
@@ -190,11 +219,7 @@ export default function ListUser() {
         columns={getcolumns()}
         onEditRowsModelChange={handleEditRowsModelChange}
       />
-      <Button
-        onClick={handleAddRow}>
-        <FontAwesomeIcon icon= {faPlus} size='sm'/>
-        &nbsp;&nbsp;Agregar Usuario
-      </Button>
+      
       
     </Box>
     </div>
@@ -374,7 +399,9 @@ const columnsAdmin = [
   {
     field:"estado",
     headerName: "Estado",
+    editable: true,
     renderCell: (params) => {
+     
       const onClick = async (e) => {
         e.stopPropagation(); // don't select this row after clicking
         const api: GridApi = params.api;
@@ -400,7 +427,9 @@ const columnsAdmin = [
               value:thisRow.estado,
             };
             //console.log("Data a actualizar: ", data);
+            
             await updateFieldUser(data);
+            
             //console.log("Estado actualización: ", statusUpdate);
           //console.log(JSON.stringify(thisRow, null, 4))
         //return alert(JSON.stringify(thisRow, null, 4));

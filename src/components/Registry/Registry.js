@@ -87,7 +87,7 @@ const crearAutenticacionUsuario = (Usuario) => {
     .catch((error) => {
       console.log(error);
     });
-}
+};
 
 /* Método para limpiar formulario */
 const limpiarForm = () => {
