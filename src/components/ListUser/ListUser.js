@@ -47,7 +47,7 @@ export default function ListUser() {
   const history = useNavigate();
   /* Método para agregar un nuevo usuario */
   const handleAddRow = () => {
-    console.log("entro");
+    //console.log("entro");
     swal("Ingresa Cedula", {
       content: "input",
     })
@@ -58,7 +58,7 @@ export default function ListUser() {
           bandera = true;
         } 
       });
-      console.log(bandera);
+      //console.log(bandera);
        if(bandera === false){
         swal(`Usuario agregado con Exito`);
         const Usuario = {
@@ -190,7 +190,7 @@ export default function ListUser() {
     <div>
       <br></br>
     <Box
-      style={{ height: 500, width: "100%" }}
+      style={{ height: 1000, width: "100%" }}
       sx={{
         height: 400,
         width: 1,
