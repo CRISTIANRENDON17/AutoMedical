@@ -8,6 +8,7 @@ import { getAuth } from "firebase/auth";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Box, Skeleton } from '@mui/material';
+import AppBar from "../AppBar/AppBar";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -36,10 +37,11 @@ export default function LandingPage() {
             }       
           }, 1000); 
         })()
-      }, [logueado, history]);
+    }, [logueado, history]);
 
     return (
         <div>
+          <AppBar/>
             {
                 logueado ?
                 <Grid container spacing={2}>

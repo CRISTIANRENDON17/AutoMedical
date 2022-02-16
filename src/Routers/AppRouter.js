@@ -26,13 +26,13 @@ export const AppRouter = () => {
                     <Routes>
                         <Route path="/" element={<div><AppBar data={0}/><BoxSx /></div>} />
                         <Route path="/Registry" element={<div><AppBar data={0}/><Registry /></div>} />
-                        <Route path="/Login" element={<div><AppBar data={0} /><Login /></div>} />
-                        <Route path="/LandingPage" element={<div><AppBar data={1} /><LandingPage /></div>} />
+                        <Route path="/Login" element={<div><AppBar /><Login /></div>} />
+                        <Route path="/LandingPage" element={<div><LandingPage /></div>} />
                         <Route path="/ProfileUser" element={<div><AppBar data={1} /><ProfileUser /></div>} />
                         <Route path="/SelfTriage" element={<div><AppBar data={1}/><SelfTriage/></div>}/>
                         <Route path="/SelfTriage/:categoryName" element={<div><AppBar data={1}/><Subcategories/></div>}/>
                         <Route path="/Agendamiento" element={<div><AppBar data={1}/><Agendamiento/></div>}/>
-                        <Route path="/ListUser" element={<div><AppBar data={2}/><Container><ListUser/></Container></div>}/>
+                        <Route path="/ListUser" element={<div><AppBar/><Container><ListUser/></Container></div>}/>
                         <Route path="/Recover" element={<div><AppBar data={0}/><RecuperarPasword/></div>}/>
                         <Route path="*" element={<div><Error404Page /></div>} />               
                     </Routes>

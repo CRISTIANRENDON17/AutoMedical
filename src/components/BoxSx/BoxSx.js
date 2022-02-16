@@ -50,8 +50,7 @@ export default function BoxSx() {
                   <div className="auto-btn1"></div>
                   <div className="auto-btn2"></div>
                   <div className="auto-btn3"></div>
-                  <div className="auto-btn4"></div>
-                  
+                  <div className="auto-btn4"></div>                  
               </div>   
           </div>
           <div className="navigation-manual">

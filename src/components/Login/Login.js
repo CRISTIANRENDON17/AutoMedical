@@ -67,7 +67,7 @@ export default function Login() {
         signInWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {    
           console.log("Ingreso exitoso al iniciar sesión");
-          history('/LandingPage');
+          history('/LandingPage', {replace : true});
         })
         .catch((error) => {
           setAlertWarning(true);

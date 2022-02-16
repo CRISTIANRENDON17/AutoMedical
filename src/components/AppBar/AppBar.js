@@ -10,6 +10,7 @@ import MenuItem from '@mui/material/MenuItem';
 import "./AppBar.css";
 import { getAuth, signOut } from "firebase/auth";
 import { useNavigate } from 'react-router-dom';
+import { getCollection } from '../../actions.js';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -20,12 +21,31 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function AppBar({data}) {
+export default function AppBar() {
   
   
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
+  const [rolUser, setRolUser] = React.useState(0)
   const history = useNavigate();
+  React.useEffect(() => {
+    console.log("Ejecución del AppBar");
+        (async() => {
+            var DataUsers = await getCollection("usuarios");
+             const arrayData = DataUsers.data.docs;
+            const auth = getAuth(); 
+            setTimeout(function (){ 
+                const email = auth.currentUser?.email;  
+                if(email !== undefined){
+                    //setLogueado(true);
+                    const rolUserLogueaded = arrayData && arrayData.filter((user) => user.data().email === email)[0].data().rol.toUpperCase();
+                    const rol = rolUserLogueaded === "USUARIO" ? 1 : rolUserLogueaded === "ADMIN" ? 2 : rolUserLogueaded === "DOCTOR" ? 2 : 0;
+                    setRolUser(rol);  
+                    console.log("Email: ", email, " Rol del usuario AppRouter: ", rol, " ", rolUser);
+                }       
+            }, 1000); 
+        })();        
+    }, [rolUser])
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -35,7 +55,7 @@ export default function AppBar({data}) {
   };
 
   const signOutSession = () => {
-    data = 0;
+    setRolUser(0);
     const auth = getAuth();
     signOut(auth).then(() => {
       console.log("Sesión cerrada");
@@ -46,8 +66,8 @@ export default function AppBar({data}) {
   };
 
   const classes = useStyles();
-  if (data === 0) {
-    return (
+  if (rolUser === 0) {
+    return (      
       <div className={classes.root}>
         <AppBarMaterial position="static" color="transparent">
           <Toolbar>
@@ -80,7 +100,7 @@ export default function AppBar({data}) {
         </AppBarMaterial>
       </div>
   );
-  } else if (data === 1) {
+  } else if (rolUser === 1) {
     return (
       <div className={classes.root}>
         <AppBarMaterial position="static" color="transparent">
@@ -144,7 +164,7 @@ export default function AppBar({data}) {
                   to="/Agendamiento"
                 >
                   <FontAwesomeIcon icon= {faUser} className="iconNavBar"/>
-                  &nbsp;Agendamientos
+                  &nbsp;Mis Agendas
                 </NavLink>
               </MenuItem>
               <MenuItem onClick={handleClose}>
@@ -177,7 +197,7 @@ export default function AppBar({data}) {
       </div>
     );
   }
-  else if (data === 2) {
+  else if (rolUser === 2) {
     return (
       <div className={classes.root}>
         <AppBarMaterial position="static" color="transparent">
